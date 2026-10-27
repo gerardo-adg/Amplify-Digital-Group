@@ -139,20 +139,28 @@ const pad = (n: number) => String(n).padStart(2, "0");
         <div class="head">
           <p class="eyebrow" data-reveal>Before they signed</p>
           <h2 id="stories-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">They had doubts</span></span><span class="l"><span class="l__in grad">too.</span></span></h2>
-          <p class="muted head__p" data-reveal>Most of our clients came to us after something didn't work. Here's what worried them, and what happened next.</p>
+          <p class="muted head__p" data-reveal>Here's what worried our clients before they signed, and what happened next.</p>
         </div>
         <ul class="story-list" data-stagger>
           {stories.map((s) => (
-            <li class="story" data-reveal>
+            <li class:list={["story", s.video && "story--video"]} data-reveal>
+              {s.video && (
+                <div class="story__video">
+                  <VideoFrame playbackId={s.video.playbackId} title={`${s.name || "Client"} on working with ${site.name}`} posterTime={s.video.posterTime} ratio={s.video.ratio ?? "9 / 16"} label="Watch" sizes="(min-width: 760px) 300px, 100vw" />
+                  {s.when && <span class="story__when">{s.when}</span>}
+                </div>
+              )}
               {isSample(s) && <span class="tag story__tag">Sample</span>}
               <p class="story__label">The concern</p>
               <p class="story__concern display">{s.concern}</p>
               <p class="story__label story__label--ok">What happened</p>
               <p class="story__outcome">{s.outcome}</p>
-              <blockquote class="story__quote">
-                <p>“{s.quote}”</p>
-                <footer><strong>{s.name}</strong><span class="muted">{s.business}</span></footer>
-              </blockquote>
+              {(s.quote || s.name) && (
+                <blockquote class="story__quote">
+                  {s.quote && <p>“{s.quote}”</p>}
+                  {s.name && <footer><strong>{s.name}</strong>{s.business && <span class="muted">{s.business}</span>}</footer>}
+                </blockquote>
+              )}
             </li>
           ))}
         </ul>
@@ -285,10 +293,26 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
   /* Stories */
   .stories { background: var(--paper-2); }
-  .story-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1rem; }
+  .story-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+  .story-list > .story { flex: 1 1 290px; }
+  .story-list > .story--video { flex-basis: 100%; }
   .story { position: relative; display: flex; flex-direction: column; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper); border: 1px solid var(--line); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
   .story:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgb(7 5 26 / 0.3); }
   .story__tag { position: absolute; top: 1.25rem; right: 1.25rem; }
+  .story--video { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: clamp(1.5rem, 4vw, 3.5rem); padding: 1rem clamp(1.5rem, 3vw, 2.5rem) 1rem 1rem; }
+  .story--video > :not(.story__video) { grid-column: 2; }
+  .story--video > .story__label:first-of-type { margin-top: clamp(1rem, 3vw, 2.5rem); }
+  .story--video .story__concern { font-size: clamp(1.4rem, 2.6vw, 2rem); }
+  .story--video .story__outcome { font-size: 1.1rem; max-width: 36rem; }
+  .story__video { position: relative; grid-column: 1; grid-row: 1 / -1; align-self: start; }
+  @media (max-width: 760px) {
+    .story--video { display: flex; padding: 0.75rem 0.75rem 1.75rem; }
+    .story--video > :not(.story__video) { margin-inline: 1rem; }
+    .story__video { align-self: stretch; margin-bottom: 1.5rem; }
+    .story__video :global(.vf) { aspect-ratio: 4 / 5 !important; }
+  }
+  .story__video :global(.vf) { border-radius: calc(var(--radius-lg) - 8px); }
+  .story__when { position: absolute; top: 1rem; left: 1rem; padding: 0.35rem 0.75rem; border-radius: 999px; background: #fff; color: var(--ink); font-size: 0.8rem; font-weight: 700; }
   .story__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
   .story__label--ok { color: var(--brand); margin-top: 1.75rem; }
   .story__concern { font-size: 1.35rem; line-height: 1.15; margin-top: 0.6rem; text-transform: none; }

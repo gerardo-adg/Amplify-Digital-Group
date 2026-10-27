@@ -125,16 +125,31 @@ export const featured = {
   video: { playbackId: "", ratio: "9 / 16", posterTime: 2, uploadDate: "2026-10-24" }, // posted on Instagram
 };
 
-export type Story = { name: string; business: string; concern: string; outcome: string; quote: string; sample?: boolean };
+export type Story = {
+  name: string;
+  business: string;
+  concern: string;
+  outcome: string;
+  quote: string;
+  // A short label like "30 days in", shown on the card
+  when?: string;
+  // Mux playback ID of their testimonial; `ratio` "9 / 16" for vertical
+  video?: { playbackId: string; ratio?: string; posterTime?: number; uploadDate?: string };
+  sample?: boolean;
+};
 // The worry they had before signing, what actually happened, and their words.
+// The quote and byline only show once they're filled in.
 export const stories: Story[] = [
   {
-    name: "Owner name",
-    business: "Business · City",
-    concern: "“I don't have time to be on camera.”",
-    outcome: "How the shoot day worked and what the footage produced.",
-    quote: "Their own words about working with you.",
-    sample: true,
+    // CONFIRM: his name, business and city, and a line from the video word for word
+    name: "",
+    business: "",
+    when: "30 days in",
+    concern: "He was shy on camera.",
+    outcome:
+      "We were patient and took it one video at a time. He keeps getting better with every one, and 30 days in he's super happy and highly recommends us.",
+    quote: "",
+    video: { playbackId: "", ratio: "9 / 16" },
   },
   {
     name: "Owner name",
