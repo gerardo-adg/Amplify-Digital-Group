@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amplifydigitalgroup.net/sitemap-index.xml
