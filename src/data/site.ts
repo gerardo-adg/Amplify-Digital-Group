@@ -126,7 +126,8 @@ export const featured = {
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
   quote: "The marketing pays for itself.", // his words on the call
   // Mux playback ID of the video. `ratio` is "9 / 16" for vertical, "16 / 9" for horizontal.
-  video: { playbackId: "", ratio: "9 / 16", posterTime: 2, uploadDate: "2026-10-24" }, // posted on Instagram
+  // posterTime is in seconds: 74 = the 1:14 frame. uploadDate = posted on Instagram (Pacific time).
+  video: { playbackId: "2v2jub58TG9M9kdJ6PPqEVfZS9zfpPEuZzRAGh00K00500", ratio: "9 / 16", posterTime: 74, uploadDate: "2026-10-24T12:00:00-07:00" },
 };
 
 export type Story = {

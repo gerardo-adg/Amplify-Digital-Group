@@ -55,7 +55,7 @@ export function graph() {
 
   const videos = [
     ...(featured.video.playbackId
-      ? [videoNode(featured.video.playbackId, `${featured.client.name} of ${featured.client.business} confirms over $80K in jobs two weeks after launching ads`, featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
+      ? [videoNode(featured.video.playbackId, `${featured.client.name} of ${featured.client.business}: $80K+ in work booked off $647 in Meta ad spend`, featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
       : []),
     ...(hero.showreel.playbackId ? [videoNode(hero.showreel.playbackId, hero.showreel.title, site.description, hero.showreel.posterTime)] : []),
     ...stories
