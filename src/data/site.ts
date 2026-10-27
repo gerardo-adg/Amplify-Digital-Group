@@ -93,10 +93,9 @@ export const work: Work[] = [
   {
     client: "GM Roofing",
     industry: "Roofing · Sacramento Valley",
-    title: "New website, project films and local SEO",
-    services: ["Website", "Video", "SEO"],
+    title: "New website and videos",
+    services: ["Website", "Video"],
     url: "https://gmroofs.com/",
-    sample: true, // CONFIRM you may name them, and add a result + video
   },
   { client: "Client name", industry: "Industry · City", title: "What you made for them", services: ["Video", "Ads"], sample: true },
   { client: "Client name", industry: "Industry · City", title: "What you made for them", services: ["Ads"], sample: true },
@@ -133,6 +132,8 @@ export type Story = {
   quote: string;
   // A short label like "30 days in", shown on the card
   when?: string;
+  // Their own words about the concern, shown under it
+  concernQuote?: string;
   // Mux playback ID of their testimonial; `ratio` "9 / 16" for vertical
   video?: { playbackId: string; ratio?: string; posterTime?: number; uploadDate?: string };
   sample?: boolean;
@@ -141,14 +142,14 @@ export type Story = {
 // The quote and byline only show once they're filled in.
 export const stories: Story[] = [
   {
-    // CONFIRM: his name, business and city, and a line from the video word for word
-    name: "",
-    business: "",
+    name: "Giovanni",
+    business: "GM Roofing · Sacramento, CA",
     when: "30 days in",
-    concern: "He was shy on camera.",
+    concern: "He was super shy on camera.",
+    concernQuote: "When I first started, I was super shy. I remember my first video, it took like 6 hours.",
     outcome:
-      "We were patient and took it one video at a time. He keeps getting better with every one, and 30 days in he's super happy and highly recommends us.",
-    quote: "",
+      "We stayed patient through that first six-hour shoot, waiting and helping him out. With every video since, it's gotten much easier. 30 days in, he's super happy with the service.",
+    quote: "Overall, man, they're good people. Highly recommend them to anybody who's looking to market their services online.",
     video: { playbackId: "", ratio: "9 / 16" },
   },
   {

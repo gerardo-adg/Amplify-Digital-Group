@@ -153,6 +153,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
               {isSample(s) && <span class="tag story__tag">Sample</span>}
               <p class="story__label">The concern</p>
               <p class="story__concern display">{s.concern}</p>
+              {s.concernQuote && <p class="story__concern-quote">“{s.concernQuote}”<span class="muted">{s.name || "Our client"}</span></p>}
               <p class="story__label story__label--ok">What happened</p>
               <p class="story__outcome">{s.outcome}</p>
               {(s.quote || s.name) && (
@@ -317,6 +318,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .story__label--ok { color: var(--brand); margin-top: 1.75rem; }
   .story__concern { font-size: 1.35rem; line-height: 1.15; margin-top: 0.6rem; text-transform: none; }
   .story__outcome { margin-top: 0.6rem; }
+  .story__concern-quote { margin-top: 0.75rem; font-style: italic; }
+  .story__concern-quote span { display: block; margin-top: 0.2rem; font-style: normal; font-size: 0.88rem; }
   .story__quote { margin: auto 0 0; padding-top: 1.5rem; margin-top: 1.75rem; border-top: 1px solid var(--line); }
   .story__quote p { font-style: italic; }
   .story__quote footer { display: flex; flex-direction: column; margin-top: 0.9rem; font-size: 0.92rem; }
