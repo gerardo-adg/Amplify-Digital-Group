@@ -77,7 +77,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="wrap">
         <div class="head">
           <p class="eyebrow" data-reveal>How it works</p>
-          <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">From first call</span></span><span class="l"><span class="l__in grad">to first lead.</span></span></h2>
+          <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span><span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+          <p class="muted head__p" data-reveal>Your only job is to show up for the shoot. We do the rest.</p>
         </div>
         <ol class="steps" data-stagger>
           {steps.map((s, i) => (
@@ -282,7 +283,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .svc__pts li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 2px; background: var(--brand); transform: translateY(-2px) rotate(45deg); }
 
   /* Process */
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0; counter-reset: s; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; counter-reset: s; }
   .step { position: relative; padding: 2rem 1.75rem 2rem 0; border-top: 1px solid var(--line-dark); }
   .step::before { content: ""; position: absolute; left: 0; top: -1px; height: 2px; width: 0; background: var(--brand-hi); transition: width 1.2s var(--ease) calc(var(--i, 0) * 200ms + 300ms); }
   .step.is-in::before { width: 100%; }

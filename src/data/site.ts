@@ -24,7 +24,7 @@ export const hero = {
   eyebrow: "Meta ads · Content · Websites",
   title: ["Meta ads that", "make the phone ring."],
   lede:
-    "Facebook and Instagram ads are what we do best. We back them with high-quality content and websites built to turn clicks into booked jobs.",
+    "Facebook and Instagram ads are what we do best. We script, film and edit your ads, then launch and manage the campaigns. Backed by high-quality content and websites built to turn clicks into booked jobs.",
   primaryCta: "Book a strategy call",
   secondaryCta: "See our work",
   // Mux playback ID for the showreel. Leave empty to show the placeholder frame.
@@ -39,14 +39,13 @@ export type Service = {
   // The main service gets the big card
   main?: boolean;
 };
-// CONFIRM the bullet points match what you deliver.
 export const services: Service[] = [
   {
     icon: "ads",
     main: true,
     title: "Meta ads",
     body: "Our main service. Facebook and Instagram campaigns that put your business in front of the people in your area who need what you do, and turn them into leads.",
-    points: ["Facebook and Instagram campaigns", "Ad creative we shoot and edit ourselves", "Targeted to the areas you serve", "Budgets you approve"],
+    points: ["We script, film and edit your ads", "We launch and manage your campaigns", "Targeted to the areas you serve", "Budgets you approve"],
   },
   {
     icon: "video",
@@ -62,12 +61,13 @@ export const services: Service[] = [
   },
 ];
 
-// CONFIRM: your real onboarding steps.
+// How every Meta ads client is handled, start to finish.
 export const steps = [
-  { title: "Strategy call", body: "30 minutes on your goals, your market and what has or hasn't worked before. No pitch deck." },
-  { title: "Plan and shoot", body: "We map the offer, the pages and the ads, then film on location in a single day." },
-  { title: "Build and launch", body: "Site, tracking and campaigns go live together, so every lead is counted from day one." },
-  { title: "Report and improve", body: "A plain-English report each month: leads, cost per lead, and what we're changing next." },
+  { title: "Script", body: "We write the ads for you, so you know exactly what to say before the camera rolls." },
+  { title: "Film", body: "We come to you and film on location. Nervous on camera? We're patient, and it gets easier with every video." },
+  { title: "Edit", body: "We cut the footage into scroll-stopping ads made for Facebook and Instagram." },
+  { title: "Launch", body: "We build and launch your campaigns, aimed at the people in the areas you serve." },
+  { title: "Manage", body: "We keep running and managing your campaigns after launch, so you can get back to the work." },
 ];
 
 export type Stat = { value: number; prefix?: string; suffix?: string; label: string; sample?: boolean };
