@@ -25,7 +25,7 @@ export const site = {
 };
 
 export const hero = {
-  label: "For roofers and home-service businesses",
+  label: "For contractors and home-service businesses",
   title: ["Meta ads that", "make the phone ring."],
   primaryCta: "See if we're a fit",
   ctaNote: "60-second quiz · No pressure",
