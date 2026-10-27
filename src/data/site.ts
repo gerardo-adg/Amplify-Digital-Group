@@ -109,14 +109,18 @@ export const work: Work[] = [
 export const featured = {
   // The hook from the video
   hook: "Would you say ads are worth it if one of my clients landed over $80K in jobs only two weeks after we launched his ads?",
-  result: { value: 80, prefix: "$", suffix: "K+", label: "in jobs landed" },
-  timeframe: "2 weeks after his ads went live",
+  // He booked $80–90K; the headline uses the low end so it never overstates.
+  results: [
+    { value: 80, prefix: "$", suffix: "K+", label: "in work booked" },
+    { value: 647, prefix: "$", suffix: "", label: "in ad spend" },
+  ],
+  timeframe: "Two weeks after his Meta ads went live, with estimates still pending.",
   concern: "He'd been burned by a marketer before.",
   // His words on the call about almost not signing
   concernQuote: "At one point I was like, I'm never gonna do this.",
   story: [
     "Trusting a new marketer wasn't easy for him. It took time before he was ready to work with us.",
-    "Two weeks after we launched his ads, he'd landed over $80,000 in jobs.",
+    "Two weeks after we launched his Meta ads, he'd booked $80–90K in work off $647 in ad spend. That's over $120 in booked work for every $1 he spent, and he still had estimates pending.",
     "Don't take our word for it. In the video, we call Evaristo and he tells you himself.",
   ],
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
@@ -171,7 +175,7 @@ export const faqs = [
   },
   {
     q: "How long until I see results?",
-    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing landed over $80K in jobs two weeks in. Every market is different, so we'll give you a realistic timeline for yours before you sign anything.",
+    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing booked over $80K in work off $647 in ad spend, two weeks in. Every market is different, so we'll give you a realistic timeline for yours before you sign anything.",
   },
   {
     q: "Do I have to be on camera?",
