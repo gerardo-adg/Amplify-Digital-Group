@@ -20,18 +20,24 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="hero__glow" aria-hidden="true"><span></span><span></span></div>
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="wrap hero__in">
-        <p class="eyebrow" data-reveal>{hero.eyebrow}</p>
+        <p class="eyebrow hero__label" data-reveal>{hero.label}</p>
         <h1 class="display hero__title" data-reveal="lines">
           {hero.title.map((line, i) => <span class="l"><span class:list={["l__in", i === hero.title.length - 1 && "grad"]}>{line}</span></span>)}
         </h1>
-        <p class="hero__lede muted" data-reveal style="--i:2">{hero.lede}</p>
-        <div class="hero__ctas" data-reveal style="--i:3">
-          <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
-          <a class="btn btn--ghost" href="#work">{hero.secondaryCta}</a>
+        <div class="hero__video" data-reveal style="--i:2">
+          <VideoFrame playbackId={hero.vsl.playbackId} title={hero.vsl.title} posterTime={hero.vsl.posterTime} label="Watch the video" sizes="(min-width: 900px) 680px, 100vw" />
         </div>
-        <div class="hero__reel" data-reveal style="--i:4">
-          <VideoFrame playbackId={hero.showreel.playbackId} title={hero.showreel.title} posterTime={hero.showreel.posterTime} label="Watch the showreel" sizes="(min-width: 1280px) 1240px, 100vw" />
+        {hero.vsl.playbackId && <p class="hero__caption" data-reveal style="--i:3">{hero.vsl.caption}</p>}
+        <div class="hero__cta" data-reveal style="--i:3">
+          <a class="btn hero__btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+          <p class="hero__note muted">{hero.ctaNote}</p>
         </div>
+        <a class="hero__proof" href="#proof" data-reveal style="--i:4" aria-label={`${hero.proof.map((p) => `${p.value} ${p.label}`).join(", ")}. Read Evaristo's story.`}>
+          {hero.proof.map((p) => (
+            <span class="hero__stat"><strong class="display">{p.value}</strong><span>{p.label}</span></span>
+          ))}
+          <span class="hero__who">{featured.client.business}, {featured.client.city} <Icon name="arrow" size={15} /></span>
+        </a>
       </div>
     </section>
 
@@ -200,7 +206,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="wrap cta__in">
         <h2 id="cta-h" class="display cta__title" data-reveal="lines"><span class="l"><span class="l__in">Ready to get</span></span><span class="l"><span class="l__in grad">amplified?</span></span></h2>
         <p class="muted cta__p" data-reveal>Answer a few quick questions about your business. It takes about 60 seconds, and if we're a fit, we'll reach out to you personally.</p>
-        <div class="hero__ctas cta__ctas" data-reveal>
+        <div class="cta__ctas" data-reveal>
           <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           {site.phone.tel ? <a class="btn btn--ghost" href={`tel:${site.phone.tel}`}>{site.phone.display}</a> : <a class="btn btn--ghost" href={`mailto:${site.email}`}>{site.email}</a>}
         </div>
@@ -229,12 +235,49 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .hero__glow span:last-child { width: 45vw; height: 45vw; max-width: 620px; max-height: 620px; right: -12vw; top: 10%; background: radial-gradient(closest-side, #7a2bff, transparent); animation-duration: 22s; animation-delay: -6s; }
   @keyframes drift { to { transform: translate3d(8vw, 6vw, 0) scale(1.15); } }
   .hero__grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line-dark) 1px, transparent 1px), linear-gradient(90deg, var(--line-dark) 1px, transparent 1px); background-size: 72px 72px; mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 20%, transparent 75%); opacity: 0.5; }
-  .hero__in { position: relative; }
-  .hero__title { font-size: clamp(2.6rem, 9.5vw, 8.4rem); margin-top: 1.4rem; }
-  .hero__lede { max-width: 38rem; margin-top: 1.75rem; font-size: clamp(1.05rem, 1.6vw, 1.25rem); }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.25rem; }
-  .hero__reel { margin-top: clamp(3rem, 7vw, 5rem); }
-  .hero__reel :global(.vf) { box-shadow: 0 40px 120px -30px rgb(59 0 252 / 0.65), 0 0 0 1px var(--line-dark); }
+  .hero__in {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "label" "title" "video" "caption" "cta" "proof";
+    align-items: start;
+  }
+  .hero__label { grid-area: label; }
+  .hero__title { grid-area: title; font-size: clamp(2.1rem, 4.4vw, 4rem); margin-top: 1.1rem; }
+  .hero__video { grid-area: video; margin-top: 1.75rem; }
+  .hero__video :global(.vf) { box-shadow: 0 40px 120px -30px rgb(59 0 252 / 0.65), 0 0 0 1px var(--line-dark); }
+  .hero__caption { grid-area: caption; margin-top: 1rem; font-size: 1.05rem; font-weight: 600; }
+  .hero__cta { grid-area: cta; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; margin-top: 1.5rem; }
+  .hero__btn { padding: 1.1rem 1.75rem; font-size: 1.05rem; }
+  .hero__note { font-size: 0.92rem; }
+  .hero__proof {
+    grid-area: proof; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem clamp(1.5rem, 4vw, 3rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: 1.75rem; border-top: 1px solid var(--line-dark); text-decoration: none;
+  }
+  .hero__stat { display: flex; align-items: baseline; gap: 0.55rem; }
+  .hero__stat strong { font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1; color: #fff; }
+  .hero__stat:first-child strong { color: var(--brand-hi); }
+  .hero__stat span { color: var(--muted-dark); font-size: 0.95rem; }
+  .hero__who { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted-dark); font-size: 0.9rem; transition: color 0.3s; }
+  .hero__proof:hover .hero__who { color: #fff; }
+  .hero__who :global(svg) { transform: rotate(90deg); }
+  @media (max-width: 899px) {
+    .hero { padding-top: 6.5rem; }
+    .hero__who { margin-left: 0; width: 100%; }
+  }
+  @media (min-width: 900px) {
+    .hero__in {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: 1fr auto auto auto auto 1fr auto;
+      grid-template-areas: ". video" "label video" "title video" "caption video" "cta video" ". video" "proof proof";
+      column-gap: clamp(2.5rem, 5vw, 4.5rem);
+    }
+    .hero__video { margin-top: 0; align-self: center; }
+    .hero__title { font-size: clamp(2.3rem, 3.55vw, 3.35rem); }
+    .hero__title .l__in { text-wrap: balance; }
+    .hero__cta { margin-top: 2rem; }
+    .hero__caption { margin-top: 1.5rem; }
+  }
 
   /* Ticker */
   .ticker { overflow: hidden; background: var(--brand); color: #fff; padding-block: 1.1rem; }
@@ -366,7 +409,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .cta__in { position: relative; }
   .cta__title { font-size: clamp(2.6rem, 9vw, 7.5rem); }
   .cta__p { max-width: 34rem; margin: 1.75rem auto 0; font-size: 1.15rem; }
-  .cta__ctas { justify-content: center; }
+  .cta__ctas { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.25rem; justify-content: center; }
 
   /* Footer */
   .foot { border-top: 1px solid var(--line-dark); padding-block: 2.5rem; }

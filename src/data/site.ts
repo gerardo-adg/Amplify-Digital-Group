@@ -25,14 +25,25 @@ export const site = {
 };
 
 export const hero = {
-  eyebrow: "Meta ads · Content · Websites",
+  label: "For roofers and home-service businesses",
   title: ["Meta ads that", "make the phone ring."],
-  lede:
-    "Facebook and Instagram ads are what we do best. We script, film and edit your ads, then launch and manage the campaigns. Backed by high-quality content and websites built to turn clicks into booked jobs.",
   primaryCta: "See if we're a fit",
-  secondaryCta: "See our work",
-  // Mux playback ID for the showreel. Leave empty to show the placeholder frame.
-  showreel: { playbackId: "", title: "Amplify Digital Group showreel", posterTime: 3 },
+  ctaNote: "60-second quiz · No pressure",
+  // The VSL (film it horizontal, 16:9). Leave playbackId empty to show the
+  // placeholder frame; the caption only shows once the video is in.
+  vsl: {
+    playbackId: "",
+    posterTime: 0,
+    title: "How Amplify Digital Group gets home-service businesses booked with Meta ads",
+    caption: "Watch how Evaristo booked $80K+ in work off $647 in ad spend.",
+    uploadDate: "", // e.g. "2026-11-05T12:00:00-08:00"
+  },
+  // The proof strip under the hero; links to Evaristo's story
+  proof: [
+    { value: "$80K+", label: "in work booked" },
+    { value: "$647", label: "in ad spend" },
+    { value: "2 weeks", label: "after launch" },
+  ],
 };
 
 export type Service = {

@@ -41,4 +41,4 @@ FAQ answers go into FAQPage schema, so each one must be true. An answer starting
 
 ## Videos
 
-Add a Mux playback ID to `hero.showreel.playbackId` or to an entry in `work`. The poster loads lazily and the player only downloads when someone presses play. Each real video is added to the schema as a VideoObject; set its real upload date in `src/lib/schema.ts`.
+**VSL:** add its Mux playback ID to `hero.vsl.playbackId` in `src/data/site.ts` (film it horizontal, 16:9). Until then the hero shows a placeholder frame, and the "Watch how Evaristo…" caption stays hidden. Other videos: `featured.video`, a story's `video`, or an entry in `work`. The poster loads lazily and the player only downloads when someone presses play. Each real video is added to the schema as a VideoObject; set its real upload date in `src/lib/schema.ts`.

@@ -57,7 +57,7 @@ export function graph() {
     ...(featured.video.playbackId
       ? [videoNode(featured.video.playbackId, `${featured.client.name} of ${featured.client.business}: $80K+ in work booked off $647 in Meta ad spend`, featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
       : []),
-    ...(hero.showreel.playbackId ? [videoNode(hero.showreel.playbackId, hero.showreel.title, site.description, hero.showreel.posterTime)] : []),
+    ...(hero.vsl.playbackId ? [videoNode(hero.vsl.playbackId, hero.vsl.title, site.description, hero.vsl.posterTime, hero.vsl.uploadDate)] : []),
     ...stories
       .filter((st) => !isSample(st) && st.video?.playbackId && st.name)
       .map((st) => videoNode(st.video!.playbackId, `${st.name} on working with ${site.name}`, st.outcome, st.video!.posterTime, st.video!.uploadDate)),
