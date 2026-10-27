@@ -112,17 +112,17 @@ export const featured = {
   result: { value: 80, prefix: "$", suffix: "K+", label: "in jobs landed" },
   timeframe: "2 weeks after his ads went live",
   concern: "He'd been burned by a marketer before.",
+  // His words on the call about almost not signing
+  concernQuote: "At one point I was like, I'm never gonna do this.",
   story: [
     "Trusting a new marketer wasn't easy for him. It took time before he was ready to work with us.",
     "Two weeks after we launched his ads, he'd landed over $80,000 in jobs.",
-    "Don't take our word for it. In the video, we call him and he tells you himself.",
+    "Don't take our word for it. In the video, we call Evaristo and he tells you himself.",
   ],
-  // CONFIRM: fill these in from the video. Until `client.name` is set,
-  // the section shows a Sample tag and stays out of the schema.
-  client: { name: "", business: "", trade: "", city: "" },
-  quote: "", // one line he says on the call, word for word
+  client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
+  quote: "The marketing pays for itself.", // his words on the call
   // Mux playback ID of the video. `ratio` is "9 / 16" for vertical, "16 / 9" for horizontal.
-  video: { playbackId: "", ratio: "9 / 16", posterTime: 2, uploadDate: "" },
+  video: { playbackId: "", ratio: "9 / 16", posterTime: 2, uploadDate: "2026-10-24" }, // posted on Instagram
 };
 
 export type Story = { name: string; business: string; concern: string; outcome: string; quote: string; sample?: boolean };
