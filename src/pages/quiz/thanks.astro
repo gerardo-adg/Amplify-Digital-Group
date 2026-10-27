@@ -1,0 +1,22 @@
+---
+// Where the quiz lands without JavaScript (the normal form post).
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import { site } from "../../data/site";
+import { quiz } from "../../data/quiz";
+---
+
+<Base title={`${quiz.done.title} | ${site.name}`} description={quiz.done.body} noindex schema={{}}>
+  <main id="main" class="ty dark">
+    <a href="/" aria-label={`${site.name} home`}><Logo height={40} eager /></a>
+    <h1 class="display">{quiz.done.title}</h1>
+    <p class="muted">{quiz.done.body}</p>
+    <a class="btn btn--ghost" href="/">Back to the site</a>
+  </main>
+</Base>
+
+<style>
+  .ty { min-height: 100vh; min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: 1.5rem; padding: 2rem var(--gutter); text-align: center; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin-top: 2rem; }
+  p { max-width: 30rem; font-size: 1.1rem; }
+</style>

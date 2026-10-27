@@ -15,7 +15,11 @@ export const site = {
     "Amplify Digital Group runs Meta ads for service businesses, backed by high-quality content and websites built to turn clicks into booked jobs.",
   email: "hello@amplifydigitalgroup.net", // CONFIRM
   phone: { display: "", tel: "" }, // e.g. { display: "(916) 555-0100", tel: "+19165550100" }
-  bookingUrl: "#book", // CONFIRM: Calendly or similar link
+  // Every "get started" button goes to the quiz funnel
+  ctaUrl: "/quiz/",
+  // Meta Pixel ID (Events Manager → Data sources). When set, every page
+  // tracks PageView and each quiz submission tracks a Lead.
+  metaPixelId: "",
   location: { city: "", region: "", country: "US" }, // CONFIRM
   social: [] as string[], // full profile URLs: Instagram, YouTube, LinkedIn…
 };
@@ -25,7 +29,7 @@ export const hero = {
   title: ["Meta ads that", "make the phone ring."],
   lede:
     "Facebook and Instagram ads are what we do best. We script, film and edit your ads, then launch and manage the campaigns. Backed by high-quality content and websites built to turn clicks into booked jobs.",
-  primaryCta: "Book a strategy call",
+  primaryCta: "See if we're a fit",
   secondaryCta: "See our work",
   // Mux playback ID for the showreel. Leave empty to show the placeholder frame.
   showreel: { playbackId: "", title: "Amplify Digital Group showreel", posterTime: 3 },

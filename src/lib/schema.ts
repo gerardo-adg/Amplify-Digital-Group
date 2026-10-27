@@ -95,3 +95,13 @@ export function graph() {
     ],
   };
 }
+
+/** A plain page that belongs to the site, for pages other than the homepage. */
+export function pageGraph(path: string, name: string, description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "WebPage", "@id": `${SITE}${path}#webpage`, url: `${SITE}${path}`, name, description, isPartOf: { "@id": ids.website }, about: { "@id": ids.org }, inLanguage: "en-US" },
+    ],
+  };
+}

@@ -26,7 +26,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
         </h1>
         <p class="hero__lede muted" data-reveal style="--i:2">{hero.lede}</p>
         <div class="hero__ctas" data-reveal style="--i:3">
-          <a class="btn" href={site.bookingUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+          <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           <a class="btn btn--ghost" href="#work">{hero.secondaryCta}</a>
         </div>
         <div class="hero__reel" data-reveal style="--i:4">
@@ -199,9 +199,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="hero__glow" aria-hidden="true"><span></span><span></span></div>
       <div class="wrap cta__in">
         <h2 id="cta-h" class="display cta__title" data-reveal="lines"><span class="l"><span class="l__in">Ready to get</span></span><span class="l"><span class="l__in grad">amplified?</span></span></h2>
-        <p class="muted cta__p" data-reveal>A 30-minute call. We'll look at your market, tell you what we'd do, and you decide. No pressure.</p>
+        <p class="muted cta__p" data-reveal>Answer a few quick questions about your business. It takes about 60 seconds, and if we're a fit, we'll reach out to you personally.</p>
         <div class="hero__ctas cta__ctas" data-reveal>
-          <a class="btn" href={site.bookingUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+          <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           {site.phone.tel ? <a class="btn btn--ghost" href={`tel:${site.phone.tel}`}>{site.phone.display}</a> : <a class="btn btn--ghost" href={`mailto:${site.email}`}>{site.email}</a>}
         </div>
       </div>
