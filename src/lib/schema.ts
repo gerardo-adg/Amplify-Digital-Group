@@ -59,7 +59,8 @@ export function graph() {
       : []),
     ...(hero.vsl.playbackId ? [videoNode(hero.vsl.playbackId, hero.vsl.title, site.description, hero.vsl.posterTime, hero.vsl.uploadDate)] : []),
     ...stories
-      .filter((st) => !isSample(st) && st.video?.playbackId && st.name)
+      // Google needs an upload date for video results, so wait for one
+      .filter((st) => !isSample(st) && st.video?.playbackId && st.video.uploadDate && st.name)
       .map((st) => videoNode(st.video!.playbackId, `${st.name} on working with ${site.name}`, st.outcome, st.video!.posterTime, st.video!.uploadDate)),
     ...work
       .filter((w) => !isSample(w) && w.playbackId)

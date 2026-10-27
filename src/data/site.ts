@@ -171,7 +171,8 @@ export const stories: Story[] = [
     outcome:
       "We stayed patient through that first six-hour shoot, waiting and helping him out. With every video since, it's gotten much easier. 30 days in, he's super happy with the service.",
     quote: "Overall, man, they're good people. Highly recommend them to anybody who's looking to market their services online.",
-    video: { playbackId: "", ratio: "9 / 16" },
+    // posterTime in seconds. Add uploadDate (e.g. "2026-10-20T12:00:00-07:00") to put it in the schema.
+    video: { playbackId: "QhpTSe00snqvNVBNpveF5CXp0295WSHzSnKXA01WkwvLhI", ratio: "9 / 16", posterTime: 2 },
   },
   {
     name: "Owner name",
