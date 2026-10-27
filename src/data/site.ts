@@ -102,17 +102,32 @@ export const work: Work[] = [
   { client: "Client name", industry: "Industry · City", title: "What you made for them", services: ["Ads"], sample: true },
 ];
 
+/**
+ * The headline proof: one client's result, told in a video where you call
+ * him and he confirms it. Shown right under the hero.
+ */
+export const featured = {
+  // The hook from the video
+  hook: "Would you say ads are worth it if one of my clients landed over $80K in jobs only two weeks after we launched his ads?",
+  result: { value: 80, prefix: "$", suffix: "K+", label: "in jobs landed" },
+  timeframe: "2 weeks after his ads went live",
+  concern: "He'd been burned by a marketer before.",
+  story: [
+    "Trusting a new marketer wasn't easy for him. It took time before he was ready to work with us.",
+    "Two weeks after we launched his ads, he'd landed over $80,000 in jobs.",
+    "Don't take our word for it. In the video, we call him and he tells you himself.",
+  ],
+  // CONFIRM: fill these in from the video. Until `client.name` is set,
+  // the section shows a Sample tag and stays out of the schema.
+  client: { name: "", business: "", trade: "", city: "" },
+  quote: "", // one line he says on the call, word for word
+  // Mux playback ID of the video. `ratio` is "9 / 16" for vertical, "16 / 9" for horizontal.
+  video: { playbackId: "", ratio: "9 / 16", posterTime: 2, uploadDate: "" },
+};
+
 export type Story = { name: string; business: string; concern: string; outcome: string; quote: string; sample?: boolean };
 // The worry they had before signing, what actually happened, and their words.
 export const stories: Story[] = [
-  {
-    name: "Owner name",
-    business: "Business · City",
-    concern: "“I've been burned by an agency before.”",
-    outcome: "What you did differently, and the result in numbers.",
-    quote: "Their own words about working with you.",
-    sample: true,
-  },
   {
     name: "Owner name",
     business: "Business · City",

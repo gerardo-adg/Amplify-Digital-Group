@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Logo from "../components/Logo.astro";
 import Icon from "../components/Icon.astro";
 import VideoFrame from "../components/VideoFrame.astro";
+import FeaturedCase from "../components/FeaturedCase.astro";
 import { site, hero, services, steps, stats, work, stories, faqs, isSample } from "../data/site";
 
 const title = `${site.name} | Websites, video and ads that bring in customers`;
@@ -41,8 +42,11 @@ const pad = (n: number) => String(n).padStart(2, "0");
       </div>
     </div>
 
+    <!-- PROOF -->
+    <FeaturedCase />
+
     <!-- SERVICES -->
-    <section class="section" id="services" aria-labelledby="services-h">
+    <section class="section svc-sec" id="services" aria-labelledby="services-h">
       <div class="wrap">
         <div class="head">
           <p class="eyebrow" data-reveal>What we do</p>
@@ -231,6 +235,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .head__p { margin-top: 1.4rem; font-size: 1.125rem; }
 
   /* Services */
+  .svc-sec { padding-top: 0; }
   .svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
   .svc__card { position: relative; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s; }
   .svc__card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 0% 0%, var(--brand-soft), transparent 60%); opacity: 0; transition: opacity 0.5s; z-index: 0; }

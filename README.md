@@ -14,7 +14,8 @@ Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
 
 | Change | File |
 |---|---|
-| All copy: hero, services, steps, results, work, client stories, FAQ, contact | `src/data/site.ts` |
+| All copy: hero, featured client result, services, steps, results, work, client stories, FAQ, contact | `src/data/site.ts` |
+| Featured client result under the hero (the $80K video) | `featured` in `src/data/site.ts`, layout in `src/components/FeaturedCase.astro` |
 | Structured data (schema.org) | `src/lib/schema.ts` |
 | Page sections and their styles | `src/pages/index.astro` |
 | Colors, fonts, spacing | `src/styles/global.css` (`:root` variables) |

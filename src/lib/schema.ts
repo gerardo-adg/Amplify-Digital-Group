@@ -3,13 +3,13 @@
  * Sample content (see site.ts) is never included, and contact fields
  * only appear once they're filled in.
  */
-import { site, services, faqs, work, hero, isSample } from "../data/site";
+import { site, services, faqs, work, hero, featured, isSample } from "../data/site";
 
 const SITE = site.url.replace(/\/$/, "");
 const ids = { org: `${SITE}/#organization`, website: `${SITE}/#website`, page: `${SITE}/#webpage`, logo: `${SITE}/#logo` };
 const muxThumb = (id: string, t = 2) => `https://image.mux.com/${id}/thumbnail.jpg?time=${t}&width=1280`;
 
-function videoNode(playbackId: string, name: string, description: string, posterTime?: number) {
+function videoNode(playbackId: string, name: string, description: string, posterTime?: number, uploadDate?: string) {
   return {
     "@type": "VideoObject",
     "@id": `${SITE}/#video-${playbackId}`,
@@ -17,8 +17,7 @@ function videoNode(playbackId: string, name: string, description: string, poster
     description,
     thumbnailUrl: muxThumb(playbackId, posterTime),
     contentUrl: `https://stream.mux.com/${playbackId}.m3u8`,
-    // CONFIRM: set the real upload date per video when you add them.
-    uploadDate: "2026-01-01",
+    ...(uploadDate ? { uploadDate } : {}),
     publisher: { "@id": ids.org },
   };
 }
@@ -55,6 +54,9 @@ export function graph() {
   if (site.social.length) org.sameAs = site.social;
 
   const videos = [
+    ...(featured.video.playbackId
+      ? [videoNode(featured.video.playbackId, "Client call: over $80K in jobs two weeks after launching ads", featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
+      : []),
     ...(hero.showreel.playbackId ? [videoNode(hero.showreel.playbackId, hero.showreel.title, site.description, hero.showreel.posterTime)] : []),
     ...work
       .filter((w) => !isSample(w) && w.playbackId)
