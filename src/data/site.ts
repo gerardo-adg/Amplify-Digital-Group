@@ -11,9 +11,8 @@ export const site = {
   name: "Amplify Digital Group",
   shortName: "Amplify",
   url: "https://amplifydigitalgroup.net",
-  // CONFIRM: one sentence that says who you help and what they get.
   description:
-    "Amplify Digital Group builds websites, video and paid ads for service businesses, and reports on every lead they produce.",
+    "Amplify Digital Group runs Meta ads for service businesses, backed by high-quality content and websites built to turn clicks into booked jobs.",
   email: "hello@amplifydigitalgroup.net", // CONFIRM
   phone: { display: "", tel: "" }, // e.g. { display: "(916) 555-0100", tel: "+19165550100" }
   bookingUrl: "#book", // CONFIRM: Calendly or similar link
@@ -22,42 +21,44 @@ export const site = {
 };
 
 export const hero = {
-  eyebrow: "Websites · Video · Paid ads",
-  title: ["Marketing that", "makes the phone ring."],
+  eyebrow: "Meta ads · Content · Websites",
+  title: ["Meta ads that", "make the phone ring."],
   lede:
-    "We plan it, film it, build it and run it. Then we show you exactly which calls and jobs came from it, every month.",
+    "Facebook and Instagram ads are what we do best. We back them with high-quality content and websites built to turn clicks into booked jobs.",
   primaryCta: "Book a strategy call",
   secondaryCta: "See our work",
   // Mux playback ID for the showreel. Leave empty to show the placeholder frame.
   showreel: { playbackId: "", title: "Amplify Digital Group showreel", posterTime: 3 },
 };
 
-export type Service = { title: string; body: string; points: string[]; icon: "web" | "video" | "ads" | "search" };
-// CONFIRM: rename, drop or add to match what you actually sell.
+export type Service = {
+  title: string;
+  body: string;
+  points: string[];
+  icon: "web" | "video" | "ads";
+  // The main service gets the big card
+  main?: boolean;
+};
+// CONFIRM the bullet points match what you deliver.
 export const services: Service[] = [
   {
-    icon: "web",
-    title: "Websites that convert",
-    body: "Fast, search-ready sites built around one goal: getting the visitor to call or book.",
-    points: ["Custom design, no templates", "Schema markup and local SEO built in", "Loads in under two seconds"],
+    icon: "ads",
+    main: true,
+    title: "Meta ads",
+    body: "Our main service. Facebook and Instagram campaigns that put your business in front of the people in your area who need what you do, and turn them into leads.",
+    points: ["Facebook and Instagram campaigns", "Ad creative we shoot and edit ourselves", "Targeted to the areas you serve", "Budgets you approve"],
   },
   {
     icon: "video",
-    title: "Video content",
-    body: "We come to you, film the work and the people, and cut it for your site, ads and social.",
+    title: "High-quality content",
+    body: "We come to you, film the work and the people, and cut it for your ads, your site and your social.",
     points: ["On-site shoots", "Short-form for Reels and TikTok", "Ad creative that stops the scroll"],
   },
   {
-    icon: "ads",
-    title: "Paid ads",
-    body: "Meta and Google campaigns aimed at the customers you want, in the areas you serve.",
-    points: ["Lead forms and call tracking", "Weekly creative testing", "Budgets you approve"],
-  },
-  {
-    icon: "search",
-    title: "Search and reputation",
-    body: "Show up when people search for what you do, and give them reasons to pick you.",
-    points: ["Google Business Profile", "Review generation", "Local landing pages"],
+    icon: "web",
+    title: "Websites",
+    body: "Fast, good-looking sites built around one goal: getting the visitor to call or book.",
+    points: ["Custom design, no templates", "Built for phones first", "Schema markup built in"],
   },
 ];
 
@@ -170,7 +171,7 @@ export const faqs = [
   },
   {
     q: "How long until I see results?",
-    a: "Ads can bring in leads within the first couple of weeks after launch. Search rankings take longer, usually a few months. We'll give you a realistic timeline for your market before you sign anything.",
+    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing landed over $80K in jobs two weeks in. Every market is different, so we'll give you a realistic timeline for yours before you sign anything.",
   },
   {
     q: "Do I have to be on camera?",

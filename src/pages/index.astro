@@ -5,10 +5,10 @@ import Logo from "../components/Logo.astro";
 import Icon from "../components/Icon.astro";
 import VideoFrame from "../components/VideoFrame.astro";
 import FeaturedCase from "../components/FeaturedCase.astro";
-import { site, hero, services, steps, stats, work, stories, faqs, isSample } from "../data/site";
+import { site, hero, services, steps, stats, work, stories, faqs, featured, isSample } from "../data/site";
 
-const title = `${site.name} | Websites, video and ads that bring in customers`;
-const ticker = ["Websites", "Video production", "Meta ads", "Google ads", "Local SEO", "Reviews", "Call tracking", "Monthly reporting"];
+const title = `${site.name} | Meta ads, content and websites for service businesses`;
+const ticker = ["Meta ads", "Facebook ads", "Instagram ads", "Ad creative", "Video content", "Reels", "Websites", "Lead generation"];
 const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
@@ -51,14 +51,20 @@ const pad = (n: number) => String(n).padStart(2, "0");
         <div class="head">
           <p class="eyebrow" data-reveal>What we do</p>
           <h2 id="services-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">One team for</span></span><span class="l"><span class="l__in">everything that</span></span><span class="l"><span class="l__in grad">brings in work.</span></span></h2>
-          <p class="muted head__p" data-reveal>No handoffs between a web person, a video person and an ads person. We do all of it, so it all points the same way.</p>
+          <p class="muted head__p" data-reveal>Meta ads bring the customers in. Our content makes them stop scrolling. Your website turns them into booked jobs. We do all three, so it all points the same way.</p>
         </div>
         <ul class="svc" data-stagger>
           {services.map((s, i) => (
-            <li class="svc__card" data-reveal>
-              <div class="svc__top"><span class="svc__icon"><Icon name={s.icon} size={26} /></span><span class="svc__n">{pad(i + 1)}</span></div>
+            <li class:list={["svc__card", s.main && "svc__card--main"]} data-reveal>
+              <div class="svc__top"><span class="svc__icon"><Icon name={s.icon} size={26} /></span>{s.main ? <span class="svc__badge">Main service</span> : <span class="svc__n">{pad(i + 1)}</span>}</div>
               <h3>{s.title}</h3>
               <p class="muted">{s.body}</p>
+              {s.main && (
+                <a class="svc__proof" href="#proof">
+                  <span class="svc__proof-n display">$80K+</span>
+                  <span>in jobs for {featured.client.business}, two weeks after his ads launched <Icon name="arrow" size={16} /></span>
+                </a>
+              )}
               <ul class="svc__pts">{s.points.map((p) => <li>{p}</li>)}</ul>
             </li>
           ))}
@@ -245,7 +251,21 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
   /* Services */
   .svc-sec { padding-top: 0; }
-  .svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; }
+  @media (max-width: 860px) { .svc { grid-template-columns: 1fr; } }
+  .svc__card.svc__card--main { grid-row: span 2; display: flex; flex-direction: column; padding: clamp(2rem, 4vw, 3rem); background: var(--ink); color: #fff; border-color: transparent; }
+  .svc__card.svc__card--main::before { opacity: 1; background: radial-gradient(90% 70% at 100% 0%, rgb(59 0 252 / 0.55), transparent 65%), radial-gradient(70% 60% at 0% 100%, rgb(122 43 255 / 0.3), transparent 60%); }
+  .svc__card.svc__card--main:hover { border-color: transparent; }
+  .svc__card.svc__card--main h3 { font-family: var(--font-display); font-weight: 850; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.95; }
+  .svc__card.svc__card--main p { color: var(--muted-dark); font-size: 1.125rem; max-width: 30rem; }
+  .svc__card.svc__card--main .svc__pts { margin-top: auto; padding-top: 2rem; font-size: 1.02rem; gap: 0.7rem; }
+  .svc__card.svc__card--main .svc__pts li::before { background: var(--brand-hi); }
+  .svc__proof { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border-radius: var(--radius); background: rgb(255 255 255 / 0.06); border: 1px solid var(--line-dark); text-decoration: none; color: #fff; transition: background 0.3s; }
+  .svc__proof:hover { background: rgb(255 255 255 / 0.1); }
+  .svc__proof-n { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--brand-hi); line-height: 1; flex: none; }
+  .svc__proof span:last-child { font-size: 0.98rem; color: var(--muted-dark); }
+  .svc__proof svg { display: inline; vertical-align: -3px; }
+  .svc__badge { padding: 0.35rem 0.8rem; border-radius: 999px; background: var(--brand); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .svc__card { position: relative; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s; }
   .svc__card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 0% 0%, var(--brand-soft), transparent 60%); opacity: 0; transition: opacity 0.5s; z-index: 0; }
   .svc__card > * { position: relative; }

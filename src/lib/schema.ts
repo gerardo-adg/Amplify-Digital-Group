@@ -32,7 +32,7 @@ export function graph() {
     logo: { "@type": "ImageObject", "@id": ids.logo, url: `${SITE}/brand/logo.png`, width: 1024, height: 1024 },
     image: `${SITE}/og.png`,
     email: site.email,
-    knowsAbout: ["Web design", "Video production", "Meta advertising", "Google Ads", "Local SEO", "Lead generation"],
+    knowsAbout: ["Meta advertising", "Facebook advertising", "Instagram advertising", "Lead generation", "Video production", "Web design"],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Marketing services",
@@ -77,7 +77,7 @@ export function graph() {
         "@type": "WebPage",
         "@id": ids.page,
         url: `${SITE}/`,
-        name: `${site.name} | Websites, video and ads that bring in customers`,
+        name: `${site.name} | Meta ads, content and websites for service businesses`,
         description: site.description,
         isPartOf: { "@id": ids.website },
         about: { "@id": ids.org },
