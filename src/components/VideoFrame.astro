@@ -1,0 +1,68 @@
+---
+/**
+ * A video that costs nothing until someone presses play: a Mux poster image
+ * and a button, then Mux Player loads on click. Without a playback ID it
+ * shows a branded placeholder frame instead.
+ */
+import Icon from "./Icon.astro";
+interface Props { playbackId?: string; title: string; posterTime?: number; label?: string; ratio?: string; sizes?: string }
+const { playbackId, title, posterTime = 2, label = "Play", ratio = "16 / 9", sizes = "100vw" } = Astro.props;
+const thumb = (w: number) => `https://image.mux.com/${playbackId}/thumbnail.webp?time=${posterTime}&width=${w}`;
+---
+<div class="vf" style={`aspect-ratio:${ratio}`} data-film={playbackId || undefined} data-title={title}>
+  {playbackId ? (
+    <img class="vf__poster" src={thumb(1280)} srcset={`${thumb(640)} 640w, ${thumb(1280)} 1280w, ${thumb(1920)} 1920w`} sizes={sizes} alt="" loading="lazy" decoding="async" />
+  ) : (
+    <div class="vf__empty" aria-hidden="true">{[22, 48, 70, 100, 64, 86, 40, 58, 28].map((h) => <span style={`--h:${h}%`}></span>)}</div>
+  )}
+  <button class="vf__play" type="button" aria-label={`Play video: ${title}`} disabled={!playbackId}>
+    <span class="vf__icon"><Icon name="play" size={22} /></span>
+    <span class="vf__label">{playbackId ? label : "Video coming soon"}</span>
+  </button>
+</div>
+
+<style>
+  .vf { position: relative; overflow: hidden; border-radius: var(--radius-lg); background: var(--ink-2); isolation: isolate; }
+  .vf__poster, .vf :global(mux-player) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .vf__poster { transition: transform 1.2s var(--ease); }
+  .vf:hover .vf__poster { transform: scale(1.04); }
+  .vf__empty {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: clamp(5px, 0.8vw, 10px);
+    background: radial-gradient(80% 90% at 30% 20%, rgb(59 0 252 / 0.55), transparent 60%), radial-gradient(60% 70% at 85% 90%, rgb(107 61 255 / 0.35), transparent 60%), var(--ink-2);
+  }
+  .vf__empty span { width: clamp(5px, 0.8vw, 10px); height: calc(var(--h) * 0.24); border-radius: 99px; background: linear-gradient(var(--brand-hi), rgb(255 255 255 / 0.5)); opacity: 0.7; animation: eq 1.3s ease-in-out infinite alternate; }
+  .vf__empty span:nth-child(2n) { animation-delay: -0.4s; }
+  .vf__empty span:nth-child(3n) { animation-delay: -0.9s; }
+  @keyframes eq { to { height: calc(var(--h) * 0.1); } }
+  .vf__play {
+    position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 0.85rem;
+    padding: clamp(1rem, 3vw, 1.75rem); color: #fff; font-weight: 600;
+    background: linear-gradient(180deg, transparent 55%, rgb(7 5 26 / 0.75));
+  }
+  .vf__play:disabled { cursor: default; }
+  .vf__icon {
+    display: grid; place-items: center; width: 60px; height: 60px; border-radius: 999px;
+    background: #fff; color: var(--brand); transition: transform 0.5s var(--ease);
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0.5);
+  }
+  .vf__play:not(:disabled) .vf__icon { animation: pulse 2.4s infinite; }
+  .vf__play:hover .vf__icon { transform: scale(1.08); }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(255 255 255 / 0.45); } 70%, 100% { box-shadow: 0 0 0 18px rgb(255 255 255 / 0); } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-film]").forEach((film) => {
+    const btn = film.querySelector("button");
+    btn?.addEventListener("click", async () => {
+      btn.disabled = true;
+      await import("@mux/mux-player");
+      const player = document.createElement("mux-player");
+      player.setAttribute("playback-id", film.dataset.film ?? "");
+      player.setAttribute("metadata-video-title", film.dataset.title ?? "");
+      player.setAttribute("accent-color", "#3b00fc");
+      player.setAttribute("autoplay", "");
+      film.append(player);
+      btn.remove();
+    });
+  });
+</script>

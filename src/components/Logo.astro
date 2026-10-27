@@ -1,0 +1,24 @@
+---
+/**
+ * The Amplify Digital Group logo: blue AMPLIFY over white DIGITAL GROUP,
+ * so it's made for dark backgrounds. Source file: public/brand/logo-640.webp.
+ */
+interface Props { class?: string; height?: number; eager?: boolean }
+const { class: cls, height = 40, eager = false } = Astro.props;
+const width = Math.round((height * 2000) / 593);
+---
+<img
+  class:list={["logo", cls]}
+  src="/brand/logo-320.webp"
+  srcset="/brand/logo-320.webp 320w, /brand/logo-640.webp 640w"
+  sizes={`${width}px`}
+  width={width}
+  height={height}
+  alt="Amplify Digital Group"
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+/>
+
+<style>
+  .logo { display: block; width: auto; }
+</style>

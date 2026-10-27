@@ -1,0 +1,43 @@
+---
+import Logo from "./Logo.astro";
+import { site, hero } from "../data/site";
+const links = [
+  ["What we do", "#services"],
+  ["How it works", "#process"],
+  ["Work", "#work"],
+  ["FAQ", "#faq"],
+];
+---
+<header class="hdr" data-header>
+  <div class="wrap hdr__in">
+    <a href="#top" class="hdr__logo" aria-label={`${site.name}, back to top`}><Logo height={42} eager /></a>
+    <nav aria-label="Main">
+      <ul>{links.map(([label, href]) => <li><a href={href}>{label}</a></li>)}</ul>
+    </nav>
+    <a class="btn hdr__cta" href={site.bookingUrl}>{hero.primaryCta}</a>
+  </div>
+</header>
+
+<style>
+  .hdr { position: fixed; inset: 0 0 auto; z-index: 50; color: #fff; transition: background 0.4s var(--ease), backdrop-filter 0.4s; }
+  .hdr.is-scrolled { background: rgb(7 5 26 / 0.72); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 1px 0 var(--line-dark); }
+  .hdr__in { display: flex; align-items: center; gap: 2rem; height: 76px; }
+  .hdr__logo { display: block; transition: opacity 0.3s; }
+  .hdr__logo:hover { opacity: 0.85; }
+  nav { margin-left: auto; }
+  ul { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+  nav a { position: relative; text-decoration: none; font-size: 0.95rem; color: rgb(255 255 255 / 0.8); transition: color 0.3s; }
+  nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease); }
+  nav a:hover { color: #fff; }
+  nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .hdr__cta { padding: 0.7rem 1.15rem; font-size: 0.92rem; }
+  @media (max-width: 900px) { nav { display: none; } .hdr__cta { margin-left: auto; } }
+  @media (max-width: 420px) { .hdr__cta { padding: 0.6rem 0.9rem; font-size: 0.85rem; } .hdr__logo :global(.logo) { height: 30px; } }
+</style>
+
+<script>
+  const h = document.querySelector<HTMLElement>("[data-header]");
+  const set = () => h?.classList.toggle("is-scrolled", window.scrollY > 20);
+  set();
+  window.addEventListener("scroll", set, { passive: true });
+</script>

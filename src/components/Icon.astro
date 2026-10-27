@@ -1,0 +1,14 @@
+---
+interface Props { name: "web" | "video" | "ads" | "search" | "arrow" | "play" | "plus"; size?: number }
+const { name, size = 24 } = Astro.props;
+const paths: Record<Props["name"], string> = {
+  web: '<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>',
+  video: '<rect x="2.5" y="5.5" width="14" height="13" rx="2.5"/><path d="m16.5 10 5-3v10l-5-3"/>',
+  ads: '<path d="M4 15V9l11-5v16L4 15Zm0 0 2 5h3l-1.5-4.2M18 9.5a3 3 0 0 1 0 5"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M8.5 11h5M11 8.5v5"/>',
+  arrow: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
+  play: '<path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+};
+---
+<svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={paths[name]} />
