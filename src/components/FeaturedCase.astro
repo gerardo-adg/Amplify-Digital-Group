@@ -101,4 +101,13 @@ const who = [f.client.business, f.client.city].filter(Boolean).join(" · ");
   .fc__quote p { font-family: var(--font-display); font-weight: 850; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.05; color: var(--ink); }
   .fc__quote footer { display: flex; flex-direction: column; margin-top: 0.6rem; font-size: 0.95rem; }
   .fc__cta { margin-top: 2.25rem; }
+
+  @media (max-width: 899px) {
+    .fc__body { text-align: center; }
+    .fc__stats { justify-content: center; }
+    .fc__concern { border-left: 0; border-top: 3px solid var(--brand); border-radius: 0 0 var(--radius) var(--radius); }
+    .fc__quote { padding-left: 0; border-left: 0; padding-top: 1.25rem; border-top: 3px solid var(--brand); }
+    .fc__quote footer { align-items: center; }
+    .fc__story { justify-items: center; }
+  }
 </style>

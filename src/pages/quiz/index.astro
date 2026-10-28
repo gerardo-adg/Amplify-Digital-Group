@@ -165,6 +165,16 @@ const total = quiz.questions.length + 1;
   @keyframes pop { from { transform: scale(0.4); opacity: 0; } }
   .done__title { font-size: clamp(2.2rem, 6vw, 3.6rem); margin-top: 1.75rem; }
   .done__body { max-width: 30rem; margin: 1rem auto 2rem; font-size: 1.1rem; }
+
+  /* Phones: headings and buttons centered; answer cards stay left-aligned so they're easy to scan */
+  @media (max-width: 899px) {
+    .qz__top { justify-content: center; }
+    .qz__exit { display: none; }
+    .qz__intro, .step__q, .step__help, .qz__count, .step__error { text-align: center; }
+    .qz__lede { margin-inline: auto; }
+    .step__q { width: 100%; }
+    .qz__submit { display: flex; margin-inline: auto; }
+  }
 </style>
 
 <script>
