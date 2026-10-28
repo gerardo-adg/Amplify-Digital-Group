@@ -1,14 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
-import Logo from "../components/Logo.astro";
 import Icon from "../components/Icon.astro";
 import VideoFrame from "../components/VideoFrame.astro";
+import Footer from "../components/Footer.astro";
 import FeaturedCase from "../components/FeaturedCase.astro";
-import { site, hero, services, steps, stats, work, stories, faqs, featured, isSample } from "../data/site";
+import { site, hero, steps, objections, stories, faqs, featured, isSample } from "../data/site";
 
-const title = `${site.name} | Meta ads, content and websites for service businesses`;
-const ticker = ["Meta ads", "Facebook ads", "Instagram ads", "Ad creative", "Video content", "Reels", "Websites", "Lead generation"];
+const title = `More booked jobs from Facebook & Instagram ads | ${site.name}`;
 const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
@@ -21,8 +20,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="wrap hero__in">
         <h1 class="display hero__title" data-reveal="lines">
-          {hero.title.map((line, i) => <span class="l"><span class:list={["l__in", i === hero.title.length - 1 && "grad"]}>{line}</span></span>)}
+          {hero.title.map((line, i) => <span class="l"><span class:list={["l__in", i > 0 && "grad"]}>{line}</span>{" "}</span>)}
         </h1>
+        <p class="hero__sub muted" data-reveal style="--i:1">{hero.subheadline}</p>
         <div class="hero__video" data-reveal style="--i:2">
           <VideoFrame playbackId={hero.vsl.playbackId} title={hero.vsl.title} posterTime={hero.vsl.posterTime} label="Watch the video" sizes="(min-width: 900px) 680px, 100vw" />
         </div>
@@ -31,51 +31,26 @@ const pad = (n: number) => String(n).padStart(2, "0");
           <a class="btn hero__btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           <p class="hero__note muted">{hero.ctaNote}</p>
         </div>
-        <a class="hero__proof" href="#proof" data-reveal style="--i:4" aria-label={`${hero.proof.map((p) => `${p.value} ${p.label}`).join(", ")}. Read Evaristo's story.`}>
-          {hero.proof.map((p) => (
-            <span class="hero__stat"><strong class="display">{p.value}</strong><span>{p.label}</span></span>
-          ))}
-          <span class="hero__who">{featured.client.business}, {featured.client.city} <Icon name="arrow" size={15} /></span>
-        </a>
       </div>
     </section>
 
-    <!-- TICKER -->
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track">
-        {[0, 1].map(() => ticker.map((t) => <span class="display">{t}<i>✦</i></span>))}
-      </div>
-    </div>
+    <!-- OBJECTIONS: the three biggest, most common first -->
+    <section class="obj" aria-label="Common concerns">
+      <ul class="wrap obj__list" data-stagger>
+        {objections.map((o) => (
+          <li class="obj__item" data-reveal>
+            <span class="obj__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg></span>
+            <div>
+              <p class="obj__q">{o.q}</p>
+              <p class="obj__a muted">{o.a}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
 
     <!-- PROOF -->
     <FeaturedCase />
-
-    <!-- SERVICES -->
-    <section class="section svc-sec" id="services" aria-labelledby="services-h">
-      <div class="wrap">
-        <div class="head">
-          <p class="eyebrow" data-reveal>What we do</p>
-          <h2 id="services-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">One team for</span></span><span class="l"><span class="l__in">everything that</span></span><span class="l"><span class="l__in grad">brings in work.</span></span></h2>
-          <p class="muted head__p" data-reveal>Meta ads bring the customers in. Our content makes them stop scrolling. Your website turns them into booked jobs. We do all three, so it all points the same way.</p>
-        </div>
-        <ul class="svc" data-stagger>
-          {services.map((s, i) => (
-            <li class:list={["svc__card", s.main && "svc__card--main"]} data-reveal>
-              <div class="svc__top"><span class="svc__icon"><Icon name={s.icon} size={26} /></span>{s.main ? <span class="svc__badge">Main service</span> : <span class="svc__n">{pad(i + 1)}</span>}</div>
-              <h3>{s.title}</h3>
-              <p class="muted">{s.body}</p>
-              {s.main && (
-                <a class="svc__proof" href="#proof">
-                  <span class="svc__proof-n display">$80K+</span>
-                  <span>booked by {featured.client.business} off $647 in ad spend, two weeks after launch <Icon name="arrow" size={16} /></span>
-                </a>
-              )}
-              <ul class="svc__pts">{s.points.map((p) => <li>{p}</li>)}</ul>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
 
     <!-- PROCESS -->
     <section class="section dark process" id="process" aria-labelledby="process-h">
@@ -97,54 +72,6 @@ const pad = (n: number) => String(n).padStart(2, "0");
       </div>
     </section>
 
-    <!-- RESULTS -->
-    <section class="results" aria-labelledby="results-h">
-      <div class="wrap">
-        <h2 id="results-h" class="sr-only">Results</h2>
-        <ul class="stats" data-stagger>
-          {stats.map((s) => (
-            <li class="stat" data-reveal>
-              <p class="stat__v display">
-                {s.sample ? "—" : <>{s.prefix}<span data-count={s.value}>{s.value.toLocaleString("en-US")}</span>{s.suffix}</>}
-              </p>
-              <p class="stat__l">{s.label}</p>
-              {s.sample && <span class="tag">Sample</span>}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- WORK -->
-    <section class="section" id="work" aria-labelledby="work-h">
-      <div class="wrap">
-        <div class="head head--row">
-          <div>
-            <p class="eyebrow" data-reveal>Our work</p>
-            <h2 id="work-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Made for real</span></span><span class="l"><span class="l__in grad">businesses.</span></span></h2>
-          </div>
-          <p class="muted head__p" data-reveal>Every project below was planned, shot, built and run by our team.</p>
-        </div>
-        <ul class="work" data-stagger>
-          {work.map((w, i) => (
-            <li class:list={["work__card", i === 0 && "work__card--wide"]} data-reveal>
-              <VideoFrame playbackId={w.playbackId} title={`${w.client}: ${w.title}`} posterTime={w.posterTime} label="Watch" ratio={i === 0 ? "16 / 9" : "4 / 5"} sizes={i === 0 ? "(min-width: 1280px) 1240px, 100vw" : "(min-width: 900px) 600px, 100vw"} />
-              <div class="work__meta">
-                <div>
-                  <p class="work__client">{w.client} {isSample(w) && <span class="tag">Sample</span>}</p>
-                  <p class="muted work__ind">{w.industry}</p>
-                </div>
-                <ul class="chips">{w.services.map((s) => <li>{s}</li>)}</ul>
-              </div>
-              <h3 class="work__title">{w.title}</h3>
-              {w.result && <p class="work__result">{w.result}</p>}
-              {w.url && <a class="work__link" href={w.url} target="_blank" rel="noopener">Visit the site <Icon name="arrow" size={16} /></a>}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
     <!-- CONCERNS -->
     <section class="section stories" aria-labelledby="stories-h">
       <div class="wrap">
@@ -154,7 +81,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
           <p class="muted head__p" data-reveal>Here's what worried our clients before they signed, and what happened next.</p>
         </div>
         <ul class="story-list" data-stagger>
-          {stories.map((s) => (
+          {stories.filter((s) => !isSample(s)).map((s) => (
             <li class:list={["story", s.video && "story--video"]} data-reveal>
               {s.video && (
                 <div class="story__video">
@@ -204,7 +131,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
       <div class="hero__glow" aria-hidden="true"><span></span><span></span></div>
       <div class="wrap cta__in">
         <h2 id="cta-h" class="display cta__title" data-reveal="lines"><span class="l"><span class="l__in">Ready to get</span></span><span class="l"><span class="l__in grad">amplified?</span></span></h2>
-        <p class="muted cta__p" data-reveal>Answer a few quick questions about your business. It takes about 60 seconds, and if we're a fit, we'll reach out to you personally.</p>
+        <p class="muted cta__p" data-reveal>{hero.ctaNote}</p>
         <div class="cta__ctas" data-reveal>
           <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           {site.phone.tel ? <a class="btn btn--ghost" href={`tel:${site.phone.tel}`}>{site.phone.display}</a> : <a class="btn btn--ghost" href={`mailto:${site.email}`}>{site.email}</a>}
@@ -213,13 +140,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
     </section>
   </main>
 
-  <footer class="foot dark">
-    <div class="wrap foot__in">
-      <Logo class="foot__logo" height={44} />
-      <p class="muted">© {new Date().getFullYear()} {site.name}</p>
-      <a class="muted" href={`mailto:${site.email}`}>{site.email}</a>
-    </div>
-  </footer>
+  <Footer />
 </Base>
 
 <style>
@@ -238,51 +159,37 @@ const pad = (n: number) => String(n).padStart(2, "0");
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "title" "video" "caption" "cta" "proof";
+    grid-template-areas: "title" "sub" "video" "caption" "cta";
     align-items: start;
   }
   .hero__title { grid-area: title; font-size: clamp(2.1rem, 4.4vw, 4rem); }
+  .hero__sub { grid-area: sub; margin-top: 1rem; font-size: clamp(1.05rem, 1.5vw, 1.2rem); max-width: 34rem; }
   .hero__video { grid-area: video; margin-top: 1.75rem; }
   .hero__video :global(.vf) { box-shadow: 0 40px 120px -30px rgb(59 0 252 / 0.65), 0 0 0 1px var(--line-dark); }
   .hero__caption { grid-area: caption; margin-top: 1rem; font-size: 1.05rem; font-weight: 600; }
   .hero__cta { grid-area: cta; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; margin-top: 1.5rem; }
   .hero__btn { padding: 1.1rem 1.75rem; font-size: 1.05rem; }
-  .hero__note { font-size: 0.92rem; }
-  .hero__proof {
-    grid-area: proof; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem clamp(1.5rem, 4vw, 3rem);
-    margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: 1.75rem; border-top: 1px solid var(--line-dark); text-decoration: none;
-  }
-  .hero__stat { display: flex; align-items: baseline; gap: 0.55rem; }
-  .hero__stat strong { font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1; color: #fff; }
-  .hero__stat:first-child strong { color: var(--brand-hi); }
-  .hero__stat span { color: var(--muted-dark); font-size: 0.95rem; }
-  .hero__who { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted-dark); font-size: 0.9rem; transition: color 0.3s; }
-  .hero__proof:hover .hero__who { color: #fff; }
-  .hero__who :global(svg) { transform: rotate(90deg); }
+  .hero__note { flex-basis: 100%; max-width: 30rem; font-size: 0.92rem; }
   @media (max-width: 899px) {
-    .hero { padding-top: 6.5rem; }
-    .hero__who { margin-left: 0; width: 100%; }
+    .hero { padding-top: 5.75rem; }
+    .hero__title { font-size: clamp(1.75rem, 8.4vw, 2.6rem); }
+    .hero__sub { margin-top: 0.75rem; font-size: 1rem; }
+    .hero__video { margin-top: 1.25rem; }
+    .hero__cta { margin-top: 1.25rem; }
   }
   @media (min-width: 900px) {
     .hero__in {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-rows: 1fr auto auto auto 1fr auto;
-      grid-template-areas: ". video" "title video" "caption video" "cta video" ". video" "proof proof";
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      grid-template-rows: 1fr auto auto auto auto 1fr;
+      grid-template-areas: ". video" "title video" "sub video" "caption video" "cta video" ". video";
       column-gap: clamp(2.5rem, 5vw, 4.5rem);
     }
     .hero__video { margin-top: 0; align-self: center; }
-    .hero__title { font-size: clamp(2.3rem, 3.55vw, 3.35rem); }
-    .hero__title .l__in { text-wrap: balance; }
+    .hero__title { font-size: clamp(2rem, 3.05vw, 2.85rem); }
+    .hero__title .l { white-space: nowrap; }
     .hero__cta { margin-top: 2rem; }
     .hero__caption { margin-top: 1.5rem; }
   }
-
-  /* Ticker */
-  .ticker { overflow: hidden; background: var(--brand); color: #fff; padding-block: 1.1rem; }
-  .ticker__track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
-  .ticker span { display: inline-flex; align-items: center; gap: 2rem; padding-right: 2rem; font-size: clamp(1.1rem, 2.2vw, 1.6rem); white-space: nowrap; }
-  .ticker i { font-style: normal; font-size: 0.7em; opacity: 0.6; }
-  @keyframes marquee { to { transform: translateX(-50%); } }
 
   /* Section heads */
   .head { max-width: 46rem; margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
@@ -291,37 +198,14 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .h2 { font-size: clamp(2.1rem, 6vw, 4.6rem); margin-top: 1.1rem; }
   .head__p { margin-top: 1.4rem; font-size: 1.125rem; }
 
-  /* Services */
-  .svc-sec { padding-top: 0; }
-  .svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; }
-  @media (max-width: 860px) { .svc { grid-template-columns: 1fr; } }
-  .svc__card.svc__card--main { grid-row: span 2; display: flex; flex-direction: column; padding: clamp(2rem, 4vw, 3rem); background: var(--ink); color: #fff; border-color: transparent; }
-  .svc__card.svc__card--main::before { opacity: 1; background: radial-gradient(90% 70% at 100% 0%, rgb(59 0 252 / 0.55), transparent 65%), radial-gradient(70% 60% at 0% 100%, rgb(122 43 255 / 0.3), transparent 60%); }
-  .svc__card.svc__card--main:hover { border-color: transparent; }
-  .svc__card.svc__card--main h3 { font-family: var(--font-display); font-weight: 850; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.95; }
-  .svc__card.svc__card--main p { color: var(--muted-dark); font-size: 1.125rem; max-width: 30rem; }
-  .svc__card.svc__card--main .svc__pts { margin-top: auto; padding-top: 2rem; font-size: 1.02rem; gap: 0.7rem; }
-  .svc__card.svc__card--main .svc__pts li::before { background: var(--brand-hi); }
-  .svc__proof { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border-radius: var(--radius); background: rgb(255 255 255 / 0.06); border: 1px solid var(--line-dark); text-decoration: none; color: #fff; transition: background 0.3s; }
-  .svc__proof:hover { background: rgb(255 255 255 / 0.1); }
-  .svc__proof-n { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--brand-hi); line-height: 1; flex: none; }
-  .svc__proof span:last-child { font-size: 0.98rem; color: var(--muted-dark); }
-  .svc__proof svg { display: inline; vertical-align: -3px; }
-  .svc__badge { padding: 0.35rem 0.8rem; border-radius: 999px; background: var(--brand); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .svc__card { position: relative; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s; }
-  .svc__card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 0% 0%, var(--brand-soft), transparent 60%); opacity: 0; transition: opacity 0.5s; z-index: 0; }
-  .svc__card > * { position: relative; }
-  .svc__card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgb(59 0 252 / 0.4); border-color: rgb(59 0 252 / 0.3); }
-  .svc__card:hover::before { opacity: 1; }
-  .svc__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
-  .svc__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--brand); color: #fff; transition: transform 0.5s var(--ease); }
-  .svc__card:hover .svc__icon { transform: rotate(-8deg) scale(1.06); }
-  .svc__n { font-family: var(--font-display); font-weight: 700; color: var(--muted); font-size: 0.9rem; }
-  .svc h3 { font-size: 1.4rem; font-weight: 750; letter-spacing: -0.01em; line-height: 1.15; }
-  .svc p { margin-top: 0.75rem; }
-  .svc__pts { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.5rem; font-size: 0.95rem; }
-  .svc__pts li { display: flex; gap: 0.6rem; align-items: baseline; }
-  .svc__pts li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 2px; background: var(--brand); transform: translateY(-2px) rotate(45deg); }
+  /* Objections */
+  .obj { background: var(--paper); border-bottom: 1px solid var(--line); }
+  .obj__list { list-style: none; margin-block: 0; padding: clamp(2.5rem, 5vw, 3.5rem) 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); }
+  .obj__item { display: flex; gap: 0.9rem; align-items: flex-start; }
+  .obj__check { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brand); color: #fff; margin-top: 0.1rem; }
+  .obj__q { font-weight: 750; font-size: 1.08rem; letter-spacing: -0.01em; }
+  .obj__a { margin-top: 0.35rem; font-size: 0.98rem; }
+  @media (max-width: 899px) { .obj__list { grid-template-columns: 1fr; } }
 
   /* Process */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; counter-reset: s; }
@@ -331,28 +215,6 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .step__n { display: block; font-size: clamp(2.6rem, 5vw, 3.6rem); color: transparent; -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.35); margin-bottom: 1.5rem; }
   .step h3 { font-size: 1.3rem; font-weight: 750; letter-spacing: -0.01em; }
   .step p { margin-top: 0.7rem; }
-
-  /* Results */
-  .results { background: var(--brand); color: #fff; padding-block: clamp(3.5rem, 8vw, 5.5rem); position: relative; overflow: hidden; }
-  .results::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 120% at 100% 0%, rgb(255 255 255 / 0.18), transparent 60%); }
-  .stats { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-  .stat__v { font-size: clamp(2.8rem, 6vw, 4.4rem); line-height: 1; }
-  .stat__l { margin-top: 0.6rem; color: rgb(255 255 255 / 0.8); max-width: 16rem; }
-  .stat .tag { margin-top: 0.8rem; }
-
-  /* Work */
-  .work { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem); }
-  .work__card--wide { grid-column: 1 / -1; }
-  .work__meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-top: 1.25rem; }
-  .work__client { font-weight: 700; display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
-  .work__ind { font-size: 0.92rem; }
-  .chips { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; list-style: none; margin: 0; padding: 0; }
-  .chips li { font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid var(--line); }
-  .work__title { font-family: var(--font-body); font-size: clamp(1.3rem, 2.4vw, 1.75rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-top: 0.75rem; }
-  .work__result { margin-top: 0.5rem; color: var(--brand); font-weight: 650; }
-  .work__link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.75rem; font-weight: 600; color: var(--brand); text-decoration: none; }
-  .work__link:hover { text-decoration: underline; text-underline-offset: 4px; }
-  @media (max-width: 760px) { .work { grid-template-columns: 1fr; } }
 
   /* Stories */
   .stories { background: var(--paper-2); }
@@ -409,33 +271,18 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .cta__p { max-width: 34rem; margin: 1.75rem auto 0; font-size: 1.15rem; }
   .cta__ctas { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.25rem; justify-content: center; }
 
-  /* Footer */
-  .foot { border-top: 1px solid var(--line-dark); padding-block: 2.5rem; }
-  .foot__in { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between; font-size: 0.92rem; }
-  .foot a { text-decoration: none; }
-  .foot a:hover { color: #fff; }
-
   /* ---- Phones and small tablets: everything centered ---- */
   @media (max-width: 899px) {
     main { text-align: center; }
     .head, .head__p { margin-inline: auto; }
     .head--row { flex-direction: column; align-items: center; }
     .hero__cta { flex-direction: column; justify-content: center; }
-    .hero__proof { justify-content: center; }
-    .hero__stat { justify-content: center; width: 100%; }
-    .hero__who { justify-content: center; }
-    .svc__top { justify-content: center; gap: 1rem; }
-    .svc__card p, .svc__card--main p { margin-inline: auto; }
-    .svc__pts { justify-items: center; }
-    .svc__pts li { display: block; }
-    .svc__pts li::before { display: inline-block; margin-right: 0.6rem; vertical-align: middle; transform: translateY(-1px) rotate(45deg); }
-    .svc__proof { flex-direction: column; text-align: center; gap: 0.6rem; }
+    .hero__sub, .hero__note { margin-inline: auto; }
+    /* Let the headline flow as one sentence on narrow screens instead of forced lines */
+    .hero__title { text-wrap: balance; }
+    .hero__title .l, .hero__title .l__in { display: inline; }
+    .obj__item { flex-direction: column; align-items: center; text-align: center; }
     .step { padding-right: 0; }
-    .stat__l { margin-inline: auto; }
-    .work__meta { flex-direction: column; align-items: center; gap: 0.75rem; }
-    .work__client { justify-content: center; }
-    .chips { justify-content: center; }
-    .story__tag { position: static; align-self: center; margin-bottom: 1rem; }
     .story--video { text-align: center; }
     .story__outcome { margin-inline: auto; }
     .story__quote footer { align-items: center; }
@@ -443,6 +290,5 @@ const pad = (n: number) => String(n).padStart(2, "0");
     .qa summary > span:first-child { flex: 1; }
     .qa summary::before { content: ""; flex: none; width: 40px; }
     .qa__a { padding: 0 0 1.6rem; }
-    .foot__in { flex-direction: column; justify-content: center; text-align: center; }
   }
 </style>

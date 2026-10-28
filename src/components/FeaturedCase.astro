@@ -6,7 +6,7 @@
  */
 import VideoFrame from "./VideoFrame.astro";
 import Icon from "./Icon.astro";
-import { featured as f, site } from "../data/site";
+import { featured as f, site, hero } from "../data/site";
 
 const vertical = f.video.ratio === "9 / 16";
 const who = [f.client.business, f.client.city].filter(Boolean).join(" · ");
@@ -53,7 +53,7 @@ const who = [f.client.business, f.client.city].filter(Boolean).join(" · ");
       )}
 
       <div class="fc__cta" data-reveal>
-        <a class="btn" href={site.ctaUrl}>Get a plan like his <Icon name="arrow" size={18} /></a>
+        <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
       </div>
     </div>
   </div>

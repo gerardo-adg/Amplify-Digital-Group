@@ -1,0 +1,38 @@
+---
+/**
+ * Site footer: logo, contact, legal links and the disclaimers a page
+ * running Meta ads should carry.
+ */
+import Logo from "./Logo.astro";
+import { site } from "../data/site";
+---
+
+<footer class="foot dark">
+  <div class="wrap">
+    <div class="foot__top">
+      <a href="/" aria-label={`${site.name} home`}><Logo height={44} /></a>
+      <nav class="foot__links" aria-label="Legal">
+        <a href="/privacy/">Privacy policy</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </nav>
+    </div>
+    <div class="foot__legal">
+      <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      <p>Results vary. The results shown are from real clients and aren't a guarantee of what you'll get; they depend on your market, offer and many other factors.</p>
+      <p>This site is not part of the Facebook website or Meta Platforms, Inc., and isn't endorsed by Meta in any way. Facebook and Instagram are trademarks of Meta Platforms, Inc.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot { border-top: 1px solid var(--line-dark); padding-block: 2.5rem 2rem; font-size: 0.92rem; }
+  .foot__top { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center; justify-content: space-between; }
+  .foot__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; }
+  .foot__links a { color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
+  .foot__links a:hover { color: #fff; }
+  .foot__legal { display: grid; gap: 0.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line-dark); color: rgb(169 165 196 / 0.75); font-size: 0.8rem; line-height: 1.55; }
+  @media (max-width: 899px) {
+    .foot__top, .foot__links { flex-direction: column; justify-content: center; text-align: center; }
+    .foot__legal { text-align: center; }
+  }
+</style>

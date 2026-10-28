@@ -25,9 +25,13 @@ export const site = {
 };
 
 export const hero = {
-  title: ["Meta ads that", "make the phone ring."],
-  primaryCta: "See if we're a fit",
-  ctaNote: "60-second quiz · No pressure",
+  // Promise the outcome; the subheadline says who it's for and how
+  title: ["More booked jobs", "from Facebook &", "Instagram ads."],
+  subheadline:
+    "We script, film and run Meta ads for contractors and home-service businesses, so your phone rings with real jobs.",
+  // What they get, then how they get it
+  primaryCta: "Get my free strategy call",
+  ctaNote: "Answer 6 quick questions (about 60 seconds). We'll look them over and call you personally.",
   // The VSL (film it horizontal, 16:9). Leave playbackId empty to show the
   // placeholder frame; the caption only shows once the video is in.
   vsl: {
@@ -37,12 +41,6 @@ export const hero = {
     caption: "Watch how Evaristo booked $80K+ in work off $647 in ad spend.",
     uploadDate: "", // e.g. "2026-11-05T12:00:00-08:00"
   },
-  // The proof strip under the hero; links to Evaristo's story
-  proof: [
-    { value: "$80K+", label: "in work booked" },
-    { value: "$647", label: "in ad spend" },
-    { value: "2 weeks", label: "after launch" },
-  ],
 };
 
 export type Service = {
@@ -84,38 +82,6 @@ export const steps = [
   { title: "Manage", body: "We keep running and managing your campaigns after launch, so you can get back to the work." },
 ];
 
-export type Stat = { value: number; prefix?: string; suffix?: string; label: string; sample?: boolean };
-export const stats: Stat[] = [
-  { value: 0, suffix: "+", label: "Leads generated for clients", sample: true },
-  { value: 0, prefix: "$", label: "Average cost per lead", sample: true },
-  { value: 0, label: "Videos produced", sample: true },
-  { value: 0, suffix: "%", label: "Clients who stay past year one", sample: true },
-];
-
-export type Work = {
-  client: string;
-  industry: string;
-  title: string;
-  services: string[];
-  result?: string;
-  // Mux playback ID; without one the card shows a still frame placeholder.
-  playbackId?: string;
-  posterTime?: number;
-  url?: string;
-  sample?: boolean;
-};
-export const work: Work[] = [
-  {
-    client: "GM Roofing",
-    industry: "Roofing · Sacramento Valley",
-    title: "New website and videos",
-    services: ["Website", "Video"],
-    url: "https://gmroofs.com/",
-  },
-  { client: "Client name", industry: "Industry · City", title: "What you made for them", services: ["Video", "Ads"], sample: true },
-  { client: "Client name", industry: "Industry · City", title: "What you made for them", services: ["Ads"], sample: true },
-];
-
 /**
  * The headline proof: one client's result, told in a video where you call
  * him and he confirms it. Shown right under the hero.
@@ -144,6 +110,22 @@ export const featured = {
   video: { playbackId: "2v2jub58TG9M9kdJ6PPqEVfZS9zfpPEuZzRAGh00K00500", ratio: "9 / 16", posterTime: 74, uploadDate: "2026-10-24T12:00:00-07:00" },
 };
 
+// The three biggest objections, most common first, answered right under the hero
+export const objections = [
+  {
+    q: "“I've been burned by marketers before.”",
+    a: "So had Evaristo. Two weeks after we launched his Meta ads, he'd booked $80K+ in work off $647 in ad spend.",
+  },
+  {
+    q: "“I'm not good on camera.”",
+    a: "Neither was Giovanni. His first shoot took six hours and we stayed patient. We script every video, and it gets easier each time.",
+  },
+  {
+    q: "“I don't have time for marketing.”",
+    a: "Your only job is to show up for the shoot. We script, film, edit, launch and manage everything else.",
+  },
+];
+
 export type Story = {
   name: string;
   business: string;
@@ -159,7 +141,6 @@ export type Story = {
   sample?: boolean;
 };
 // The worry they had before signing, what actually happened, and their words.
-// The quote and byline only show once they're filled in.
 export const stories: Story[] = [
   {
     name: "Giovanni",
@@ -173,41 +154,25 @@ export const stories: Story[] = [
     // posterTime in seconds. Add uploadDate (e.g. "2026-10-20T12:00:00-07:00") to put it in the schema.
     video: { playbackId: "QhpTSe00snqvNVBNpveF5CXp0295WSHzSnKXA01WkwvLhI", ratio: "9 / 16", posterTime: 2 },
   },
-  {
-    name: "Owner name",
-    business: "Business · City",
-    concern: "“I can't tell if marketing is even working.”",
-    outcome: "What the reporting showed them, month by month.",
-    quote: "Their own words about working with you.",
-    sample: true,
-  },
 ];
 
-// CONFIRM every answer. These go into FAQPage schema, so they must be true.
+// Only answers we know are true; they also go into FAQPage schema.
 export const faqs = [
   {
     q: "Who do you work with?",
-    a: "Service businesses that want more booked jobs from their own area: contractors, home services and local professionals. If we don't think we can help you, we'll say so on the first call.",
+    a: "Contractors and home-service businesses that want more booked jobs from their own area, like roofers, HVAC companies, plumbers and remodelers.",
   },
   {
     q: "How long until I see results?",
-    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing booked over $80K in work off $647 in ad spend, two weeks in. Every market is different, so we'll give you a realistic timeline for yours before you sign anything.",
+    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing booked over $80K in work off $647 in ad spend, two weeks in. Every market is different, and we'll talk through yours on the call.",
   },
   {
-    q: "Do I have to be on camera?",
-    a: "No. We can film your crew, your work and your finished projects instead. If you do want to be on camera, we keep it short and guide you through it.",
+    q: "What if I'm not comfortable on camera?",
+    a: "We script every video and guide you through the shoot. Giovanni at GM Roofing was super shy at first, and his first video took about six hours. We stayed patient, and it's gotten much easier with every video.",
   },
   {
-    q: "How will I know it's working?",
-    a: "Every call, form and booking is tracked back to where it came from. Each month you get a short report with leads, cost per lead and what we're changing next.",
-  },
-  {
-    q: "Am I locked into a long contract?",
-    a: "CONFIRM: describe your actual terms here.",
-  },
-  {
-    q: "What does it cost?",
-    a: "It depends on what you need and how fast you want to grow. After the strategy call we send a fixed proposal, with no surprises after you sign.",
+    q: "What happens after I take the quiz?",
+    a: "We look over your answers and reach out to you personally to talk about your business and whether we're a fit.",
   },
 ];
 

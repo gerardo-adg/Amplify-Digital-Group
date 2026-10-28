@@ -3,7 +3,7 @@
  * Sample content (see site.ts) is never included, and contact fields
  * only appear once they're filled in.
  */
-import { site, services, faqs, work, hero, featured, stories, isSample } from "../data/site";
+import { site, services, faqs, hero, featured, stories, isSample } from "../data/site";
 
 const SITE = site.url.replace(/\/$/, "");
 const ids = { org: `${SITE}/#organization`, website: `${SITE}/#website`, page: `${SITE}/#webpage`, logo: `${SITE}/#logo` };
@@ -62,9 +62,6 @@ export function graph() {
       // Google needs an upload date for video results, so wait for one
       .filter((st) => !isSample(st) && st.video?.playbackId && st.video.uploadDate && st.name)
       .map((st) => videoNode(st.video!.playbackId, `${st.name} on working with ${site.name}`, st.outcome, st.video!.posterTime, st.video!.uploadDate)),
-    ...work
-      .filter((w) => !isSample(w) && w.playbackId)
-      .map((w) => videoNode(w.playbackId!, `${w.client}: ${w.title}`, `${w.title} for ${w.client} (${w.industry}).`, w.posterTime)),
   ];
 
   const realFaqs = faqs.filter((f) => !f.a.startsWith("CONFIRM"));

@@ -14,7 +14,8 @@ Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
 
 | Change | File |
 |---|---|
-| All copy: hero, featured client result, services, steps, results, work, client stories, FAQ, contact | `src/data/site.ts` |
+| All copy: hero, the three objection bullets, featured client result, steps, client stories, FAQ, contact | `src/data/site.ts` |
+| Footer, disclaimers, privacy policy | `src/components/Footer.astro`, `src/pages/privacy.astro` |
 | Featured client result under the hero (the $80K video) | `featured` in `src/data/site.ts`, layout in `src/components/FeaturedCase.astro` |
 | Structured data (schema.org) | `src/lib/schema.ts` |
 | Quiz funnel questions, contact step and thank-you text | `src/data/quiz.ts` (page: `src/pages/quiz/index.astro`) |
@@ -32,6 +33,10 @@ Every "See if we're a fit" button goes to `/quiz/`. Answers and contact details 
 - Email alerts: **Site configuration → Notifications → Emails and webhooks → Form submission notifications**.
 - A hidden honeypot field (`company_website`) filters out most spam bots.
 - With a Meta Pixel ID in `site.ts`, every page tracks `PageView` and each quiz submission tracks `Lead`.
+
+## Keep it lean
+
+The page follows one rule: if a section doesn't get more qualified people into the quiz, cut it. Header has no menu, every button goes to `/quiz/`, and proof sits below the fold.
 
 ## Sample content
 
