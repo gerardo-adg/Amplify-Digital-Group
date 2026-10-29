@@ -1,6 +1,6 @@
-# Amplify Digital Group: landing page
+# Amplify Digital Group: website and landing page
 
-One-page site built with [Astro](https://astro.build). Static output; JavaScript is limited to scroll animations, the header and click-to-play Mux video.
+Built with [Astro](https://astro.build). Static output; JavaScript is limited to scroll animations, the header and click-to-play Mux video.
 
 ```bash
 npm install
@@ -9,6 +9,17 @@ npm run build    # outputs to dist/
 ```
 
 Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
+
+## Pages
+
+| URL | What it is | File |
+|---|---|---|
+| `/start/` | **Ads landing page.** Use this link in Meta ads. | `src/pages/start.astro` |
+| `/quiz/` | Quiz funnel every button leads to | `src/pages/quiz/index.astro` |
+| `/privacy/` | Privacy policy | `src/pages/privacy.astro` |
+| `/` | Main website (not built yet). Until it is, Netlify redirects `/` to `/start/` (see `netlify.toml`); remove that redirect when `src/pages/index.astro` is added. | — |
+
+Both the main website and the landing page share the same theme: colors, fonts and spacing in `src/styles/global.css`, plus the logo, buttons, video player and footer components.
 
 ## Where things live
 
@@ -20,7 +31,7 @@ Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
 | Structured data (schema.org) | `src/lib/schema.ts` |
 | Quiz funnel questions, contact step and thank-you text | `src/data/quiz.ts` (page: `src/pages/quiz/index.astro`) |
 | Where buttons go, Meta Pixel ID | `ctaUrl` and `metaPixelId` in `src/data/site.ts` |
-| Page sections and their styles | `src/pages/index.astro` |
+| Landing page sections and their styles | `src/pages/start.astro` |
 | Colors, fonts, spacing | `src/styles/global.css` (`:root` variables) |
 | Logo | `public/brand/logo-320.webp`, `logo-640.webp` (made for dark backgrounds), `logo.png` (square, for schema) |
 | Social share image, favicons | `public/og.png`, `public/favicon.*`, `public/apple-touch-icon.png` |

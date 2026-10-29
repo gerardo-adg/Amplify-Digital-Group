@@ -15,7 +15,7 @@ const thumb = (w: number) => `https://image.mux.com/${playbackId}/thumbnail.webp
   ) : (
     <div class="vf__empty" aria-hidden="true">{[22, 48, 70, 100, 64, 86, 40, 58, 28].map((h) => <span style={`--h:${h}%`}></span>)}</div>
   )}
-  <button class="vf__play" type="button" aria-label={`Play video: ${title}`} disabled={!playbackId}>
+  <button class="vf__play" type="button" aria-label={playbackId ? `${label}: ${title}` : "Video coming soon"} disabled={!playbackId}>
     <span class="vf__icon"><Icon name="play" size={22} /></span>
     <span class="vf__label">{playbackId ? label : "Video coming soon"}</span>
   </button>

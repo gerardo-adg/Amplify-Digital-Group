@@ -6,7 +6,7 @@
 import { site, services, faqs, hero, featured, stories, isSample } from "../data/site";
 
 const SITE = site.url.replace(/\/$/, "");
-const ids = { org: `${SITE}/#organization`, website: `${SITE}/#website`, page: `${SITE}/#webpage`, logo: `${SITE}/#logo` };
+const ids = { org: `${SITE}/#organization`, website: `${SITE}/#website`, page: `${SITE}/start/#webpage`, logo: `${SITE}/#logo` };
 const muxThumb = (id: string, t = 2) => `https://image.mux.com/${id}/thumbnail.jpg?time=${t}&width=1280`;
 
 function videoNode(playbackId: string, name: string, description: string, posterTime?: number, uploadDate?: string) {
@@ -74,7 +74,7 @@ export function graph() {
       {
         "@type": "WebPage",
         "@id": ids.page,
-        url: `${SITE}/`,
+        url: `${SITE}/start/`,
         name: `${site.name} | Meta ads, content and websites for service businesses`,
         description: site.description,
         isPartOf: { "@id": ids.website },

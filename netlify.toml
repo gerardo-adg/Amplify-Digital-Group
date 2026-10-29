@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Until the main website has a home page, send the bare domain to the
+# landing page. Remove this once src/pages/index.astro exists again.
+[[redirects]]
+  from = "/"
+  to = "/start/"
+  status = 302
+
 # Fingerprinted build assets never change, so browsers can keep them for a year
 [[headers]]
   for = "/_astro/*"

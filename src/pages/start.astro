@@ -127,7 +127,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
     </section>
 
     <!-- CTA -->
-    <section class="cta dark" id="book" aria-labelledby="cta-h">
+    <section class="cta dark" id="book" data-sticky-stop aria-labelledby="cta-h">
       <div class="hero__glow" aria-hidden="true"><span></span><span></span></div>
       <div class="wrap cta__in">
         <h2 id="cta-h" class="display cta__title" data-reveal="lines"><span class="l"><span class="l__in">Ready to get</span></span><span class="l"><span class="l__in grad">amplified?</span></span></h2>
@@ -139,6 +139,11 @@ const pad = (n: number) => String(n).padStart(2, "0");
       </div>
     </section>
   </main>
+
+  <!-- Phones: the one action stays in reach once the hero's button scrolls away -->
+  <div class="sticky-cta" data-sticky aria-hidden="true">
+    <a class="btn sticky-cta__btn" href={site.ctaUrl} tabindex="-1">{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+  </div>
 
   <Footer />
 </Base>
@@ -291,4 +296,49 @@ const pad = (n: number) => String(n).padStart(2, "0");
     .qa summary::before { content: ""; flex: none; width: 40px; }
     .qa__a { padding: 0 0 1.6rem; }
   }
+
+  /* Sticky button bar (phones only) */
+  .sticky-cta { display: none; }
+  @media (max-width: 899px) {
+    .sticky-cta {
+      display: block; position: fixed; inset: auto 0 0; z-index: 40;
+      padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgb(7 5 26 / 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 -1px 0 var(--line-dark);
+      transform: translateY(110%); transition: transform 0.45s var(--ease);
+    }
+    .sticky-cta.is-on { transform: none; }
+    .sticky-cta__btn { width: 100%; justify-content: center; }
+
+    /* Process: compact on phones, number beside the title */
+    .step { display: grid; grid-template-columns: 3rem 1fr; column-gap: 1rem; align-items: baseline; padding: 1.4rem 0; text-align: left; }
+    .step__n { grid-row: span 2; margin: 0; font-size: 2rem; }
+    .step p { margin-top: 0.3rem; }
+  }
 </style>
+
+<script>
+  // Show the bar once the hero button is off screen; hide it at the closing call to action and footer
+  const bar = document.querySelector<HTMLElement>("[data-sticky]");
+  const heroBtn = document.querySelector(".hero__btn");
+  const stops = document.querySelectorAll("[data-sticky-stop], footer");
+  if (bar && heroBtn && "IntersectionObserver" in window) {
+    let pastHero = false;
+    const visibleStops = new Set<Element>();
+    const update = () => {
+      const on = pastHero && visibleStops.size === 0;
+      bar.classList.toggle("is-on", on);
+      bar.setAttribute("aria-hidden", String(!on));
+      bar.querySelector("a")?.setAttribute("tabindex", on ? "0" : "-1");
+    };
+    new IntersectionObserver(([e]) => {
+      pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+      update();
+    }).observe(heroBtn);
+    const stopObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? visibleStops.add(e.target) : visibleStops.delete(e.target)));
+      update();
+    });
+    stops.forEach((el) => stopObserver.observe(el));
+  }
+</script>

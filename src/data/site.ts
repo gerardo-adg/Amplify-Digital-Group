@@ -98,10 +98,9 @@ export const featured = {
   concern: "He'd been burned by a marketer before.",
   // His words on the call about almost not signing
   concernQuote: "At one point I was like, I'm never gonna do this.",
+  // One short paragraph under the numbers; the video does the rest
   story: [
-    "Trusting a new marketer wasn't easy for him. It took time before he was ready to work with us.",
-    "Two weeks after we launched his Meta ads, he'd booked $80–90K in work off $647 in ad spend. That's over $120 in booked work for every $1 he spent, and he still had estimates pending.",
-    "Don't take our word for it. In the video, we call Evaristo and he tells you himself.",
+    "He booked $80–90K in work, over $120 for every $1 of ad spend. Don't take our word for it: in the video, we call Evaristo and he tells you himself.",
   ],
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
   quote: "The marketing pays for itself.", // his words on the call
