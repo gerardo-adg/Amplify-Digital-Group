@@ -25,10 +25,11 @@ export const site = {
 };
 
 export const hero = {
-  // Promise the outcome; the subheadline says who it's for and how
-  title: ["More booked jobs", "from Facebook &", "Instagram ads."],
+  // Sell the dream; the subheadline says who it's for and how.
+  // Headline test variants (2, 3…) will sit alongside this one.
+  title: ["Stop chasing jobs.", "Let them come to you."],
   subheadline:
-    "We script, film and run Meta ads for contractors and home-service businesses, so your phone rings with real jobs.",
+    "We script, film and run Facebook & Instagram ads for contractors and home-service businesses, so new customers find you while you're out on the job.",
   // What they get, then how they get it
   primaryCta: "Get my free strategy call",
   ctaNote: "6 quick questions · About 60 seconds · We'll call you personally",
