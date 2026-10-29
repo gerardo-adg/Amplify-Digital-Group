@@ -36,11 +36,6 @@ export const quiz = {
       options: ["Under $20K", "$20K to $50K", "$50K to $100K", "Over $100K"],
     },
     {
-      name: "ads_before",
-      q: "Have you run Facebook or Instagram ads before?",
-      options: ["Never", "Yes, on my own", "Yes, with an agency or marketer", "I'm running them now"],
-    },
-    {
       name: "biggest_challenge",
       q: "What's your biggest challenge right now?",
       options: [

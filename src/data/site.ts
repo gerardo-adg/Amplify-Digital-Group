@@ -33,7 +33,7 @@ export const hero = {
     "We script, film, launch and manage your Meta ads, so you can do what you do best.",
   // What they get, then how they get it
   primaryCta: "Get my free strategy call",
-  ctaNote: "7 quick questions · About 60 seconds · We'll call you personally",
+  ctaNote: "6 quick questions · About 60 seconds · We'll call you personally",
   // The VSL (film it horizontal, 16:9). Leave playbackId empty to show the
   // placeholder frame; the caption only shows once the video is in.
   vsl: {
