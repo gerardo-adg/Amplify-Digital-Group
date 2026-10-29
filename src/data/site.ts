@@ -30,7 +30,7 @@ export const hero = {
   callout: "Contractors & Home-Service Owners:",
   title: ["You Can Handle More Jobs.", "We'll Bring Them to You."],
   subheadline:
-    "We script, film and run your Facebook & Instagram ads, so new customers find you while you're out on the job.",
+    "We script, film, launch and manage your Meta ads, so you can do what you do best.",
   // What they get, then how they get it
   primaryCta: "Get my free strategy call",
   ctaNote: "6 quick questions · About 60 seconds · We'll call you personally",
