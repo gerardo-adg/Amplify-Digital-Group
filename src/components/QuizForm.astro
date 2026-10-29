@@ -161,6 +161,26 @@ const total = quiz.questions.length + 1;
   .done__title { font-size: clamp(2rem, 5vw, 3.2rem); margin-top: 1.5rem; }
   .done__body { max-width: 30rem; margin: 1rem auto 1.5rem; font-size: 1.1rem; }
 
+  /* White card version (landing page hero): dark text on white so the form pops off the dark hero */
+  .quiz--card { background: #fff; color: var(--ink); border-color: transparent; box-shadow: 0 40px 120px -30px rgb(59 0 252 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.1); backdrop-filter: none; }
+  .quiz--card .muted { color: var(--muted); }
+  .quiz--card .qz__bar { background: var(--paper-2); }
+  .quiz--card .opt__box { background: var(--paper-2); border-color: var(--line); }
+  .quiz--card .opt:hover .opt__box { background: var(--brand-soft); border-color: rgb(59 0 252 / 0.35); }
+  .quiz--card .opt__key { border-color: rgb(7 5 26 / 0.15); color: var(--muted); background: #fff; }
+  .quiz--card .opt__check { border-color: rgb(7 5 26 / 0.25); }
+  .quiz--card .opt input:focus-visible + .opt__box { outline-color: var(--brand); }
+  .quiz--card .opt input:checked + .opt__box { background: var(--brand-soft); border-color: var(--brand); }
+  .quiz--card .opt input:checked + .opt__box .opt__check { border-color: var(--brand); background-color: var(--brand); }
+  .quiz--card .field span { color: var(--muted); }
+  .quiz--card .field input { background: var(--paper-2); border-color: var(--line); color: var(--ink); }
+  .quiz--card .field input:focus { background: #fff; border-color: var(--brand); }
+  .quiz--card .field input[aria-invalid="true"] { border-color: #d92d4a; }
+  .quiz--card .step__error { color: #c8243f; }
+  .quiz--card .qz__consent { color: var(--muted); }
+  .quiz--card .qz__back { color: var(--muted); }
+  .quiz--card .qz__back:hover { color: var(--ink); }
+
   /* Phones: headings and buttons centered; answer cards stay left-aligned so they're easy to scan */
   @media (max-width: 899px) {
     .qz__intro, .step__q, .step__help, .qz__count, .step__error { text-align: center; }

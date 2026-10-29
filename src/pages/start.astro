@@ -138,12 +138,11 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
   .hero__in { position: relative; display: flex; flex-direction: column; align-items: center; }
   .hero__title { font-size: clamp(2.2rem, 3.6vw, 3.4rem); }
   .hero__title .l { white-space: nowrap; }
-  /* Callout: highlighted, like a marker swipe behind the words */
+  /* Callout: who it's for, in plain bold type above the headline */
   .hero__callout {
-    display: table; margin: 0 auto 1.1rem; padding: 0 0.3em;
+    display: table; margin: 0 auto 1.1rem;
     font-family: var(--font-body); font-style: normal; font-weight: 800; font-stretch: normal;
     text-transform: none; letter-spacing: -0.01em; font-size: clamp(1.05rem, 2vw, 1.45rem); color: #fff;
-    background: linear-gradient(transparent 52%, var(--brand) 52%, var(--brand) 92%, transparent 92%);
   }
   /* The promise line is underlined in brand blue */
   .hero__title .l--promise { padding-bottom: 0.18em; }
@@ -259,9 +258,10 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
   const stops = document.querySelectorAll("[data-sticky-stop], footer");
   if (bar && quiz && "IntersectionObserver" in window) {
     let pastQuiz = false;
+    let typing = false;
     const visibleStops = new Set<Element>();
     const update = () => {
-      const on = pastQuiz && visibleStops.size === 0;
+      const on = pastQuiz && !typing && visibleStops.size === 0;
       bar.classList.toggle("is-on", on);
       bar.setAttribute("aria-hidden", String(!on));
       bar.querySelector("a")?.setAttribute("tabindex", on ? "0" : "-1");
@@ -275,5 +275,12 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
       update();
     });
     stops.forEach((el) => stopObserver.observe(el));
+    // Never cover the form while someone is typing in it (phone keyboards shrink the screen)
+    quiz.addEventListener("focusin", (e) => {
+      const el = e.target as HTMLInputElement;
+      typing = el.tagName === "INPUT" && el.type !== "radio";
+      update();
+    });
+    quiz.addEventListener("focusout", () => { typing = false; update(); });
   }
 </script>

@@ -27,8 +27,8 @@ export const site = {
 export const hero = {
   // Call out who it's for, say what they already believe, then promise the dream.
   // Headline test variants (2, 3…) will sit alongside this one.
-  callout: "Contractors & home-service owners:",
-  title: ["You can handle more jobs.", "We'll bring them to you."],
+  callout: "Contractors & Home-Service Owners:",
+  title: ["You Can Handle More Jobs.", "We'll Bring Them to You."],
   subheadline:
     "We script, film and run your Facebook & Instagram ads, so new customers find you while you're out on the job.",
   // What they get, then how they get it
