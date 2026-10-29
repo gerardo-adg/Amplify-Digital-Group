@@ -27,7 +27,7 @@ Both the main website and the landing page share the same theme: colors, fonts a
 |---|---|
 | All copy: hero, the three objection bullets, proof cards, FAQ, contact | `src/data/site.ts` |
 | Footer, disclaimers, privacy policy | `src/components/Footer.astro`, `src/pages/privacy.astro` |
-| Featured client result under the hero (the $80K video) | `featured` in `src/data/site.ts`, layout in `src/components/FeaturedCase.astro` |
+| Client videos and details (Evaristo, Giovanni) | `featured` and `stories` in `src/data/site.ts`; the landing page cards read from `proofCards` |
 | Structured data (schema.org) | `src/lib/schema.ts` |
 | Quiz questions, contact step and thank-you text | `src/data/quiz.ts` (the quiz itself: `src/components/QuizForm.astro`) |
 | Where buttons go, Meta Pixel ID | `ctaUrl` and `metaPixelId` in `src/data/site.ts` |
