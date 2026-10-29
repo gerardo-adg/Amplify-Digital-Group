@@ -15,7 +15,8 @@ interface Props {
   intro?: boolean;
 }
 const { card = false, intro = false } = Astro.props;
-const total = quiz.questions.length + 1;
+// The contact step is labelled "Last step", so only the questions are counted
+const total = quiz.questions.length;
 ---
 
 <div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root>
@@ -228,7 +229,7 @@ const total = quiz.questions.length + 1;
       const isContact = step.classList.contains("step--contact");
       next.hidden = isContact;
       bar.style.width = `${(current / steps.length) * 100}%`;
-      countLabel.textContent = isContact ? "Last step" : `Question ${current + 1} of ${steps.length}`;
+      countLabel.textContent = isContact ? "Last step" : `Question ${current + 1} of ${steps.length - 1}`;
       if (dir !== 0) {
         step.querySelector<HTMLElement>("legend")?.focus({ preventScroll: true });
         keepInView();
