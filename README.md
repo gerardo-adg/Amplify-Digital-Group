@@ -57,4 +57,4 @@ FAQ answers go into FAQPage schema, so each one must be true. An answer starting
 
 ## Videos
 
-**VSL:** add its Mux playback ID to `hero.vsl.playbackId` in `src/data/site.ts` (film it horizontal, 16:9). Until then the hero shows a placeholder frame, and the "Watch how Evaristo…" caption stays hidden. Other videos: `featured.video`, a story's `video`, or an entry in `work`. The poster loads lazily and the player only downloads when someone presses play. Each real video is added to the schema as a VideoObject; give it an `uploadDate` next to its playback ID.
+**VSL:** add its Mux playback ID to `hero.vsl.playbackId` in `src/data/site.ts` (film it horizontal, 16:9). Until then the hero is a centered text block with no video; once the ID is set, the video layout and the "Watch how Evaristo…" caption come back on their own. Other videos: `featured.video`, a story's `video`, or an entry in `work`. The poster loads lazily and the player only downloads when someone presses play. Each real video is added to the schema as a VideoObject; give it an `uploadDate` next to its playback ID.

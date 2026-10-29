@@ -7,6 +7,8 @@ import Footer from "../components/Footer.astro";
 import FeaturedCase from "../components/FeaturedCase.astro";
 import { site, hero, steps, objections, stories, faqs, featured, isSample } from "../data/site";
 
+// Without a VSL the hero is a centered text block; adding hero.vsl.playbackId brings the video layout back
+const hasVsl = Boolean(hero.vsl.playbackId);
 const title = `More booked jobs from Facebook & Instagram ads | ${site.name}`;
 const pad = (n: number) => String(n).padStart(2, "0");
 ---
@@ -15,7 +17,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
   <Header />
   <main id="main">
     <!-- HERO -->
-    <section class="hero dark" id="top">
+    <section class:list={["hero dark", !hasVsl && "hero--text"]} id="top">
       <div class="hero__glow" aria-hidden="true"><span></span><span></span></div>
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="wrap hero__in">
@@ -23,10 +25,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
           {hero.title.map((line, i) => <span class="l"><span class:list={["l__in", i > 0 && "grad"]}>{line}</span>{" "}</span>)}
         </h1>
         <p class="hero__sub muted" data-reveal style="--i:1">{hero.subheadline}</p>
-        <div class="hero__video" data-reveal style="--i:2">
-          <VideoFrame playbackId={hero.vsl.playbackId} title={hero.vsl.title} posterTime={hero.vsl.posterTime} label="Watch the video" sizes="(min-width: 900px) 680px, 100vw" />
-        </div>
-        {hero.vsl.playbackId && <p class="hero__caption" data-reveal style="--i:3">{hero.vsl.caption}</p>}
+        {hasVsl && (
+          <div class="hero__video" data-reveal style="--i:2">
+            <VideoFrame playbackId={hero.vsl.playbackId} title={hero.vsl.title} posterTime={hero.vsl.posterTime} label="Watch the video" sizes="(min-width: 900px) 680px, 100vw" />
+          </div>
+        )}
+        {hasVsl && <p class="hero__caption" data-reveal style="--i:3">{hero.vsl.caption}</p>}
         <div class="hero__cta" data-reveal style="--i:3">
           <a class="btn hero__btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
           <p class="hero__note muted">{hero.ctaNote}</p>
@@ -202,6 +206,19 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .head--row .head__p { max-width: 24rem; }
   .h2 { font-size: clamp(2.1rem, 6vw, 4.6rem); margin-top: 1.1rem; }
   .head__p { margin-top: 1.4rem; font-size: 1.125rem; }
+
+  /* Hero without a video: one centered column */
+  .hero--text { text-align: center; padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+  .hero--text .hero__in { justify-items: center; }
+  .hero--text .hero__sub { margin-inline: auto; max-width: 38rem; }
+  .hero--text .hero__cta { flex-direction: column; justify-content: center; margin-top: 2rem; }
+  .hero--text .hero__note { margin-inline: auto; }
+  @media (min-width: 900px) {
+    .hero--text { padding-top: clamp(9rem, 14vw, 11rem); }
+    .hero--text .hero__in { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "title" "sub" "cta"; }
+    .hero--text .hero__title { font-size: clamp(2.6rem, 5.2vw, 4.75rem); }
+    .hero--text .hero__sub { margin-top: 1.5rem; font-size: 1.25rem; }
+  }
 
   /* Objections */
   .obj { background: var(--paper); border-bottom: 1px solid var(--line); }
