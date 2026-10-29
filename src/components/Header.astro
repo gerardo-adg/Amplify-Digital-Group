@@ -5,11 +5,17 @@
  */
 import Logo from "./Logo.astro";
 import { site, hero } from "../data/site";
+
+interface Props {
+  // Where the button goes; the landing page points it at its own quiz
+  ctaHref?: string;
+}
+const { ctaHref = site.ctaUrl } = Astro.props;
 ---
 <header class="hdr" data-header>
   <div class="wrap hdr__in">
     <a href="#top" class="hdr__logo" aria-label={`${site.name}, back to top`}><Logo height={42} eager /></a>
-    <a class="btn hdr__cta" href={site.ctaUrl}>{hero.primaryCta}</a>
+    <a class="btn hdr__cta" href={ctaHref}>{hero.primaryCta}</a>
   </div>
 </header>
 

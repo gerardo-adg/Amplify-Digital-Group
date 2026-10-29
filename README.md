@@ -14,8 +14,8 @@ Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
 
 | URL | What it is | File |
 |---|---|---|
-| `/start/` | **Ads landing page.** Use this link in Meta ads. | `src/pages/start.astro` |
-| `/quiz/` | Quiz funnel every button leads to | `src/pages/quiz/index.astro` |
+| `/start/` | **Ads landing page.** Use this link in Meta ads. The quiz sits right in the hero. | `src/pages/start.astro` |
+| `/quiz/` | The same quiz on its own page, for direct links | `src/pages/quiz/index.astro` |
 | `/privacy/` | Privacy policy | `src/pages/privacy.astro` |
 | `/` | Main website (not built yet). Until it is, Netlify redirects `/` to `/start/` (see `netlify.toml`); remove that redirect when `src/pages/index.astro` is added. | — |
 
@@ -25,11 +25,11 @@ Both the main website and the landing page share the same theme: colors, fonts a
 
 | Change | File |
 |---|---|
-| All copy: hero, the three objection bullets, featured client result, steps, client stories, FAQ, contact | `src/data/site.ts` |
+| All copy: hero, the three objection bullets, proof cards, FAQ, contact | `src/data/site.ts` |
 | Footer, disclaimers, privacy policy | `src/components/Footer.astro`, `src/pages/privacy.astro` |
 | Featured client result under the hero (the $80K video) | `featured` in `src/data/site.ts`, layout in `src/components/FeaturedCase.astro` |
 | Structured data (schema.org) | `src/lib/schema.ts` |
-| Quiz funnel questions, contact step and thank-you text | `src/data/quiz.ts` (page: `src/pages/quiz/index.astro`) |
+| Quiz questions, contact step and thank-you text | `src/data/quiz.ts` (the quiz itself: `src/components/QuizForm.astro`) |
 | Where buttons go, Meta Pixel ID | `ctaUrl` and `metaPixelId` in `src/data/site.ts` |
 | Landing page sections and their styles | `src/pages/start.astro` |
 | Colors, fonts, spacing | `src/styles/global.css` (`:root` variables) |
@@ -38,7 +38,7 @@ Both the main website and the landing page share the same theme: colors, fonts a
 
 ## Quiz leads
 
-Every "See if we're a fit" button goes to `/quiz/`. Answers and contact details are sent to **Netlify Forms** as the form named `quiz`.
+On the landing page the quiz is in the hero and every button jumps to it; elsewhere buttons go to `/quiz/`. Answers and contact details are sent to **Netlify Forms** as the form named `quiz`.
 
 - Netlify: **Site configuration → Forms → Enable form detection** (once), then redeploy. Leads appear under **Forms → quiz**.
 - Email alerts: **Site configuration → Notifications → Emails and webhooks → Form submission notifications**.

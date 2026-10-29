@@ -31,7 +31,7 @@ export const hero = {
     "We script, film and run Meta ads for contractors and home-service businesses, so your phone rings with real jobs.",
   // What they get, then how they get it
   primaryCta: "Get my free strategy call",
-  ctaNote: "Answer 6 quick questions (about 60 seconds). We'll look them over and call you personally.",
+  ctaNote: "6 quick questions · About 60 seconds · We'll call you personally",
   // The VSL (film it horizontal, 16:9). Leave playbackId empty to show the
   // placeholder frame; the caption only shows once the video is in.
   vsl: {
@@ -152,6 +152,26 @@ export const stories: Story[] = [
     quote: "Overall, man, they're good people. Highly recommend them to anybody who's looking to market their services online.",
     // posterTime in seconds. Add uploadDate (e.g. "2026-10-20T12:00:00-07:00") to put it in the schema.
     video: { playbackId: "QhpTSe00snqvNVBNpveF5CXp0295WSHzSnKXA01WkwvLhI", ratio: "9 / 16", posterTime: 2 },
+  },
+];
+
+// The two client proof cards on the landing page, next to their videos
+export const proofCards = [
+  {
+    result: "$80K+ booked off $647 in ads",
+    detail: "Two weeks after his Meta ads went live, with estimates still pending.",
+    quote: "The marketing pays for itself.",
+    name: "Evaristo",
+    business: "Sky Roofing Unlimited Inc. · Stockton, CA",
+    video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc.: $80K+ booked off $647 in Meta ad spend", label: "Watch the call" },
+  },
+  {
+    result: "Camera-shy to “highly recommend”",
+    detail: "30 days in. His first video took six hours, and it's gotten much easier with every one since.",
+    quote: "They were super patient there, just waiting, helping me out.",
+    name: "Giovanni",
+    business: "GM Roofing · Sacramento, CA",
+    video: { ...stories[0].video!, title: "Giovanni of GM Roofing on working with Amplify Digital Group", label: "Watch" },
   },
 ];
 

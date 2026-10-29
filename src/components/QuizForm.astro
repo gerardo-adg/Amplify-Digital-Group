@@ -1,0 +1,301 @@
+---
+/**
+ * The qualifying quiz: one question per screen, then contact details.
+ * Used in the landing page hero (card) and on /quiz/. Submits to Netlify
+ * Forms as "quiz"; without JavaScript it's a normal one-page form that
+ * posts to /quiz/thanks/. Questions and wording: src/data/quiz.ts.
+ */
+import Icon from "./Icon.astro";
+import { quiz } from "../data/quiz";
+
+interface Props {
+  // Card style for sitting inside the landing page hero
+  card?: boolean;
+  // Show the quiz's own title and intro (the standalone /quiz/ page)
+  intro?: boolean;
+}
+const { card = false, intro = false } = Astro.props;
+const total = quiz.questions.length + 1;
+---
+
+<div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root>
+  <div class="qz__progress" aria-hidden="true" data-progress-wrap>
+    <div class="qz__bar"><span data-bar></span></div>
+    <p class="qz__count muted"><span data-count-label>Question 1 of {total}</span></p>
+  </div>
+
+  <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="company_website" data-quiz>
+    <input type="hidden" name="form-name" value="quiz" />
+    <p hidden><label>Leave this empty: <input name="company_website" tabindex="-1" autocomplete="off" /></label></p>
+
+    {intro && (
+      <section class="qz__intro">
+        <p class="eyebrow">{quiz.eyebrow}</p>
+        <h1 class="display qz__title">{quiz.title}</h1>
+        <p class="muted qz__lede">{quiz.intro}</p>
+      </section>
+    )}
+
+    {quiz.questions.map((q, j) => (
+      <fieldset class="step" data-step>
+        <legend class="step__q" tabindex="-1">{q.q}</legend>
+        {q.help && <p class="step__help muted">{q.help}</p>}
+        <div class="opts">
+          {q.options.map((o, k) => (
+            <label class="opt">
+              <input type="radio" name={q.name} value={o} required={k === 0} />
+              <span class="opt__box">
+                <span class="opt__key" aria-hidden="true">{String.fromCharCode(65 + k)}</span>
+                <span class="opt__text">{o}</span>
+                <span class="opt__check" aria-hidden="true"></span>
+              </span>
+            </label>
+          ))}
+        </div>
+        <p class="step__error" role="alert" data-error></p>
+      </fieldset>
+    ))}
+
+    <fieldset class="step step--contact" data-step>
+      <legend class="step__q" tabindex="-1">{quiz.contact.q}</legend>
+      <p class="step__help muted">{quiz.contact.help}</p>
+      <div class="fields">
+        <label class="field"><span>Your name</span><input name="name" autocomplete="name" required /></label>
+        <label class="field"><span>Business name</span><input name="business_name" autocomplete="organization" required /></label>
+        <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required /></label>
+        <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required /></label>
+        <label class="field field--wide"><span>City you're based in</span><input name="city" autocomplete="address-level2" required /></label>
+      </div>
+      <p class="step__error" role="alert" data-error></p>
+      <button class="btn qz__submit" type="submit" data-submit>{quiz.contact.submit} <Icon name="arrow" size={18} /></button>
+      <p class="qz__consent">{quiz.contact.consent} See our <a href="/privacy/">Privacy Policy</a>.</p>
+    </fieldset>
+
+    <section class="step step--done" data-done tabindex="-1" hidden>
+      <span class="done__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg></span>
+      <h2 class="display done__title" data-done-title>{quiz.done.title}</h2>
+      <p class="muted done__body">{quiz.done.body}</p>
+      {!card && <a class="btn btn--ghost" href="/">Back to the site</a>}
+    </section>
+
+    <nav class="qz__nav" data-nav>
+      <button class="qz__back" type="button" data-back>← Back</button>
+      <button class="btn qz__next" type="button" data-next>Next <Icon name="arrow" size={18} /></button>
+    </nav>
+  </form>
+</div>
+
+<style>
+  .quiz { position: relative; text-align: left; scroll-margin-top: 88px; }
+  .quiz--card {
+    width: 100%; max-width: 680px; margin-inline: auto; padding: clamp(1.25rem, 4vw, 2.25rem);
+    border-radius: var(--radius-lg); background: rgb(255 255 255 / 0.04); border: 1px solid var(--line-dark);
+    box-shadow: 0 40px 120px -40px rgb(59 0 252 / 0.6); backdrop-filter: blur(6px);
+  }
+
+  .qz__progress { display: none; margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+  :global(.js) .qz__progress { display: block; }
+  .quiz--card .qz__progress { margin-bottom: 1.5rem; }
+  .qz__bar { height: 4px; border-radius: 4px; background: var(--line-dark); overflow: hidden; }
+  .qz__bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--brand), var(--brand-hi)); border-radius: inherit; transition: width 0.6s var(--ease); }
+  .qz__count { margin-top: 0.7rem; font-size: 0.85rem; }
+
+  .qz__intro { margin-bottom: 2.5rem; }
+  .qz__title { font-size: clamp(2.4rem, 7vw, 4.5rem); margin-top: 1rem; }
+  .qz__lede { margin-top: 1rem; font-size: 1.1rem; max-width: 34rem; }
+
+  .step { border: 0; margin: 0 0 3rem; padding: 0; min-width: 0; }
+  :global(.js) .step { display: none; margin: 0; }
+  :global(.js) .step.is-active { display: block; animation: stepIn 0.55s var(--ease); }
+  :global(.js) .step.is-back { animation-name: stepBack; }
+  @keyframes stepIn { from { opacity: 0; transform: translateX(36px); } }
+  @keyframes stepBack { from { opacity: 0; transform: translateX(-36px); } }
+  .step__q { padding: 0; font-family: var(--font-body); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 750; letter-spacing: -0.025em; line-height: 1.15; outline: none; }
+  .quiz--card .step__q { font-size: clamp(1.35rem, 2.6vw, 1.85rem); }
+  .step__help { margin-top: 0.75rem; font-size: 1.02rem; }
+
+  .opts { display: grid; gap: 0.6rem; margin-top: 1.5rem; }
+  .quiz--card .opts { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .opt { position: relative; display: block; cursor: pointer; }
+  .opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .opt__box {
+    display: flex; align-items: center; gap: 1rem; height: 100%; padding: 1rem 1.15rem; border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.05); border: 1px solid var(--line-dark); font-size: 1.05rem; font-weight: 550;
+    transition: background 0.25s, border-color 0.25s, transform 0.35s var(--ease);
+  }
+  .opt:hover .opt__box { background: rgb(255 255 255 / 0.09); border-color: rgb(255 255 255 / 0.22); transform: translateX(4px); }
+  .opt__key { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-dark); font-size: 0.8rem; font-weight: 700; color: var(--muted-dark); transition: all 0.25s; }
+  .opt__text { flex: 1; }
+  .opt__check { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / 0.3); transition: all 0.25s; }
+  .opt input:focus-visible + .opt__box { outline: 2px solid var(--brand-hi); outline-offset: 3px; }
+  .opt input:checked + .opt__box { background: rgb(59 0 252 / 0.28); border-color: var(--brand-hi); }
+  .opt input:checked + .opt__box .opt__key { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .opt input:checked + .opt__box .opt__check { border-color: var(--brand-hi); background: var(--brand-hi) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-8.5'/%3E%3C/svg%3E") center / 14px no-repeat; }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-top: 1.5rem; }
+  .field--wide { grid-column: 1 / -1; }
+  @media (max-width: 560px) { .fields { grid-template-columns: 1fr; } }
+  .field span { display: block; margin-bottom: 0.4rem; font-size: 0.88rem; font-weight: 600; color: var(--muted-dark); }
+  .field input { width: 100%; padding: 0.95rem 1rem; border-radius: var(--radius); border: 1px solid var(--line-dark); background: rgb(255 255 255 / 0.05); color: #fff; font: inherit; transition: border-color 0.25s, background 0.25s; }
+  .field input:focus { outline: none; border-color: var(--brand-hi); background: rgb(255 255 255 / 0.08); }
+  .field input[aria-invalid="true"] { border-color: #ff6b81; }
+  .qz__submit { margin-top: 1.5rem; }
+  .qz__consent { margin-top: 1rem; font-size: 0.78rem; line-height: 1.5; color: rgb(169 165 196 / 0.8); }
+  .qz__consent a { color: inherit; }
+  :global(.js) .qz__submit[disabled] { opacity: 0.6; pointer-events: none; }
+
+  .step__error { min-height: 1.5em; margin-top: 0.75rem; color: #ff8a9b; font-size: 0.95rem; }
+
+  .qz__nav { display: none; }
+  :global(.js) .qz__nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+  .qz__back { color: var(--muted-dark); font-weight: 600; padding: 0.6rem 0; transition: color 0.2s; }
+  .qz__back:hover { color: #fff; }
+  .qz__back[hidden] { display: block; visibility: hidden; }
+  .qz__next[hidden] { display: none; }
+
+  :global(.js) .qz__progress[hidden], :global(.js) .qz__nav[hidden] { display: none; }
+  .step--done { text-align: center; padding-block: 1.5rem; }
+  :global(.js) .step--done:not([hidden]) { display: block; animation: stepIn 0.6s var(--ease); }
+  .done__icon { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: var(--brand); color: #fff; box-shadow: 0 0 0 10px rgb(59 0 252 / 0.2); animation: pop 0.7s var(--ease); }
+  @keyframes pop { from { transform: scale(0.4); opacity: 0; } }
+  .done__title { font-size: clamp(2rem, 5vw, 3.2rem); margin-top: 1.5rem; }
+  .done__body { max-width: 30rem; margin: 1rem auto 1.5rem; font-size: 1.1rem; }
+
+  /* Phones: headings and buttons centered; answer cards stay left-aligned so they're easy to scan */
+  @media (max-width: 899px) {
+    .qz__intro, .step__q, .step__help, .qz__count, .step__error { text-align: center; }
+    .qz__lede { margin-inline: auto; }
+    .step__q { width: 100%; }
+    .qz__submit { display: flex; margin-inline: auto; }
+    .qz__consent { text-align: center; }
+    .opt:hover .opt__box { transform: none; }
+  }
+</style>
+
+<script>
+  type Fbq = (...args: unknown[]) => void;
+
+  document.querySelectorAll<HTMLElement>("[data-quiz-root]").forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>("[data-quiz]")!;
+    const steps = Array.from(form.querySelectorAll<HTMLElement>("[data-step]"));
+    const intro = form.querySelector<HTMLElement>(".qz__intro");
+    const nav = form.querySelector<HTMLElement>("[data-nav]")!;
+    const back = form.querySelector<HTMLButtonElement>("[data-back]")!;
+    const next = form.querySelector<HTMLButtonElement>("[data-next]")!;
+    const bar = root.querySelector<HTMLElement>("[data-bar]")!;
+    const countLabel = root.querySelector<HTMLElement>("[data-count-label]")!;
+    const progress = root.querySelector<HTMLElement>("[data-progress-wrap]")!;
+    const done = form.querySelector<HTMLElement>("[data-done]")!;
+    // We validate step by step ourselves; without JS the browser's own checks apply
+    form.noValidate = true;
+    let current = 0;
+    // Auto-advance only for taps and clicks, not arrow keys moving between radios
+    let pointerPick = false;
+
+    // Keep the top of the quiz on screen as it changes height
+    const keepInView = () => {
+      if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    function show(i: number, dir = 1) {
+      steps[current].classList.remove("is-active", "is-back");
+      current = i;
+      const step = steps[current];
+      step.classList.add("is-active");
+      step.classList.toggle("is-back", dir < 0);
+      if (intro) intro.hidden = current > 0;
+      back.hidden = current === 0;
+      const isContact = step.classList.contains("step--contact");
+      next.hidden = isContact;
+      bar.style.width = `${(current / steps.length) * 100}%`;
+      countLabel.textContent = isContact ? "Last step" : `Question ${current + 1} of ${steps.length}`;
+      if (dir !== 0) {
+        step.querySelector<HTMLElement>("legend")?.focus({ preventScroll: true });
+        keepInView();
+      }
+    }
+
+    function validStep(step: HTMLElement) {
+      const err = step.querySelector<HTMLElement>("[data-error]");
+      const radios = step.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+      if (radios.length) {
+        const ok = Array.from(radios).some((r) => r.checked);
+        if (err) err.textContent = ok ? "" : "Pick one to continue.";
+        return ok;
+      }
+      let first: HTMLInputElement | null = null;
+      step.querySelectorAll<HTMLInputElement>("input[required]").forEach((input) => {
+        const ok = input.value.trim() !== "" && input.checkValidity();
+        input.setAttribute("aria-invalid", String(!ok));
+        if (!ok && !first) first = input;
+      });
+      if (err) err.textContent = first ? "Please fill in each field so we can reach you." : "";
+      (first as HTMLInputElement | null)?.focus();
+      return !first;
+    }
+
+    form.addEventListener("pointerdown", (e) => {
+      pointerPick = Boolean((e.target as HTMLElement).closest(".opt"));
+    });
+    form.addEventListener("change", (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.type !== "radio") return;
+      const step = steps[current];
+      step.querySelector<HTMLElement>("[data-error]")!.textContent = "";
+      if (pointerPick) {
+        pointerPick = false;
+        setTimeout(() => { if (steps[current] === step) show(current + 1); }, 320);
+      }
+    });
+    form.addEventListener("input", (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.getAttribute("aria-invalid") === "true" && input.value.trim() && input.checkValidity()) input.setAttribute("aria-invalid", "false");
+    });
+    next.addEventListener("click", () => { if (validStep(steps[current])) show(current + 1); });
+    back.addEventListener("click", () => { if (current > 0) show(current - 1, -1); });
+
+    // Enter on a question moves forward instead of submitting the whole form
+    form.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !steps[current].classList.contains("step--contact")) {
+        e.preventDefault();
+        next.click();
+      }
+    });
+
+    // Buttons elsewhere on the page that jump to the quiz put focus on the current question
+    document.querySelectorAll<HTMLAnchorElement>(`a[href="#${root.id}"]`).forEach((a) =>
+      a.addEventListener("click", () => setTimeout(() => steps[current].querySelector<HTMLElement>("legend")?.focus({ preventScroll: true }), 450)),
+    );
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const contact = steps[steps.length - 1];
+      if (!validStep(contact)) return;
+      const firstMissing = steps.findIndex((s) => !s.classList.contains("step--contact") && !s.querySelector("input:checked"));
+      if (firstMissing >= 0) { show(firstMissing, -1); validStep(steps[firstMissing]); return; }
+
+      const submit = form.querySelector<HTMLButtonElement>("[data-submit]")!;
+      const err = contact.querySelector<HTMLElement>("[data-error]")!;
+      submit.disabled = true;
+      try {
+        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+        const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
+        if (!res.ok) throw new Error(String(res.status));
+        (window as unknown as { fbq?: Fbq }).fbq?.("track", "Lead");
+        const first = (new FormData(form).get("name") as string).trim().split(/\s+/)[0];
+        if (first) form.querySelector<HTMLElement>("[data-done-title]")!.textContent = `You're all set, ${first}`;
+        steps[current].classList.remove("is-active");
+        nav.hidden = true;
+        progress.hidden = true;
+        done.hidden = false;
+        done.focus({ preventScroll: true });
+        keepInView();
+      } catch {
+        err.textContent = "Something went wrong sending your answers. Please try again.";
+        submit.disabled = false;
+      }
+    });
+
+    show(0, 0);
+  });
+</script>
