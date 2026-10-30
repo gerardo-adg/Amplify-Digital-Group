@@ -32,9 +32,10 @@ export const quiz = {
     },
     {
       name: "annual_revenue",
-      q: "Roughly how much does your business make in a year?",
-      help: "A ballpark is fine, and it stays between us. It helps us plan the right campaign for you.",
-      options: ["Under $250K", "$250K–$500K", "$500K–$1M", "$1M–$5M", "Over $5M"],
+      q: "What's your annual revenue?",
+      help: "A ballpark is fine, and it stays between us.",
+      // One range per kind of buyer; $250K–$1M businesses are treated the same
+      options: ["Under $250K", "$250K–$1M", "$1M–$5M", "Over $5M"],
     },
     {
       name: "ad_budget",
