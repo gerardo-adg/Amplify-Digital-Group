@@ -28,7 +28,7 @@ export const quiz = {
     {
       name: "timeline",
       q: "When do you want to get started?",
-      options: ["As soon as possible", "In the next month", "In 1 to 3 months", "Just looking for now"],
+      options: ["As Soon as Possible", "Within 30 Days", "In 1–3 Months", "Just Looking for Now"],
     },
     {
       name: "annual_revenue",
