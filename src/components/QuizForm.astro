@@ -215,12 +215,18 @@ const total = quiz.questions.length;
     // Auto-advance only for taps and clicks, not arrow keys moving between radios
     let pointerPick = false;
 
-    type Rule = { label: string; when: Record<string, string[]> };
-    const rules = JSON.parse(root.dataset.priority ?? "{}") as { notFit: Rule; hot: Rule; otherwise: string };
-    const matches = (rule: Rule, data: FormData) =>
-      Object.entries(rule.when).every(([field, values]) => values.includes(String(data.get(field) ?? "")));
+    type When = Record<string, string[]>;
+    const rules = JSON.parse(root.dataset.priority ?? "{}") as {
+      notFit: { label: string; when: When };
+      hot: { label: string; whenAny: When[] };
+      otherwise: string;
+    };
+    const matches = (when: When, data: FormData) =>
+      Object.entries(when).every(([field, values]) => values.includes(String(data.get(field) ?? "")));
     const priorityOf = (data: FormData) =>
-      matches(rules.notFit, data) ? rules.notFit.label : matches(rules.hot, data) ? rules.hot.label : rules.otherwise;
+      matches(rules.notFit.when, data) ? rules.notFit.label
+        : rules.hot.whenAny.some((w) => matches(w, data)) ? rules.hot.label
+        : rules.otherwise;
 
     // Keep the top of the quiz on screen as it changes height
     const keepInView = () => {

@@ -50,7 +50,7 @@ export const quiz = {
   // Based on a $2K–$3K monthly fee: under $3K total leaves almost nothing for
   // ads, and $5K+ leaves room for both the fee and a real ad budget.
   // A rule matches when every listed question's answer is one of its options.
-  // "Not a fit" is checked first, then "Hot"; everyone else is "Warm".
+  // "Not a fit" is checked first, then each "Hot" rule; everyone else is "Warm".
   priority: {
     notFit: {
       label: "Not a fit",
@@ -58,14 +58,18 @@ export const quiz = {
     },
     hot: {
       label: "🔥 Hot",
-      when: {
-        timeline: ["As Soon as Possible", "Within 30 Days"],
-        annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
-        marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
-      },
+      // Any one of these makes a lead Hot
+      whenAny: [
+        {
+          timeline: ["As Soon as Possible", "Within 30 Days"],
+          annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
+          marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
+        },
+        { timeline: ["As Soon as Possible"], marketing_budget: ["$3K–$5K"] },
+      ],
     },
     otherwise: "Warm",
-  } as { notFit: PriorityRule; hot: PriorityRule; otherwise: string },
+  } as { notFit: PriorityRule; hot: { label: string; whenAny: Record<string, string[]>[] }; otherwise: string },
   contact: {
     q: "Where should we reach you?",
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
