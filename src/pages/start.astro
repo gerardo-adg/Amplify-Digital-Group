@@ -37,7 +37,6 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
           </div>
         )}
         {hasVsl && <p class="hero__caption">{hero.vsl.caption}</p>}
-        <p class="hero__note muted">{hero.ctaNote}</p>
         <div class="hero__quiz">
           <QuizForm card />
         </div>
@@ -153,11 +152,11 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
   .hero__caption { margin-top: 1rem; font-size: 1.05rem; font-weight: 600; }
   @media (max-width: 899px) {
     .hero { padding-top: 5.5rem; }
-    .hero__title { font-size: clamp(1.75rem, 8.4vw, 2.6rem); text-wrap: balance; }
-    .hero__title .l, .hero__title .l__in { display: inline; white-space: normal; }
+    /* Phones: title case at a size where each sentence fits on one line, so the headline is two lines */
+    .hero__title { font-size: min(6.5vw, 2.1rem); font-stretch: 100%; text-transform: none; line-height: 1.15; }
+    .hero__title .l { white-space: nowrap; }
     .hero__sub { margin-top: 0.75rem; font-size: 1rem; }
     .hero__callout { margin-bottom: 0.7rem; font-size: 1rem; }
-    .hero__note { margin-top: 0.6rem; }
     .hero__quiz { margin-top: 1.25rem; }
   }
 
@@ -170,7 +169,6 @@ const title = `Meta ads for contractors: we'll bring the jobs to you | ${site.na
   .head__p { margin-top: 1.4rem; font-size: 1.125rem; }
 
   /* Quiz in the hero */
-  .hero__note { margin-top: 0.9rem; font-size: 0.92rem; }
   .hero__quiz { width: 100%; margin-top: clamp(1.5rem, 4vw, 2.25rem); }
 
   /* Objections */
