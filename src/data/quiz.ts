@@ -33,8 +33,8 @@ export const quiz = {
     {
       name: "annual_revenue",
       q: "Roughly how much does your business make in a year?",
-      help: "A ballpark is fine. It helps us plan the right campaign for you.",
-      options: ["Under $250K", "$250K to $500K", "$500K to $1M", "$1M to $3M", "Over $3M"],
+      help: "A ballpark is fine, and it stays between us. It helps us plan the right campaign for you.",
+      options: ["Under $250K", "$250K–$500K", "$500K–$1M", "$1M–$5M", "Over $5M"],
     },
     {
       name: "ad_budget",
