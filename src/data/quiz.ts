@@ -7,7 +7,7 @@
 export type Question = { name: string; q: string; help?: string; options: string[] };
 
 export const quiz = {
-  eyebrow: "60-second quiz",
+  eyebrow: "30-second quiz",
   title: "See if we're a fit",
   intro: "Answer a few quick questions about your business. If we can help, we'll reach out to you personally.",
   questions: [
@@ -22,12 +22,6 @@ export const quiz = {
         "Painting",
         "Other Home Service",
       ],
-    },
-    {
-      name: "monthly_revenue",
-      q: "Roughly how much does your business bring in each month?",
-      help: "A ballpark is fine. It helps us plan the right campaign for you.",
-      options: ["Under $20K", "$20K to $50K", "$50K to $100K", "Over $100K"],
     },
     {
       name: "biggest_challenge",
