@@ -39,9 +39,9 @@ export const quiz = {
     },
     {
       name: "ad_budget",
-      q: "How much could you put toward ads each month?",
+      q: "How much are you comfortable investing in ads each month?",
       help: "Just the ad spend. You approve every dollar.",
-      options: ["Under $500", "$500 to $1,000", "$1,000 to $3,000", "Over $3,000", "Not sure yet"],
+      options: ["Under $3K", "$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K", "Not Sure Yet"],
     },
   ] satisfies Question[],
   contact: {
