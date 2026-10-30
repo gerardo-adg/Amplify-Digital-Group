@@ -24,19 +24,6 @@ export const quiz = {
       ],
     },
     {
-      // Tells us which avatar we're attracting: referral-built, or already paying for leads
-      name: "lead_source",
-      q: "Where do most of your jobs come from right now?",
-      options: [
-        "Referrals or word of mouth",
-        "Google (ads or search)",
-        "Yelp",
-        "Angi, HomeAdvisor or Thumbtack",
-        "Facebook or Instagram",
-        "Something else",
-      ],
-    },
-    {
       name: "monthly_revenue",
       q: "Roughly how much does your business bring in each month?",
       help: "A ballpark is fine. It helps us plan the right campaign for you.",
