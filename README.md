@@ -43,6 +43,7 @@ On the landing page the quiz is in the hero and every button jumps to it; elsewh
 - Netlify: **Site configuration → Forms → Enable form detection** (once), then redeploy. Leads appear under **Forms → quiz**.
 - Email alerts: **Site configuration → Notifications → Emails and webhooks → Form submission notifications**.
 - A hidden honeypot field (`company_website`) filters out most spam bots.
+- Each lead has a **priority** field (🔥 Hot / Warm / Not a fit) worked out from the answers, so you know who to call first. The rules are `priority` in `src/data/quiz.ts`.
 - With a Meta Pixel ID in `site.ts`, every page tracks `PageView` and each quiz submission tracks `Lead`.
 
 ## Keep it lean

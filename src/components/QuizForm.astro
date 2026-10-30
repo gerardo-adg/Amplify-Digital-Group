@@ -19,7 +19,7 @@ const { card = false, intro = false } = Astro.props;
 const total = quiz.questions.length;
 ---
 
-<div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root>
+<div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root data-priority={JSON.stringify(quiz.priority)}>
   <div class="qz__progress" aria-hidden="true" data-progress-wrap>
     <div class="qz__bar"><span data-bar></span></div>
     <p class="qz__count muted"><span data-count-label>Question 1 of {total}</span></p>
@@ -27,6 +27,8 @@ const total = quiz.questions.length;
 
   <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="company_website" data-quiz>
     <input type="hidden" name="form-name" value="quiz" />
+    <!-- Filled in on submit from the answers: who to call first -->
+    <input type="hidden" name="priority" value="" data-priority-field />
     <p hidden><label>Leave this empty: <input name="company_website" tabindex="-1" autocomplete="off" /></label></p>
 
     {intro && (
@@ -213,6 +215,13 @@ const total = quiz.questions.length;
     // Auto-advance only for taps and clicks, not arrow keys moving between radios
     let pointerPick = false;
 
+    type Rule = { label: string; when: Record<string, string[]> };
+    const rules = JSON.parse(root.dataset.priority ?? "{}") as { notFit: Rule; hot: Rule; otherwise: string };
+    const matches = (rule: Rule, data: FormData) =>
+      Object.entries(rule.when).every(([field, values]) => values.includes(String(data.get(field) ?? "")));
+    const priorityOf = (data: FormData) =>
+      matches(rules.notFit, data) ? rules.notFit.label : matches(rules.hot, data) ? rules.hot.label : rules.otherwise;
+
     // Keep the top of the quiz on screen as it changes height
     const keepInView = () => {
       if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -297,6 +306,7 @@ const total = quiz.questions.length;
 
       const submit = form.querySelector<HTMLButtonElement>("[data-submit]")!;
       const err = contact.querySelector<HTMLElement>("[data-error]")!;
+      form.querySelector<HTMLInputElement>("[data-priority-field]")!.value = priorityOf(new FormData(form));
       submit.disabled = true;
       try {
         const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();

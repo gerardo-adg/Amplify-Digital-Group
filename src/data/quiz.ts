@@ -5,6 +5,7 @@
  */
 
 export type Question = { name: string; q: string; help?: string; options: string[] };
+export type PriorityRule = { label: string; when: Record<string, string[]> };
 
 export const quiz = {
   eyebrow: "30-second quiz",
@@ -44,6 +45,24 @@ export const quiz = {
       options: ["Under $3K", "$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K", "Not Sure Yet"],
     },
   ] satisfies Question[],
+  // Each lead gets a hidden "priority" field so you know who to call first.
+  // A rule matches when every listed question's answer is one of its options.
+  // "Not a fit" is checked first, then "Hot"; everyone else is "Warm".
+  priority: {
+    notFit: {
+      label: "Not a fit",
+      when: { annual_revenue: ["Under $500K"], ad_budget: ["Under $3K"] },
+    },
+    hot: {
+      label: "🔥 Hot",
+      when: {
+        timeline: ["As Soon as Possible", "Within 30 Days"],
+        annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
+        ad_budget: ["$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K"],
+      },
+    },
+    otherwise: "Warm",
+  } as { notFit: PriorityRule; hot: PriorityRule; otherwise: string },
   contact: {
     q: "Where should we reach you?",
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
