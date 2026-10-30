@@ -10,6 +10,8 @@ export const quiz = {
   eyebrow: "30-second quiz",
   title: "See if we're a fit",
   intro: "Answer a few quick questions about your business. If we can help, we'll reach out to you personally.",
+  // Every question qualifies the lead. Easy ones first; the money questions
+  // come last, once people have momentum.
   questions: [
     {
       name: "business_type",
@@ -24,26 +26,21 @@ export const quiz = {
       ],
     },
     {
-      name: "biggest_challenge",
-      q: "What's your biggest challenge right now?",
-      options: [
-        "Not enough leads",
-        "The leads I get aren't good",
-        "Work comes and goes",
-        "I got burned by a marketer before",
-        "I don't have time for marketing",
-      ],
+      name: "timeline",
+      q: "When do you want to get started?",
+      options: ["As soon as possible", "In the next month", "In 1 to 3 months", "Just looking for now"],
+    },
+    {
+      name: "annual_revenue",
+      q: "Roughly how much does your business make in a year?",
+      help: "A ballpark is fine. It helps us plan the right campaign for you.",
+      options: ["Under $250K", "$250K to $500K", "$500K to $1M", "$1M to $3M", "Over $3M"],
     },
     {
       name: "ad_budget",
       q: "How much could you put toward ads each month?",
       help: "Just the ad spend. You approve every dollar.",
       options: ["Under $500", "$500 to $1,000", "$1,000 to $3,000", "Over $3,000", "Not sure yet"],
-    },
-    {
-      name: "timeline",
-      q: "When do you want to get started?",
-      options: ["As soon as possible", "In the next month", "In 1 to 3 months", "Just looking for now"],
     },
   ] satisfies Question[],
   contact: {
