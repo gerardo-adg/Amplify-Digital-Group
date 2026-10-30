@@ -20,9 +20,12 @@ const total = quiz.questions.length;
 ---
 
 <div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root data-priority={JSON.stringify(quiz.priority)}>
-  <div class="qz__progress" aria-hidden="true" data-progress-wrap>
-    <div class="qz__bar"><span data-bar></span></div>
-    <p class="qz__count muted"><span data-count-label>Question 1 of {total}</span></p>
+  <!-- One segment per step (questions + contact). Fills and pulses as each step is done. -->
+  <div class="qz__progress" data-progress-wrap>
+    <ol class="qz__segs" aria-hidden="true">
+      {Array.from({ length: total + 1 }, () => <li class="qz__seg"><span></span></li>)}
+    </ol>
+    <p class="sr-only" aria-live="polite" data-count-label>Question 1 of {total}</p>
   </div>
 
   <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="company_website" data-quiz>
@@ -99,9 +102,27 @@ const total = quiz.questions.length;
   .qz__progress { display: none; margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
   :global(.js) .qz__progress { display: block; }
   .quiz--card .qz__progress { margin-bottom: 1.5rem; }
-  .qz__bar { height: 4px; border-radius: 4px; background: var(--line-dark); overflow: hidden; }
-  .qz__bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--brand), var(--brand-hi)); border-radius: inherit; transition: width 0.6s var(--ease); }
-  .qz__count { margin-top: 0.7rem; font-size: 0.85rem; }
+  .qz__segs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; list-style: none; margin: 0; padding: 0; }
+  .qz__seg { position: relative; height: 6px; border-radius: 99px; background: var(--line-dark); overflow: visible; }
+  .qz__seg span {
+    position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), var(--brand-hi));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.55s var(--ease);
+  }
+  /* Done: filled, with a quick glow when it completes */
+  .qz__seg.is-done span { transform: scaleX(1); }
+  .qz__seg.is-pop span { animation: segPop 0.7s var(--ease); }
+  @keyframes segPop {
+    0% { box-shadow: 0 0 0 0 rgb(107 61 255 / 0.7); }
+    45% { box-shadow: 0 0 0 5px rgb(107 61 255 / 0.25); filter: brightness(1.35); }
+    100% { box-shadow: 0 0 0 0 rgb(107 61 255 / 0); }
+  }
+  /* Current step: a soft shimmer so you can see where you are */
+  .qz__seg.is-current { background: linear-gradient(90deg, rgb(107 61 255 / 0.25), rgb(107 61 255 / 0.55), rgb(107 61 255 / 0.25)); background-size: 200% 100%; animation: segShimmer 1.6s linear infinite; }
+  @keyframes segShimmer { to { background-position: -200% 0; } }
+  /* Finished: the whole bar flashes once */
+  .qz__segs.is-complete .qz__seg span { animation: segFinish 0.8s var(--ease) calc(var(--d, 0) * 70ms); }
+  @keyframes segFinish { 50% { filter: brightness(1.6); transform: scaleX(1) scaleY(1.8); } }
 
   .qz__intro { margin-bottom: 2.5rem; }
   .qz__title { font-size: clamp(2.4rem, 7vw, 4.5rem); margin-top: 1rem; }
@@ -167,7 +188,8 @@ const total = quiz.questions.length;
   /* White card version (landing page hero): dark text on white so the form pops off the dark hero */
   .quiz--card { background: #fff; color: var(--ink); border-color: transparent; box-shadow: 0 40px 120px -30px rgb(59 0 252 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.1); backdrop-filter: none; }
   .quiz--card .muted { color: var(--muted); }
-  .quiz--card .qz__bar { background: var(--paper-2); }
+  .quiz--card .qz__seg { background: var(--paper-2); }
+  .quiz--card .qz__seg.is-current { background: linear-gradient(90deg, rgb(59 0 252 / 0.12), rgb(59 0 252 / 0.32), rgb(59 0 252 / 0.12)); background-size: 200% 100%; }
   .quiz--card .opt__box { background: var(--paper-2); border-color: var(--line); }
   .quiz--card .opt:hover .opt__box { background: var(--brand-soft); border-color: rgb(59 0 252 / 0.35); }
   .quiz--card .opt__key { border-color: rgb(7 5 26 / 0.15); color: var(--muted); background: #fff; }
@@ -186,7 +208,7 @@ const total = quiz.questions.length;
 
   /* Phones: headings and buttons centered; answer cards stay left-aligned so they're easy to scan */
   @media (max-width: 899px) {
-    .qz__intro, .step__q, .step__help, .qz__count, .step__error { text-align: center; }
+    .qz__intro, .step__q, .step__help, .step__error { text-align: center; }
     .qz__lede { margin-inline: auto; }
     .step__q { width: 100%; }
     .qz__submit { display: flex; margin-inline: auto; }
@@ -205,7 +227,8 @@ const total = quiz.questions.length;
     const nav = form.querySelector<HTMLElement>("[data-nav]")!;
     const back = form.querySelector<HTMLButtonElement>("[data-back]")!;
     const next = form.querySelector<HTMLButtonElement>("[data-next]")!;
-    const bar = root.querySelector<HTMLElement>("[data-bar]")!;
+    const segs = Array.from(root.querySelectorAll<HTMLElement>(".qz__seg"));
+    segs.forEach((seg, i) => seg.style.setProperty("--d", String(i)));
     const countLabel = root.querySelector<HTMLElement>("[data-count-label]")!;
     const progress = root.querySelector<HTMLElement>("[data-progress-wrap]")!;
     const done = form.querySelector<HTMLElement>("[data-done]")!;
@@ -243,7 +266,17 @@ const total = quiz.questions.length;
       back.hidden = current === 0;
       const isContact = step.classList.contains("step--contact");
       next.hidden = isContact;
-      bar.style.width = `${(current / steps.length) * 100}%`;
+      segs.forEach((seg, k) => {
+        const wasDone = seg.classList.contains("is-done");
+        seg.classList.toggle("is-done", k < current);
+        seg.classList.toggle("is-current", k === current);
+        // Pop only the segment that just got completed
+        if (k < current && !wasDone && dir > 0) {
+          seg.classList.remove("is-pop");
+          void seg.offsetWidth;
+          seg.classList.add("is-pop");
+        }
+      });
       countLabel.textContent = isContact ? "Last step" : `Question ${current + 1} of ${steps.length - 1}`;
       if (dir !== 0) {
         step.querySelector<HTMLElement>("legend")?.focus({ preventScroll: true });
@@ -321,9 +354,12 @@ const total = quiz.questions.length;
         (window as unknown as { fbq?: Fbq }).fbq?.("track", "Lead");
         const first = (new FormData(form).get("name") as string).trim().split(/\s+/)[0];
         if (first) form.querySelector<HTMLElement>("[data-done-title]")!.textContent = `You're all set, ${first}`;
+        // Fill the last segment and flash the whole bar, then show the confirmation
+        segs.forEach((seg) => { seg.classList.add("is-done"); seg.classList.remove("is-current"); });
+        root.querySelector(".qz__segs")!.classList.add("is-complete");
+        countLabel.textContent = "All done";
         steps[current].classList.remove("is-active");
         nav.hidden = true;
-        progress.hidden = true;
         done.hidden = false;
         done.focus({ preventScroll: true });
         keepInView();
