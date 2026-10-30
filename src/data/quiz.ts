@@ -39,9 +39,10 @@ export const quiz = {
       options: ["Under $500K", "$500K–$1M", "$1M–$5M", "Over $5M"],
     },
     {
-      name: "ad_budget",
-      q: "How much are you comfortable investing in ads each month?",
-      help: "Just the ad spend. You approve every dollar.",
+      name: "marketing_budget",
+      // Total budget, not just ad spend, so nobody expects $1K to cover everything
+      q: "What's your total monthly marketing budget?",
+      help: "Our service plus your ad spend, combined. A ballpark is fine.",
       options: ["Under $3K", "$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K", "Not Sure Yet"],
     },
   ] satisfies Question[],
@@ -51,14 +52,14 @@ export const quiz = {
   priority: {
     notFit: {
       label: "Not a fit",
-      when: { annual_revenue: ["Under $500K"], ad_budget: ["Under $3K"] },
+      when: { annual_revenue: ["Under $500K"], marketing_budget: ["Under $3K"] },
     },
     hot: {
       label: "🔥 Hot",
       when: {
         timeline: ["As Soon as Possible", "Within 30 Days"],
         annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
-        ad_budget: ["$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K"],
+        marketing_budget: ["$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K"],
       },
     },
     otherwise: "Warm",
