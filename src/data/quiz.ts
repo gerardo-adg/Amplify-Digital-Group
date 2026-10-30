@@ -65,7 +65,7 @@ export const quiz = {
           annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
           marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
         },
-        { timeline: ["As Soon as Possible"], marketing_budget: ["$3K–$5K"] },
+        { timeline: ["As Soon as Possible", "Within 30 Days"], marketing_budget: ["$3K–$5K"] },
       ],
     },
     otherwise: "Warm",
