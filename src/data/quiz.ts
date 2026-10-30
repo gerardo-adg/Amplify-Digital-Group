@@ -14,7 +14,14 @@ export const quiz = {
     {
       name: "business_type",
       q: "What kind of business do you run?",
-      options: ["Roofing", "HVAC", "Plumbing", "Landscaping", "Remodeling or construction", "Other home service"],
+      options: [
+        "Roofing",
+        "General Contractor or Remodeling",
+        "HVAC, Plumbing or Electrical",
+        "Landscaping",
+        "Painting",
+        "Other Home Service",
+      ],
     },
     {
       // Tells us which avatar we're attracting: referral-built, or already paying for leads
