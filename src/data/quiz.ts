@@ -47,19 +47,21 @@ export const quiz = {
     },
   ] satisfies Question[],
   // Each lead gets a hidden "priority" field so you know who to call first.
+  // Based on a $2K–$3K monthly fee: under $3K total leaves almost nothing for
+  // ads, and $5K+ leaves room for both the fee and a real ad budget.
   // A rule matches when every listed question's answer is one of its options.
   // "Not a fit" is checked first, then "Hot"; everyone else is "Warm".
   priority: {
     notFit: {
       label: "Not a fit",
-      when: { annual_revenue: ["Under $500K"], marketing_budget: ["Under $3K"] },
+      when: { marketing_budget: ["Under $3K"] },
     },
     hot: {
       label: "🔥 Hot",
       when: {
         timeline: ["As Soon as Possible", "Within 30 Days"],
         annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
-        marketing_budget: ["$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K"],
+        marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
       },
     },
     otherwise: "Warm",
