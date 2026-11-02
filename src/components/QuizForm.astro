@@ -164,6 +164,10 @@ const total = quiz.questions.length;
   .field input:focus { outline: none; border-color: var(--brand-hi); background: rgb(255 255 255 / 0.08); }
   .field input[aria-invalid="true"] { border-color: #ff6b81; }
   .qz__submit { margin-top: 1.5rem; }
+  /* Contact step: heading, note, button and consent centered on every screen; field labels stay left */
+  .step--contact .step__q, .step--contact .step__help, .step--contact .step__error, .step--contact .qz__consent { text-align: center; }
+  .step--contact .step__q { width: 100%; }
+  .step--contact .qz__submit { display: flex; margin-inline: auto; }
   .qz__consent { margin-top: 1rem; font-size: 0.78rem; line-height: 1.5; color: rgb(169 165 196 / 0.8); }
   .qz__consent a { color: inherit; }
   :global(.js) .qz__submit[disabled] { opacity: 0.6; pointer-events: none; }

@@ -1,36 +1,24 @@
 ---
 /**
- * Just the logo and the one action. No menu: every click on this page
- * should lead to the quiz.
+ * Just the logo, centered. No menu and no button: the quiz sits right in
+ * the hero, so nothing up here pulls attention away from it.
  */
 import Logo from "./Logo.astro";
-import { site, hero } from "../data/site";
-
-interface Props {
-  // Where the button goes; the landing page points it at its own quiz
-  ctaHref?: string;
-}
-const { ctaHref = site.ctaUrl } = Astro.props;
+import { site } from "../data/site";
 ---
 <header class="hdr" data-header>
   <div class="wrap hdr__in">
     <a href="#top" class="hdr__logo" aria-label={`${site.name}, back to top`}><Logo height={42} eager /></a>
-    <a class="btn hdr__cta" href={ctaHref}>{hero.primaryCta}</a>
   </div>
 </header>
 
 <style>
   .hdr { position: fixed; inset: 0 0 auto; z-index: 50; color: #fff; transition: background 0.4s var(--ease), backdrop-filter 0.4s; }
   .hdr.is-scrolled { background: rgb(7 5 26 / 0.94); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 1px 0 var(--line-dark); }
-  .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 2rem; height: 76px; }
+  .hdr__in { display: flex; align-items: center; justify-content: center; height: 76px; }
   .hdr__logo { display: block; transition: opacity 0.3s; }
   .hdr__logo:hover { opacity: 0.85; }
-  .hdr__cta { padding: 0.7rem 1.15rem; font-size: 0.92rem; }
-  /* Phones: logo alone in the middle; the hero's button sits right below */
-  @media (max-width: 899px) {
-    .hdr__in { justify-content: center; height: 68px; }
-    .hdr__cta { display: none; }
-  }
+  @media (max-width: 899px) { .hdr__in { height: 68px; } }
   @media (max-width: 420px) { .hdr__logo :global(.logo) { height: 34px; } }
 </style>
 
