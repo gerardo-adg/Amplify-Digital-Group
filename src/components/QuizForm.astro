@@ -265,7 +265,9 @@ const total = quiz.questions.length;
       if (intro) intro.hidden = current > 0;
       back.hidden = current === 0;
       const isContact = step.classList.contains("step--contact");
-      next.hidden = isContact;
+      // Taps move on by themselves, so Next only shows for keyboard picks (see the
+      // change handler) or on a question answered earlier, e.g. after going Back
+      next.hidden = isContact || !step.querySelector("input:checked");
       segs.forEach((seg, k) => {
         const wasDone = seg.classList.contains("is-done");
         seg.classList.toggle("is-done", k < current);
@@ -306,6 +308,18 @@ const total = quiz.questions.length;
     form.addEventListener("pointerdown", (e) => {
       pointerPick = Boolean((e.target as HTMLElement).closest(".opt"));
     });
+    // Tapping the answer that's already selected doesn't fire "change", so move on here
+    form.addEventListener("click", (e) => {
+      const input = (e.target as HTMLElement).closest(".opt")?.querySelector("input");
+      if (!input || !pointerPick || !input.checked || input.dataset.wasChecked !== "1") return;
+      pointerPick = false;
+      const step = steps[current];
+      setTimeout(() => { if (steps[current] === step) show(current + 1); }, 200);
+    });
+    form.addEventListener("pointerdown", (e) => {
+      const input = (e.target as HTMLElement).closest(".opt")?.querySelector("input");
+      if (input) input.dataset.wasChecked = input.checked ? "1" : "0";
+    });
     form.addEventListener("change", (e) => {
       const input = e.target as HTMLInputElement;
       if (input.type !== "radio") return;
@@ -314,6 +328,8 @@ const total = quiz.questions.length;
       if (pointerPick) {
         pointerPick = false;
         setTimeout(() => { if (steps[current] === step) show(current + 1); }, 320);
+      } else {
+        next.hidden = false;
       }
     });
     form.addEventListener("input", (e) => {
