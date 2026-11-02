@@ -73,7 +73,7 @@ export const quiz = {
   contact: {
     q: "Where should we reach you?",
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
-    submit: "Get my free strategy call",
+    submit: "Apply Now",
     // Consent for calls and texts (TCPA). Have this reviewed if you text leads.
     consent:
       "By sending this, you agree that Amplify Digital Group may contact you by call, text or email about your inquiry, including with automated technology. Consent isn't a condition of any purchase. Message and data rates may apply. Reply STOP to opt out.",
