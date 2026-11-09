@@ -13,7 +13,7 @@ export const site = {
   url: "https://amplifydigitalgroup.net",
   description:
     "Amplify Digital Group runs Meta ads for service businesses, backed by high-quality content and websites built to turn clicks into booked jobs.",
-  email: "hello@amplifydigitalgroup.net", // CONFIRM
+  email: "gerardo@amplifydigitalgroup.net",
   phone: { display: "", tel: "" }, // e.g. { display: "(916) 555-0100", tel: "+19165550100" }
   // Every "get started" button goes to the quiz funnel
   ctaUrl: "/quiz/",
