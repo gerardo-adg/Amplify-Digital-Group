@@ -1,5 +1,5 @@
 /**
- * Every word and number on the landing page lives here.
+ * Every word and number on the website and the landing page lives here.
  *
  * Anything marked `sample: true` is a stand-in. It renders with a small
  * "Sample" tag so nobody mistakes it for a real result, and it is left out
@@ -46,32 +46,110 @@ export const hero = {
 };
 
 export type Service = {
+  slug: string;
   title: string;
+  // Short line for cards and the menu
   body: string;
   points: string[];
   icon: "web" | "video" | "ads";
   // The main service gets the big card
   main?: boolean;
+  // Its own page at /services/<slug>/
+  page: {
+    seoTitle: string;
+    seoDescription: string;
+    headline: string;
+    intro: string;
+    included: { title: string; body: string }[];
+    forWho: string;
+  };
 };
 export const services: Service[] = [
   {
+    slug: "meta-ads",
     icon: "ads",
     main: true,
     title: "Meta ads",
     body: "Our main service. Facebook and Instagram campaigns that put your business in front of the people in your area who need what you do, and turn them into leads.",
     points: ["We script, film and edit your ads", "We launch and manage your campaigns", "Targeted to the areas you serve", "Budgets you approve"],
+    page: {
+      seoTitle: "Meta ads for contractors and home-service businesses",
+      seoDescription:
+        "Facebook and Instagram ads for contractors, done for you: we script, film and edit the ads, then launch and manage the campaigns in the areas you serve.",
+      headline: "Facebook & Instagram ads that bring in real jobs.",
+      intro:
+        "Meta ads are what we do best. We handle the whole thing: the script, the shoot, the edit, the campaign and the day-to-day management. Your job is to show up for the shoot and answer the phone.",
+      included: [
+        { title: "Scripting", body: "We write every ad, so you know exactly what to say before the camera rolls." },
+        { title: "Filming and editing", body: "We film on location and cut the footage into ads made for Facebook and Instagram." },
+        { title: "Campaign setup", body: "We build your campaigns and aim them at the people in the areas you serve." },
+        { title: "Ongoing management", body: "We keep running and managing your campaigns after launch." },
+        { title: "Budgets you approve", body: "You decide what goes into ads. Nothing gets spent without your OK." },
+      ],
+      forWho: "Contractors and home-service businesses that can take on more work and want a steadier flow of jobs than referrals alone.",
+    },
   },
   {
+    slug: "content",
     icon: "video",
     title: "High-quality content",
     body: "We come to you, film the work and the people, and cut it for your ads, your site and your social.",
     points: ["On-site shoots", "Short-form for Reels and TikTok", "Ad creative that stops the scroll"],
+    page: {
+      seoTitle: "Video content for contractors",
+      seoDescription:
+        "On-site video shoots for contractors and home-service businesses: ad creative, short-form for Reels and TikTok, and footage for your website.",
+      headline: "Video that shows people why they should pick you.",
+      intro:
+        "We come to you and film the work, the crew and the people behind the business. Then we cut it into ads, short-form videos for Reels and TikTok, and footage for your website.",
+      included: [
+        { title: "On-site shoots", body: "We film at your jobs and your shop, where the real work happens." },
+        { title: "Scripts and coaching", body: "Not comfortable on camera? We script it and guide you through every take." },
+        { title: "Ad creative", body: "Videos built to stop the scroll and get people to reach out." },
+        { title: "Short-form for social", body: "Vertical cuts for Instagram Reels, Facebook and TikTok." },
+      ],
+      forWho: "Owners who know their work is good but don't have the time, gear or know-how to show it off on video.",
+    },
   },
   {
+    slug: "websites",
     icon: "web",
     title: "Websites",
     body: "Fast, good-looking sites built around one goal: getting the visitor to call or book.",
     points: ["Custom design, no templates", "Built for phones first", "Schema markup built in"],
+    page: {
+      seoTitle: "Websites for contractors",
+      seoDescription:
+        "Custom websites for contractors and home-service businesses: fast, built for phones first, with search-ready schema markup and a clear path to call or request an estimate.",
+      headline: "A website that turns visitors into calls.",
+      intro:
+        "Your ads and your reputation send people to your website. We build sites that look the part, load fast on a phone and make it easy to call or ask for an estimate.",
+      included: [
+        { title: "Custom design", body: "Built for your business and your brand, not a template." },
+        { title: "Built for phones first", body: "Most of your visitors are on a phone, so that's where we start." },
+        { title: "Search-ready", body: "Schema markup, page titles and descriptions set up so search engines understand your business." },
+        { title: "A clear next step", body: "Click-to-call and estimate forms on every page, so visitors know what to do." },
+      ],
+      forWho: "Businesses whose current site is slow, outdated or hard to use on a phone, or who don't have one yet.",
+    },
+  },
+];
+
+// The main site's menu
+export const nav = [
+  { label: "Services", href: "/services/" },
+  { label: "Results", href: "/results/" },
+  { label: "About", href: "/about/" },
+];
+
+// A website we built: shown on Results and the Websites page
+export const websiteProjects = [
+  {
+    client: "GM Roofing",
+    place: "Sacramento Valley, CA",
+    url: "https://gmroofs.com/",
+    body: "A new website for GM Roofing, with a page for every service and a free estimate form, plus video content for their marketing.",
+    tags: ["Website", "Video"],
   },
 ];
 

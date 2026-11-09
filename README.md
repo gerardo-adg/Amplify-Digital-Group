@@ -14,12 +14,19 @@ Deploys on Netlify from `netlify.toml` (build `npm run build`, publish `dist`).
 
 | URL | What it is | File |
 |---|---|---|
-| `/start/` | **Ads landing page.** Use this link in Meta ads. The quiz sits right in the hero. | `src/pages/start.astro` |
-| `/quiz/` | The same quiz on its own page, for direct links | `src/pages/quiz/index.astro` |
+| `/` | Home page | `src/pages/index.astro` |
+| `/services/` and `/services/<slug>/` | Services overview, plus one page per service (Meta ads, content, websites) | `src/pages/services/` (content: `services` in `src/data/site.ts`) |
+| `/results/` | Client stories with their videos, and websites we've built | `src/pages/results.astro` |
+| `/about/` | About us | `src/pages/about.astro` |
+| `/quiz/` | The quiz every Apply Now button leads to | `src/pages/quiz/index.astro` |
+| `/start/` | **Ads landing page.** Use this link in Meta ads. No menu, no links away from the quiz. | `src/pages/start.astro` |
 | `/privacy/` | Privacy policy | `src/pages/privacy.astro` |
-| `/` | Main website (not built yet). Until it is, Netlify redirects `/` to `/start/` (see `netlify.toml`); remove that redirect when `src/pages/index.astro` is added. | — |
 
-Both the main website and the landing page share the same theme: colors, fonts and spacing in `src/styles/global.css`, plus the logo, buttons, video player and footer components.
+The website and the landing page share one theme: colors, fonts and spacing in `src/styles/global.css`, plus the logo, buttons, video player, quiz and footer. Website-only section styles are in `src/styles/site.css`; the website header with its menu is `src/components/SiteHeader.astro`, and the section building blocks are in `src/components/site/`.
+
+## Connecting your domain
+
+In Netlify: **Domain management → Add a domain** and follow the DNS steps (Netlify gives you the records to add at your registrar). HTTPS turns on automatically once DNS is pointed. If your domain isn't amplifydigitalgroup.net, change `url` in `src/data/site.ts` so canonical links, the sitemap and schema use it.
 
 ## Where things live
 

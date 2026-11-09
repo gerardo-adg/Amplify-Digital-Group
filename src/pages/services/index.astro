@@ -1,0 +1,36 @@
+---
+import Site from "../../layouts/Site.astro";
+import Icon from "../../components/Icon.astro";
+import PageHero from "../../components/site/PageHero.astro";
+import ServiceCards from "../../components/site/ServiceCards.astro";
+import Process from "../../components/site/Process.astro";
+import CtaBand from "../../components/site/CtaBand.astro";
+import { site, services } from "../../data/site";
+import { pageGraph, serviceNode } from "../../lib/schema";
+
+const title = `Services: Meta ads, video content and websites | ${site.name}`;
+const description = "Meta ads for contractors and home-service businesses, done for you, backed by on-site video content and websites built to turn clicks into booked jobs.";
+const schema = pageGraph({ path: "/services/", name: title, description, type: "CollectionPage", crumbs: [{ name: "Services", path: "/services/" }], nodes: services.map(serviceNode) });
+---
+
+<Site title={title} description={description} schema={schema}>
+  <PageHero crumbs={[{ name: "Services", href: "/services/" }]} title={["Ads, video and websites", "that work together."]} underlineLast sub="Meta ads are our main service. Content and websites make them work harder. We handle all three, so you can get back to the work.">
+    <a class="btn" href={site.ctaUrl}>Apply Now <Icon name="arrow" size={18} /></a>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap"><ServiceCards /></div>
+  </section>
+
+  <section class="section dark" aria-labelledby="process-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow" data-reveal>How it works</p>
+        <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+      </div>
+      <Process />
+    </div>
+  </section>
+
+  <CtaBand />
+</Site>

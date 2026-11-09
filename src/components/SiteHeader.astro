@@ -1,0 +1,86 @@
+---
+/**
+ * Header for the main website: logo, menu and the Apply Now button.
+ * On phones the menu folds into a button that opens a panel.
+ * (The ads landing page uses Header.astro, which is just the logo.)
+ */
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { site, hero, nav } from "../data/site";
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+---
+<header class="sh" data-site-header>
+  <div class="wrap sh__in">
+    <a href="/" class="sh__logo" aria-label={`${site.name} home`}><Logo height={40} eager /></a>
+    <nav class="sh__nav" aria-label="Main">
+      <ul>
+        {nav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn sh__cta" href={site.ctaUrl}>{hero.primaryCta}</a>
+    <button class="sh__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+      <span class="sr-only">Menu</span>
+      <span class="sh__icon sh__icon--open"><Icon name="menu" size={26} /></span>
+      <span class="sh__icon sh__icon--close"><Icon name="close" size={26} /></span>
+    </button>
+  </div>
+  <div class="sh__panel" id="site-menu" data-menu hidden>
+    <ul class="wrap">
+      {nav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+      <li><a class="btn sh__panel-cta" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .sh { position: fixed; inset: 0 0 auto; z-index: 50; color: #fff; transition: background 0.4s var(--ease), box-shadow 0.4s; }
+  .sh.is-scrolled, .sh.is-open { background: rgb(7 5 26 / 0.94); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 1px 0 var(--line-dark); }
+  .sh__in { display: flex; align-items: center; gap: 2rem; height: 76px; }
+  .sh__logo { display: block; transition: opacity 0.3s; }
+  .sh__logo:hover { opacity: 0.85; }
+  .sh__nav { margin-left: auto; }
+  .sh__nav ul { display: flex; gap: 2.25rem; list-style: none; margin: 0; padding: 0; }
+  .sh__nav a { position: relative; text-decoration: none; font-size: 0.95rem; font-weight: 500; color: rgb(255 255 255 / 0.8); transition: color 0.3s; }
+  .sh__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--brand-hi); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
+  .sh__nav a:hover, .sh__nav a[aria-current="page"] { color: #fff; }
+  .sh__nav a:hover::after, .sh__nav a[aria-current="page"]::after { transform: scaleX(1); }
+  .sh__cta { padding: 0.7rem 1.25rem; font-size: 0.92rem; }
+  .sh__toggle { display: none; margin-left: auto; width: 44px; height: 44px; place-items: center; border-radius: 12px; color: #fff; }
+  .sh__icon { display: grid; }
+  .sh__icon--close, .sh.is-open .sh__icon--open { display: none; }
+  .sh.is-open .sh__icon--close { display: grid; }
+  .sh__panel { border-top: 1px solid var(--line-dark); }
+  .sh.is-open { background: var(--ink); }
+  .sh__panel ul { list-style: none; margin-block: 0; padding: 1rem 0 1.75rem; display: grid; gap: 0.25rem; }
+  .sh__panel a:not(.btn) { display: block; padding: 0.9rem 0; font-size: 1.25rem; font-weight: 650; text-decoration: none; border-bottom: 1px solid var(--line-dark); }
+  .sh__panel a[aria-current="page"] { color: var(--brand-hi); }
+  .sh__panel-cta { margin-top: 1rem; width: 100%; justify-content: center; }
+  .sh__panel:not([hidden]) { animation: panelIn 0.35s var(--ease); }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(-8px); } }
+  @media (max-width: 899px) {
+    .sh__in { height: 68px; }
+    .sh__nav, .sh__cta { display: none; }
+    .sh__toggle { display: grid; }
+  }
+  @media (min-width: 900px) { .sh__panel { display: none !important; } }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-site-header]")!;
+  const toggle = header.querySelector<HTMLButtonElement>("[data-menu-toggle]")!;
+  const panel = header.querySelector<HTMLElement>("[data-menu]")!;
+  const setScrolled = () => header.classList.toggle("is-scrolled", window.scrollY > 20);
+  const setOpen = (open: boolean) => {
+    panel.hidden = !open;
+    header.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.querySelector(".sr-only")!.textContent = open ? "Close menu" : "Menu";
+  };
+  setScrolled();
+  window.addEventListener("scroll", setScrolled, { passive: true });
+  toggle.addEventListener("click", () => setOpen(panel.hidden));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) { setOpen(false); toggle.focus(); } });
+  window.matchMedia("(min-width: 900px)").addEventListener("change", (e) => { if (e.matches) setOpen(false); });
+</script>

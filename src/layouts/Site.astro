@@ -1,0 +1,15 @@
+---
+/** Main website pages: shared head, the site header with menu, and the footer. */
+import Base from "./Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/site.css";
+
+interface Props { title: string; description: string; schema?: object; noindex?: boolean }
+const { title, description, schema, noindex } = Astro.props;
+---
+<Base title={title} description={description} schema={schema} noindex={noindex}>
+  <SiteHeader />
+  <main id="main"><slot /></main>
+  <Footer />
+</Base>

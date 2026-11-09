@@ -1,0 +1,19 @@
+---
+import VideoFrame from "../VideoFrame.astro";
+import { proofCards } from "../../data/site";
+---
+<ul class="proof__list" data-stagger>
+  {proofCards.map((c) => (
+    <li class="pc" data-reveal>
+      <VideoFrame playbackId={c.video.playbackId} title={c.video.title} posterTime={c.video.posterTime} ratio="4 / 5" label={c.video.label} sizes="(min-width: 760px) 470px, 100vw" />
+      <div class="pc__body">
+        <p class="pc__result">{c.result}</p>
+        <p class="pc__detail muted">{c.detail}</p>
+        <blockquote class="pc__quote">
+          <p>“{c.quote}”</p>
+          <footer><strong>{c.name}</strong><span class="muted">{c.business}</span></footer>
+        </blockquote>
+      </div>
+    </li>
+  ))}
+</ul>

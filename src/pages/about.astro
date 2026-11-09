@@ -1,0 +1,84 @@
+---
+/**
+ * About page. Only facts so far: what we do, who for and how. Add the
+ * founder's story, photo and location here when you're ready.
+ */
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import PageHero from "../components/site/PageHero.astro";
+import Process from "../components/site/Process.astro";
+import CtaBand from "../components/site/CtaBand.astro";
+import { site } from "../data/site";
+import { pageGraph } from "../lib/schema";
+
+const title = `About us | ${site.name}`;
+const description = `${site.name} is a Meta ads agency for contractors and home-service businesses. We script, film, launch and manage your ads, so you can do what you do best.`;
+const schema = pageGraph({ path: "/about/", name: title, description, type: "AboutPage", crumbs: [{ name: "About", path: "/about/" }] });
+
+const beliefs = [
+  { title: "Proof over promises", body: "We show real client results, in their own words. No made-up numbers." },
+  { title: "We do the work", body: "We script, film, edit, launch and manage. Your job is to show up for the shoot and take the calls." },
+  { title: "Patience on camera", body: "Most owners aren't comfortable on camera at first. We script every video, guide every take and take our time." },
+  { title: "You stay in control", body: "You approve every dollar of ad spend. Nothing runs without your OK." },
+];
+---
+
+<Site title={title} description={description} schema={schema}>
+  <PageHero crumbs={[{ name: "About", href: "/about/" }]} title={["Marketing for the people", "who do the real work."]} underlineLast sub={`${site.name} runs Meta ads for contractors and home-service businesses, backed by high-quality video and websites. We handle the marketing so you can do what you do best.`}>
+    <a class="btn" href={site.ctaUrl}>Apply Now <Icon name="arrow" size={18} /></a>
+  </PageHero>
+
+  <section class="section" aria-labelledby="why-h">
+    <div class="wrap split">
+      <div class="head">
+        <p class="eyebrow" data-reveal>Who we work with</p>
+        <h2 id="why-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Contractors and</span></span> <span class="l"><span class="l__in grad">home-service pros.</span></span></h2>
+      </div>
+      <div class="about__text" data-reveal>
+        <p>Roofers, general contractors, HVAC, plumbing and electrical companies, landscapers, painters and other home-service businesses.</p>
+        <p>Most are great at what they do and could take on more work, but jobs come and go, referrals are hard to predict, and there's no time left over for marketing. That's where we come in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" aria-labelledby="bel-h">
+    <div class="wrap">
+      <div class="head head--center">
+        <p class="eyebrow" data-reveal>How we work</p>
+        <h2 id="bel-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">What you can</span></span> <span class="l"><span class="l__in grad">count on.</span></span></h2>
+      </div>
+      <ul class="bel" data-stagger>
+        {beliefs.map((b) => (
+          <li class="bel__item" data-reveal>
+            <span class="bel__check" aria-hidden="true"><Icon name="check" size={18} /></span>
+            <h3>{b.title}</h3>
+            <p class="muted">{b.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section dark" aria-labelledby="process-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow" data-reveal>Our process</p>
+        <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+      </div>
+      <Process />
+    </div>
+  </section>
+
+  <CtaBand />
+</Site>
+
+<style>
+  .about__text { display: grid; gap: 1rem; font-size: 1.15rem; color: var(--muted); padding-top: 2.5rem; }
+  .bel { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .bel__item { padding: 2rem 1.6rem; border-radius: var(--radius-lg); background: var(--paper); border: 1px solid var(--line); }
+  .bel__check { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff; }
+  .bel h3 { margin: 1.25rem 0 0.5rem; font-size: 1.2rem; font-weight: 750; }
+  @media (max-width: 1080px) { .bel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 899px) { .about__text { padding-top: 0; } }
+  @media (max-width: 600px) { .bel { grid-template-columns: 1fr; } .bel__item { text-align: center; } .bel__check { margin-inline: auto; } }
+</style>

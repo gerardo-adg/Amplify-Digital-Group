@@ -8,5 +8,5 @@ export default defineConfig({
   trailingSlash: "always",
   build: { format: "directory" },
   vite: { build: { chunkSizeWarningLimit: 1200 } },
-  integrations: [sitemap({ filter: (page) => !page.includes("/thanks/") })],
+  integrations: [sitemap({ filter: (page) => !page.includes("/thanks/") && !page.includes("/404") })],
 });

@@ -1,0 +1,93 @@
+---
+/** Main website home page. */
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import PageHero from "../components/site/PageHero.astro";
+import ProofBand from "../components/site/ProofBand.astro";
+import ServiceCards from "../components/site/ServiceCards.astro";
+import Process from "../components/site/Process.astro";
+import ProofCards from "../components/site/ProofCards.astro";
+import Faq from "../components/site/Faq.astro";
+import CtaBand from "../components/site/CtaBand.astro";
+import { site, hero, objections, services } from "../data/site";
+import { pageGraph, clientVideos, faqNode, serviceNode } from "../lib/schema";
+
+const title = `${site.name} | Meta ads for contractors and home-service businesses`;
+const description =
+  "We script, film, launch and manage Meta ads for contractors and home-service businesses, backed by high-quality video and websites built to turn clicks into booked jobs.";
+const schema = pageGraph({ path: "/", name: title, description, nodes: [...services.map(serviceNode), ...clientVideos(), faqNode("/")] });
+---
+
+<Site title={title} description={description} schema={schema}>
+  <PageHero callout={hero.callout} title={hero.title} underlineLast wide sub="We script, film, launch and manage your Meta ads, backed by high-quality video and a website built to turn clicks into booked jobs.">
+    <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+    <a class="btn btn--ghost" href="/results/">See our results</a>
+  </PageHero>
+
+  <ProofBand />
+
+  <section class="section" aria-labelledby="services-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow" data-reveal>What we do</p>
+        <h2 id="services-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Everything it takes</span></span> <span class="l"><span class="l__in grad">to fill your calendar.</span></span></h2>
+        <p class="muted head__p" data-reveal>Meta ads bring the customers in. Our content makes them stop scrolling. Your website turns them into booked jobs. We do all three, so it all works together.</p>
+      </div>
+      <ServiceCards />
+    </div>
+  </section>
+
+  <section class="section dark" aria-labelledby="process-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow" data-reveal>How it works</p>
+        <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+        <p class="muted head__p" data-reveal>Your only job is to show up for the shoot. We do the rest.</p>
+      </div>
+      <Process />
+    </div>
+  </section>
+
+  <section class="section tint" aria-labelledby="proof-h">
+    <div class="wrap">
+      <div class="head head--center">
+        <p class="eyebrow" data-reveal>Proof over promises</p>
+        <h2 id="proof-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Real contractors.</span></span> <span class="l"><span class="l__in grad">Real results.</span></span></h2>
+      </div>
+      <ProofCards />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="obj-h">
+    <div class="wrap">
+      <div class="head head--center">
+        <p class="eyebrow" data-reveal>Sound familiar?</p>
+        <h2 id="obj-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">You're not the first</span></span> <span class="l"><span class="l__in grad">to say it.</span></span></h2>
+      </div>
+      <ul class="objs" data-stagger>
+        {objections.map((o) => (
+          <li class="objs__item" data-reveal>
+            <span class="objs__check" aria-hidden="true"><Icon name="check" size={18} /></span>
+            <p class="objs__q">{o.q}</p>
+            <p class="muted">{o.a}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <div class="tint"><Faq /></div>
+  <CtaBand />
+</Site>
+
+<style>
+  .objs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .objs__item { padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper-2); border: 1px solid var(--line); }
+  .objs__check { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff; }
+  .objs__q { margin: 1.25rem 0 0.6rem; font-size: 1.15rem; font-weight: 750; letter-spacing: -0.01em; }
+  @media (max-width: 899px) {
+    .objs { grid-template-columns: 1fr; }
+    .objs__item { text-align: center; }
+    .objs__check { margin-inline: auto; }
+  }
+</style>

@@ -1,0 +1,113 @@
+---
+/** Client results: each story in full, with the client's own video. */
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import VideoFrame from "../components/VideoFrame.astro";
+import PageHero from "../components/site/PageHero.astro";
+import ProjectCard from "../components/site/ProjectCard.astro";
+import CtaBand from "../components/site/CtaBand.astro";
+import { site, featured as f, stories, websiteProjects } from "../data/site";
+import { pageGraph, clientVideos } from "../lib/schema";
+
+const g = stories[0];
+const title = `Client results: real contractors, real numbers | ${site.name}`;
+const description = `How Meta ads booked ${f.client.business} $80K+ in work off $647 in ad spend in two weeks, plus more contractor results from ${site.name}.`;
+const schema = pageGraph({ path: "/results/", name: title, description, crumbs: [{ name: "Results", path: "/results/" }], nodes: clientVideos() });
+---
+
+<Site title={title} description={description} schema={schema}>
+  <PageHero crumbs={[{ name: "Results", href: "/results/" }]} title={["Real contractors.", "Real results."]} underlineLast sub="No made-up numbers. These are our clients, in their own words." />
+
+  <!-- Evaristo -->
+  <section class="section case" id="evaristo" aria-labelledby="ev-h">
+    <div class="wrap case__in">
+      <div class="case__media" data-reveal>
+        <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business}: $80K+ booked off $647 in Meta ad spend`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch the call" sizes="(min-width: 900px) 380px, 90vw" />
+      </div>
+      <div class="case__body">
+        <p class="eyebrow" data-reveal>{f.client.business} · {f.client.city}</p>
+        <h2 id="ev-h" class="case__h" data-reveal>“{f.hook}”</h2>
+        <div class="case__stats" data-reveal>
+          {f.results.map((r) => <div><strong class="display">{r.prefix}{r.value}{r.suffix}</strong><span>{r.label}</span></div>)}
+        </div>
+        <p class="muted" data-reveal>{f.timeframe}</p>
+        <div class="case__concern" data-reveal>
+          <p class="case__tag">The concern</p>
+          <p class="case__concern-text">{f.concern}</p>
+          <p class="case__concern-quote">“{f.concernQuote}” <span class="muted">{f.client.name}, on the call</span></p>
+        </div>
+        {f.story.map((p) => <p class="case__story" data-reveal>{p}</p>)}
+        <blockquote class="case__quote" data-reveal>
+          <p>“{f.quote}”</p>
+          <footer><strong>{f.client.name}</strong> <span class="muted">{f.client.business}</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Giovanni -->
+  <section class="section case tint" id="giovanni" aria-labelledby="gi-h">
+    <div class="wrap case__in case__in--flip">
+      <div class="case__media" data-reveal>
+        <VideoFrame playbackId={g.video!.playbackId} title={`${g.name} of GM Roofing on working with ${site.name}`} posterTime={g.video!.posterTime} ratio="9 / 16" label="Watch" sizes="(min-width: 900px) 380px, 90vw" />
+      </div>
+      <div class="case__body">
+        <p class="eyebrow" data-reveal>{g.business} · {g.when}</p>
+        <h2 id="gi-h" class="case__h" data-reveal>From camera-shy to “highly recommend.”</h2>
+        <div class="case__concern" data-reveal>
+          <p class="case__tag">The concern</p>
+          <p class="case__concern-text">{g.concern}</p>
+          <p class="case__concern-quote">“{g.concernQuote}” <span class="muted">{g.name}</span></p>
+        </div>
+        <p class="case__story" data-reveal>{g.outcome}</p>
+        <blockquote class="case__quote" data-reveal>
+          <p>“{g.quote}”</p>
+          <footer><strong>{g.name}</strong> <span class="muted">{g.business}</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Websites -->
+  <section class="section" aria-labelledby="web-h">
+    <div class="wrap">
+      <div class="head head--center">
+        <p class="eyebrow" data-reveal>Websites</p>
+        <h2 id="web-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Sites we've</span></span> <span class="l"><span class="l__in grad">built.</span></span></h2>
+      </div>
+      {websiteProjects.map((p) => <ProjectCard {...p} />)}
+    </div>
+  </section>
+
+  <CtaBand title={["Want results", "like these?"]} />
+</Site>
+
+<style>
+  .case__in { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center; }
+  .case__in--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); }
+  .case__in--flip .case__media { order: 2; }
+  .case__media :global(.vf) { box-shadow: 0 40px 90px -40px rgb(59 0 252 / 0.6); }
+  .case__h { margin-top: 1rem; font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 750; line-height: 1.2; letter-spacing: -0.02em; }
+  .case__stats { display: flex; flex-wrap: wrap; gap: 1rem 3rem; margin: 2rem 0 0.75rem; }
+  .case__stats strong { display: block; font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 0.9; color: var(--brand); }
+  .case__stats div + div strong { color: var(--ink); }
+  .case__stats span { display: block; margin-top: 0.5rem; font-weight: 700; }
+  .case__concern { margin-top: 1.75rem; padding: 1.25rem 1.5rem; border-left: 3px solid var(--brand); background: var(--paper-2); border-radius: 0 var(--radius) var(--radius) 0; }
+  .tint .case__concern { background: var(--paper); }
+  .case__tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .case__concern-text { margin-top: 0.35rem; font-size: 1.15rem; font-weight: 650; }
+  .case__concern-quote { margin-top: 0.5rem; font-style: italic; }
+  .case__concern-quote span { font-style: normal; font-size: 0.9rem; }
+  .case__story { margin-top: 1.5rem; font-size: 1.08rem; color: var(--muted); }
+  .case__quote { margin: 1.75rem 0 0; padding-left: 1.5rem; border-left: 3px solid var(--brand); }
+  .case__quote p { font-family: var(--font-display); font-weight: 850; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: clamp(1.3rem, 2.4vw, 1.8rem); line-height: 1.1; }
+  .case__quote footer { margin-top: 0.6rem; font-size: 0.95rem; }
+  @media (max-width: 899px) {
+    .case__in, .case__in--flip { grid-template-columns: 1fr; text-align: center; }
+    .case__in--flip .case__media { order: 0; }
+    .case__media { max-width: 320px; width: 100%; margin-inline: auto; }
+    .case__stats { justify-content: center; }
+    .case__concern, .case__quote { border-left: 0; border-top: 3px solid var(--brand); border-radius: 0 0 var(--radius) var(--radius); padding-left: 1.25rem; padding-right: 1.25rem; }
+    .case__quote { padding-top: 1.25rem; }
+  }
+</style>

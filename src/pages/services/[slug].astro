@@ -1,0 +1,113 @@
+---
+/** One page per service, from `services` in src/data/site.ts. */
+import Site from "../../layouts/Site.astro";
+import Icon from "../../components/Icon.astro";
+import PageHero from "../../components/site/PageHero.astro";
+import ProofBand from "../../components/site/ProofBand.astro";
+import ProofCards from "../../components/site/ProofCards.astro";
+import Process from "../../components/site/Process.astro";
+import ProjectCard from "../../components/site/ProjectCard.astro";
+import Faq from "../../components/site/Faq.astro";
+import CtaBand from "../../components/site/CtaBand.astro";
+import { site, services, websiteProjects, faqs, type Service } from "../../data/site";
+import { pageGraph, serviceNode, clientVideos, faqNode } from "../../lib/schema";
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+}
+const { service: s } = Astro.props as { service: Service };
+const path = `/services/${s.slug}/`;
+const title = `${s.page.seoTitle} | ${site.name}`;
+const others = services.filter((o) => o.slug !== s.slug);
+const schema = pageGraph({
+  path,
+  name: title,
+  description: s.page.seoDescription,
+  crumbs: [{ name: "Services", path: "/services/" }, { name: s.title, path }],
+  nodes: [serviceNode(s), ...(s.slug === "websites" ? [] : clientVideos()), ...(s.slug === "meta-ads" ? [faqNode(path)] : [])],
+});
+---
+
+<Site title={title} description={s.page.seoDescription} schema={schema}>
+  <PageHero crumbs={[{ name: "Services", href: "/services/" }, { name: s.title, href: path }]} title={[s.page.headline]} sub={s.page.intro}>
+    <a class="btn" href={site.ctaUrl}>Apply Now <Icon name="arrow" size={18} /></a>
+  </PageHero>
+
+  {s.slug === "meta-ads" && <ProofBand />}
+
+  <section class="section" aria-labelledby="inc-h">
+    <div class="wrap split">
+      <div class="head">
+        <p class="eyebrow" data-reveal>What's included</p>
+        <h2 id="inc-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Done for you,</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+        <p class="muted head__p" data-reveal><strong>Who it's for:</strong> {s.page.forWho}</p>
+      </div>
+      <ul class="inc" data-stagger>
+        {s.page.included.map((i) => (
+          <li class="inc__item" data-reveal>
+            <span class="inc__check" aria-hidden="true"><Icon name="check" size={16} /></span>
+            <div><h3>{i.title}</h3><p class="muted">{i.body}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {s.slug === "meta-ads" && (
+    <section class="section dark" aria-labelledby="process-h">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow" data-reveal>How it works</p>
+          <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Your only job:</span></span> <span class="l"><span class="l__in grad">show up for the shoot.</span></span></h2>
+        </div>
+        <Process />
+      </div>
+    </section>
+  )}
+
+  <section class="section tint" aria-labelledby="proof-h">
+    <div class="wrap">
+      <div class="head head--center">
+        <p class="eyebrow" data-reveal>{s.slug === "websites" ? "Our work" : "Proof over promises"}</p>
+        <h2 id="proof-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">{s.slug === "websites" ? "A site we built" : "Real contractors."}</span></span> <span class="l"><span class="l__in grad">{s.slug === "websites" ? "for a roofer." : "Real results."}</span></span></h2>
+      </div>
+      {s.slug === "websites" ? websiteProjects.map((p) => <ProjectCard {...p} />) : <ProofCards />}
+    </div>
+  </section>
+
+  {s.slug === "meta-ads" && <Faq list={faqs} />}
+
+  <section class="section others" aria-labelledby="others-h">
+    <div class="wrap">
+      <h2 id="others-h" class="others__h">Pairs well with</h2>
+      <ul class="others__list">
+        {others.map((o) => (
+          <li><a href={`/services/${o.slug}/`}><span><strong>{o.title}</strong><span class="muted">{o.body}</span></span><Icon name="arrow" size={20} /></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Site>
+
+<style>
+  .inc { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  .inc__item { display: flex; gap: 1rem; align-items: flex-start; padding: 1.25rem 1.4rem; border-radius: var(--radius); background: var(--paper-2); border: 1px solid var(--line); text-align: left; }
+  .inc__check { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brand); color: #fff; }
+  .inc h3 { font-size: 1.1rem; font-weight: 750; }
+  .inc p { margin-top: 0.25rem; }
+  .others { padding-top: 0; }
+  .tint + .others { padding-top: var(--section); }
+  .others__h { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .others__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .others__list a { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: 100%; padding: 1.5rem 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--line); text-decoration: none; transition: border-color 0.3s, transform 0.4s var(--ease); }
+  .others__list a:hover { border-color: var(--brand); transform: translateY(-3px); }
+  .others__list strong { display: block; font-size: 1.2rem; }
+  .others__list .muted { display: block; margin-top: 0.3rem; font-size: 0.95rem; }
+  .others__list :global(svg) { flex: none; color: var(--brand); }
+  @media (max-width: 899px) {
+    .others__h { text-align: center; }
+    .others__list { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+import Site from "../layouts/Site.astro";
+import Icon from "../components/Icon.astro";
+import PageHero from "../components/site/PageHero.astro";
+import { site } from "../data/site";
+---
+<Site title={`Page not found | ${site.name}`} description="This page doesn't exist." noindex schema={{}}>
+  <PageHero title={["This page", "doesn't exist."]} underlineLast sub="It may have moved, or the link may be wrong.">
+    <a class="btn" href="/">Back to home <Icon name="arrow" size={18} /></a>
+    <a class="btn btn--ghost" href={site.ctaUrl}>Apply Now</a>
+  </PageHero>
+</Site>

@@ -1,0 +1,35 @@
+---
+/**
+ * Dark hero at the top of every page. `title` lines: the last one can be
+ * underlined in the brand blue. Optional breadcrumb trail and buttons.
+ */
+interface Props {
+  title: string[];
+  callout?: string;
+  sub?: string;
+  underlineLast?: boolean;
+  wide?: boolean;
+  crumbs?: { name: string; href: string }[];
+}
+const { title, callout, sub, underlineLast = false, wide = false, crumbs } = Astro.props;
+---
+<section class="ph dark">
+  <div class="ph__glow" aria-hidden="true"><span></span><span></span></div>
+  <div class="ph__grid" aria-hidden="true"></div>
+  <div class="wrap ph__in">
+    {crumbs && (
+      <nav aria-label="Breadcrumb">
+        <ol class="ph__crumbs">
+          <li><a href="/">Home</a></li>
+          {crumbs.map((c, i) => <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.href}>{c.name}</a>}</li>)}
+        </ol>
+      </nav>
+    )}
+    {callout && <p class="ph__callout" data-reveal>{callout}</p>}
+    <h1 class:list={["display ph__title", wide && "ph__title--wide"]} data-reveal="lines">
+      {title.map((line, i) => <span class="l"><span class:list={["l__in", underlineLast && i === title.length - 1 && "ph__u"]}>{line}</span>{" "}</span>)}
+    </h1>
+    {sub && <p class="ph__sub muted" data-reveal style="--i:2">{sub}</p>}
+    {Astro.slots.has("default") && <div class="ph__ctas" data-reveal style="--i:3"><slot /></div>}
+  </div>
+</section>

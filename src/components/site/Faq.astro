@@ -1,0 +1,22 @@
+---
+import Icon from "../Icon.astro";
+import { faqs } from "../../data/site";
+interface Props { list?: { q: string; a: string }[]; title?: [string, string] }
+const { list = faqs, title = ["Straight", "answers."] } = Astro.props;
+---
+<section class="section faq" aria-labelledby="faq-h">
+  <div class="wrap faq__in">
+    <div class="head faq__head">
+      <p class="eyebrow" data-reveal>Questions</p>
+      <h2 id="faq-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">{title[0]}</span></span> <span class="l"><span class="l__in grad">{title[1]}</span></span></h2>
+    </div>
+    <div class="faq__list" data-stagger>
+      {list.map((f, i) => (
+        <details class="qa" data-reveal open={i === 0}>
+          <summary><span>{f.q}</span><span class="qa__icon" aria-hidden="true"><Icon name="plus" size={20} /></span></summary>
+          <div class="qa__a"><p class="muted">{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

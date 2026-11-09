@@ -4,7 +4,13 @@
  * running Meta ads should carry.
  */
 import Logo from "./Logo.astro";
-import { site } from "../data/site";
+import { site, nav, services, hero } from "../data/site";
+
+interface Props {
+  // The ads landing page hides the site links, so nothing leads away from the quiz
+  links?: boolean;
+}
+const { links = true } = Astro.props;
 ---
 
 <footer class="foot dark">
@@ -16,6 +22,21 @@ import { site } from "../data/site";
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </nav>
     </div>
+    {links && (
+      <div class="foot__cols">
+        <div>
+          <p class="foot__h">Services</p>
+          <ul>{services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}</ul>
+        </div>
+        <div>
+          <p class="foot__h">Company</p>
+          <ul>
+            {nav.filter((n) => n.href !== "/services/").map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+            <li><a href={site.ctaUrl}>{hero.primaryCta}</a></li>
+          </ul>
+        </div>
+      </div>
+    )}
     <div class="foot__legal">
       <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
       <p>Results vary. The results shown are from real clients and aren't a guarantee of what you'll get; they depend on your market, offer and many other factors.</p>
@@ -30,9 +51,20 @@ import { site } from "../data/site";
   .foot__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; }
   .foot__links a { color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
   .foot__links a:hover { color: #fff; }
+  .foot__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 12rem)); gap: 2rem; margin-top: 2rem; }
+  .foot__cols ul { list-style: none; margin: 0.75rem 0 0; padding: 0; display: grid; gap: 0.55rem; }
+  .foot__cols a { color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
+  .foot__cols a:hover { color: #fff; }
+  .foot__h { font-weight: 700; color: #fff; }
   .foot__legal { display: grid; gap: 0.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line-dark); color: rgb(169 165 196 / 0.75); font-size: 0.8rem; line-height: 1.55; }
   @media (max-width: 899px) {
     .foot__top, .foot__links { flex-direction: column; justify-content: center; text-align: center; }
-    .foot__legal { text-align: center; }
+    .foot__cols { justify-content: center; text-align: center; }
+    .foot__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 12rem)); gap: 2rem; margin-top: 2rem; }
+  .foot__cols ul { list-style: none; margin: 0.75rem 0 0; padding: 0; display: grid; gap: 0.55rem; }
+  .foot__cols a { color: var(--muted-dark); text-decoration: none; transition: color 0.2s; }
+  .foot__cols a:hover { color: #fff; }
+  .foot__h { font-weight: 700; color: #fff; }
+  .foot__legal { text-align: center; }
   }
 </style>
