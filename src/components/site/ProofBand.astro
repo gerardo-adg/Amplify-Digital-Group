@@ -11,11 +11,11 @@ const { link = true } = Astro.props;
       {f.results.map((r) => (
         <div class="band__stat"><strong class="display">{r.prefix}{r.value}{r.suffix}</strong><span>{r.label}</span></div>
       ))}
-      <div class="band__stat"><strong class="display">2 weeks</strong><span>after launch</span></div>
+      <div class="band__stat"><strong class="display">30 days</strong><span>after launch</span></div>
     </div>
     <div class="band__who">
       <p>{f.client.name}, {f.client.business}</p>
-      <p>{f.client.city} · Meta ads, with estimates still pending</p>
+      <p>{f.client.city} · Meta ads</p>
       {link && <a href="/results/#evaristo">Watch him tell it <Icon name="arrow" size={16} /></a>}
     </div>
   </div>

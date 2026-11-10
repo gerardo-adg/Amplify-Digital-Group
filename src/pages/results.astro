@@ -11,7 +11,7 @@ import { pageGraph, clientVideos } from "../lib/schema";
 
 const g = stories[0];
 const title = `Client results: real contractors, real numbers | ${site.name}`;
-const description = `How Meta ads booked ${f.client.business} $80K+ in work off $647 in ad spend in two weeks, plus more contractor results from ${site.name}.`;
+const description = `How ${f.client.business} did $94K in revenue in the first 30 days of Meta ads off $1,300 in ad spend, plus more contractor results from ${site.name}.`;
 const schema = pageGraph({ path: "/results/", name: title, description, crumbs: [{ name: "Results", path: "/results/" }], nodes: clientVideos() });
 ---
 
@@ -22,7 +22,7 @@ const schema = pageGraph({ path: "/results/", name: title, description, crumbs: 
   <section class="section case" id="evaristo" aria-labelledby="ev-h">
     <div class="wrap case__in">
       <div class="case__media" data-reveal>
-        <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business}: $80K+ booked off $647 in Meta ad spend`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch the call" sizes="(min-width: 900px) 380px, 90vw" />
+        <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business} on his first results with Meta ads`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch the call" sizes="(min-width: 900px) 380px, 90vw" />
       </div>
       <div class="case__body">
         <p class="eyebrow" data-reveal>{f.client.business} · {f.client.city}</p>

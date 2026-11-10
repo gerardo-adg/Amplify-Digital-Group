@@ -27,7 +27,7 @@ function videoNode(playbackId: string, name: string, description: string, poster
 export function clientVideos() {
   return [
     ...(featured.video.playbackId && featured.video.uploadDate
-      ? [videoNode(featured.video.playbackId, `${featured.client.name} of ${featured.client.business}: $80K+ in work booked off $647 in Meta ad spend`, featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
+      ? [videoNode(featured.video.playbackId, `${featured.client.name} of ${featured.client.business} on his first results with Meta ads`, featured.story.join(" "), featured.video.posterTime, featured.video.uploadDate)]
       : []),
     ...stories
       .filter((st) => !isSample(st) && st.video?.playbackId && st.video.uploadDate && st.name)

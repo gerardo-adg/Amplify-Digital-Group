@@ -40,7 +40,7 @@ export const hero = {
     playbackId: "",
     posterTime: 0,
     title: "How Amplify Digital Group gets home-service businesses booked with Meta ads",
-    caption: "Watch how Evaristo booked $80K+ in work off $647 in ad spend.",
+    caption: "Watch how Evaristo did $94K in revenue in his first 30 days off $1,300 in ad spend.",
     uploadDate: "", // e.g. "2026-11-05T12:00:00-08:00"
   },
 };
@@ -169,18 +169,18 @@ export const steps = [
 export const featured = {
   // The hook from the video
   hook: "Would you say ads are worth it if one of my clients landed over $80K in jobs only two weeks after we launched his ads?",
-  // He booked $80–90K; the headline uses the low end so it never overstates.
+  // His first 30 days of Meta ads. (The video was recorded at two weeks, when he had $80K+ booked.)
   results: [
-    { value: 80, prefix: "$", suffix: "K+", label: "in work booked" },
-    { value: 647, prefix: "$", suffix: "", label: "in ad spend" },
+    { value: "94", prefix: "$", suffix: "K", label: "in revenue" },
+    { value: "1,300", prefix: "$", suffix: "", label: "in ad spend" },
   ],
-  timeframe: "Two weeks after his Meta ads went live, with estimates still pending.",
+  timeframe: "His first 30 days of Meta ads with us.",
   concern: "He'd been burned by a marketer before.",
   // His words on the call about almost not signing
   concernQuote: "At one point I was like, I'm never gonna do this.",
   // One short paragraph under the numbers; the video does the rest
   story: [
-    "He booked $80–90K in work, over $120 for every $1 of ad spend. Don't take our word for it: in the video, we call Evaristo and he tells you himself.",
+    "That's over $70 in revenue for every $1 of ad spend. Two weeks in, he already had $80K+ booked, which is when we called him for the video. Don't take our word for it: Evaristo tells you himself.",
   ],
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
   quote: "The marketing pays for itself.", // his words on the call
@@ -193,7 +193,7 @@ export const featured = {
 export const objections = [
   {
     q: "“I've been burned by marketers before.”",
-    a: "So had Evaristo. Two weeks after we launched his Meta ads, he'd booked $80K+ in work off $647 in ad spend.",
+    a: "So had Evaristo. In his first 30 days of Meta ads with us, he did $94K in revenue off $1,300 in ad spend.",
   },
   {
     q: "“I'm not good on camera.”",
@@ -238,12 +238,12 @@ export const stories: Story[] = [
 // The two client proof cards on the landing page, next to their videos
 export const proofCards = [
   {
-    result: "$80K+ booked off $647 in ads",
-    detail: "Two weeks after his Meta ads went live, with estimates still pending.",
+    result: "$94K in 30 days off $1,300 in ads",
+    detail: "Revenue from his first 30 days of Meta ads. He had $80K+ booked in the first two weeks.",
     quote: "The marketing pays for itself.",
     name: "Evaristo",
     business: "Sky Roofing Unlimited Inc. · Stockton, CA",
-    video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc.: $80K+ booked off $647 in Meta ad spend", label: "Watch the call" },
+    video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc. on his first results with Meta ads", label: "Watch the call" },
   },
   {
     result: "Camera-shy to “highly recommend”",
@@ -263,7 +263,7 @@ export const faqs = [
   },
   {
     q: "How long until I see results?",
-    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing booked over $80K in work off $647 in ad spend, two weeks in. Every market is different, and we'll talk through yours on the call.",
+    a: "Meta ads can start bringing in leads within the first couple of weeks after launch. Evaristo at Sky Roofing had $80K+ booked two weeks in, and $94K in revenue by day 30 off $1,300 in ad spend. Every market is different, and we'll talk through yours on the call.",
   },
   {
     q: "What if I'm not comfortable on camera?",
