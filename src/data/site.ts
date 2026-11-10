@@ -143,14 +143,15 @@ export const nav = [
 ];
 
 // Contractors we work with, for the scrolling strip under the home hero.
-// `logo` is a file in public/clients/ (transparent PNG/WebP, about 240px tall);
+// `logo` is a file in public/clients/ (transparent WebP, 240px tall, light enough to read on the dark band);
 // without one, the name shows as text. Only list real clients.
-export const clients: { name: string; logo?: string; width?: number; height?: number }[] = [
+// `scale` shrinks a logo that looks too big next to the others (wide wordmarks).
+export const clients: { name: string; logo?: string; width?: number; height?: number; scale?: number }[] = [
   { name: "Triple R Roofing LLC", logo: "/clients/triple-r-roofing.webp", width: 280, height: 240 },
   { name: "Sky Roofing Unlimited Inc." },
   { name: "Speed Plumbing Pros", logo: "/clients/speed-plumbing-pros.webp", width: 370, height: 240 },
   { name: "GM Roofing" },
-  { name: "B & S Painting Inc." },
+  { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
 ];
 
 // A website we built: shown on Results and the Websites page

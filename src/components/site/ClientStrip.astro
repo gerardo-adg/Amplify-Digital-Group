@@ -18,7 +18,7 @@ const pass = Array.from({ length: Math.max(1, Math.ceil(8 / clients.length)) }, 
       {[0, 1].map(() => pass.map((c) => (
         <div class="cs__item">
           {c.logo
-            ? <img src={c.logo} alt="" width={c.width} height={c.height} loading="lazy" decoding="async" />
+            ? <img src={c.logo} alt="" width={c.width} height={c.height} style={c.scale ? `--s:${c.scale}` : undefined} loading="lazy" decoding="async" />
             : <span class="cs__name">{c.name}</span>}
         </div>
       )))}
@@ -33,14 +33,14 @@ const pass = Array.from({ length: Math.max(1, Math.ceil(8 / clients.length)) }, 
   .cs__track { display: flex; width: max-content; animation: csScroll 40s linear infinite; }
   .cs__viewport:hover .cs__track { animation-play-state: paused; }
   .cs__item { flex: none; display: grid; place-items: center; height: 80px; padding-inline: clamp(1.75rem, 4vw, 3rem); }
-  .cs__item img { height: 80px; width: auto; }
+  .cs__item img { height: calc(80px * var(--s, 1)); width: auto; }
   .cs__name { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-style: italic; text-transform: uppercase; font-size: 1.2rem; letter-spacing: 0.01em; white-space: nowrap; color: #fff; opacity: 0.7; transition: opacity 0.3s; }
   .cs__item:hover .cs__name { opacity: 1; }
   @keyframes csScroll { to { transform: translateX(-50%); } }
   @media (max-width: 899px) {
     .cs { padding-block: 1.75rem 2rem; }
     .cs__item { height: 60px; }
-    .cs__item img { height: 60px; }
+    .cs__item img { height: calc(60px * var(--s, 1)); }
     .cs__name { font-size: 1rem; }
     .cs__track { animation-duration: 30s; }
   }
