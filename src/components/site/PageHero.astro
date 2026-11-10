@@ -1,6 +1,6 @@
 ---
 /**
- * Dark hero at the top of every page. `title` lines: the last one can be
+ * White hero at the top of every page, black text. (A background video can go here later.) `title` lines: the last one can be
  * underlined in the brand blue. Optional breadcrumb trail and buttons.
  */
 interface Props {
@@ -13,9 +13,7 @@ interface Props {
 }
 const { title, callout, sub, underlineLast = false, wide = false, crumbs } = Astro.props;
 ---
-<section class="ph dark">
-  <div class="ph__glow" aria-hidden="true"><span></span><span></span></div>
-  <div class="ph__grid" aria-hidden="true"></div>
+<section class="ph">
   <div class="wrap ph__in">
     {crumbs && (
       <nav aria-label="Breadcrumb">

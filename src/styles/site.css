@@ -11,7 +11,7 @@
 .head__p { margin-top: 1.25rem; font-size: 1.125rem; }
 
 /* Page hero */
-.ph { position: relative; overflow: hidden; padding-top: clamp(8rem, 13vw, 10.5rem); padding-bottom: clamp(3.5rem, 8vw, 6rem); text-align: center; }
+.ph { position: relative; overflow: hidden; background: var(--paper); color: var(--ink); border-bottom: 1px solid var(--line); padding-top: clamp(8rem, 13vw, 10.5rem); padding-bottom: clamp(3.5rem, 8vw, 6rem); text-align: center; }
 .ph__glow { position: absolute; inset: 0; pointer-events: none; }
 .ph__glow span { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; animation: phDrift 18s ease-in-out infinite alternate; }
 .ph__glow span:first-child { width: 60vw; height: 60vw; max-width: 820px; max-height: 820px; left: -18vw; top: 20%; background: radial-gradient(closest-side, var(--brand), transparent); }
@@ -19,10 +19,10 @@
 @keyframes phDrift { to { transform: translate3d(8vw, 6vw, 0) scale(1.15); } }
 .ph__grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line-dark) 1px, transparent 1px), linear-gradient(90deg, var(--line-dark) 1px, transparent 1px); background-size: 72px 72px; mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 20%, transparent 75%); opacity: 0.45; }
 .ph__in { position: relative; display: flex; flex-direction: column; align-items: center; }
-.ph__crumbs { display: flex; gap: 0.5rem; justify-content: center; list-style: none; margin: 0 0 1.25rem; padding: 0; font-size: 0.85rem; color: var(--muted-dark); }
+.ph__crumbs { display: flex; gap: 0.5rem; justify-content: center; list-style: none; margin: 0 0 1.25rem; padding: 0; font-size: 0.85rem; color: var(--muted); }
 .ph__crumbs li + li::before { content: "/"; margin-right: 0.5rem; opacity: 0.6; }
 .ph__crumbs a { text-decoration: none; }
-.ph__crumbs a:hover { color: #fff; }
+.ph__crumbs a:hover { color: var(--ink); }
 .ph__callout { font-weight: 800; font-size: clamp(1.05rem, 2vw, 1.4rem); letter-spacing: -0.01em; margin-bottom: 1rem; }
 .ph__title { font-size: clamp(2.2rem, 5vw, 4.4rem); max-width: 18ch; text-wrap: balance; }
 .ph__title--wide { max-width: none; font-size: clamp(2.2rem, 3.7vw, 3.5rem); }
