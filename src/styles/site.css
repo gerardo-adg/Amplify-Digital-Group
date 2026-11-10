@@ -25,8 +25,15 @@
 .ph__crumbs a:hover { color: var(--ink); }
 .ph__callout { font-weight: 800; font-size: clamp(1.05rem, 2vw, 1.4rem); letter-spacing: -0.01em; margin-bottom: 1rem; }
 .ph__title { font-size: clamp(2.2rem, 5vw, 4.4rem); max-width: 18ch; text-wrap: balance; }
-.ph__title--wide { max-width: none; font-size: clamp(2.2rem, 3.7vw, 3.5rem); }
-@media (min-width: 900px) { .ph__title--wide .l { white-space: nowrap; } }
+.ph__title--wide { max-width: 16ch; font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; }
+/* Desktop: the home hero is a full first screen with a big headline */
+@media (min-width: 900px) {
+  .ph:has(.ph__title--wide) { padding-top: 10.5rem; padding-bottom: 7rem; }
+  .ph:has(.ph__title--wide) .ph__callout { font-size: 1.45rem; margin-bottom: 1.4rem; }
+  .ph:has(.ph__title--wide) .ph__sub { font-size: 1.25rem; margin-top: 1.6rem; }
+  .ph:has(.ph__title--wide) .ph__ctas { margin-top: 2.4rem; }
+  .ph:has(.ph__title--wide) .ph__ctas .btn { padding: 1.1rem 1.9rem; font-size: 1.08rem; }
+}
 .ph__u { text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 0.09em; text-underline-offset: 0.14em; text-decoration-skip-ink: none; }
 .ph__sub { margin-top: 1.25rem; max-width: 40rem; font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
 .ph__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem; margin-top: 2rem; }
@@ -39,8 +46,8 @@
   .ph__ctas .btn--ghost { display: none; }
   .ph__ctas .btn svg { display: none; }
   /* Long hero headlines: title case at a size where each sentence fits one line */
-  .ph__title--wide { font-size: min(6.5vw, 2.1rem); font-stretch: 100%; text-transform: none; line-height: 1.15; }
-  .ph__title--wide .l { white-space: nowrap; }
+  /* Phones: bold caps like desktop, sized to wrap in about 4 lines */
+  .ph__title--wide { max-width: none; font-size: min(8.4vw, 2.3rem); font-stretch: 108%; line-height: 1.02; }
 }
 
 /* Proof band: a client's numbers in one strip */
