@@ -48,6 +48,7 @@
   /* Long hero headlines: title case at a size where each sentence fits one line */
   /* Phones: bold caps like desktop, sized to wrap in about 4 lines */
   .ph__title--wide { max-width: none; font-size: min(8.4vw, 2.3rem); font-stretch: 108%; line-height: 1.02; }
+  .ph__u { text-decoration: none; }
 }
 
 /* Proof band: a client's numbers in one strip */
