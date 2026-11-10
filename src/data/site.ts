@@ -148,6 +148,7 @@ export const nav = [
 export const clients: { name: string; logo?: string; width?: number; height?: number }[] = [
   { name: "Triple R Roofing LLC", logo: "/clients/triple-r-roofing.webp", width: 280, height: 240 },
   { name: "Sky Roofing Unlimited Inc." },
+  { name: "Speed Plumbing Pros", logo: "/clients/speed-plumbing-pros.webp", width: 370, height: 240 },
   { name: "GM Roofing" },
   { name: "B & S Painting Inc." },
 ];
