@@ -37,6 +37,7 @@
   .ph__ctas { width: 100%; }
   .ph__ctas .btn { width: 100%; justify-content: center; padding-block: 1.1rem; font-size: 1.05rem; }
   .ph__ctas .btn--ghost { display: none; }
+  .ph__ctas .btn svg { display: none; }
   /* Long hero headlines: title case at a size where each sentence fits one line */
   .ph__title--wide { font-size: min(6.5vw, 2.1rem); font-stretch: 100%; text-transform: none; line-height: 1.15; }
   .ph__title--wide .l { white-space: nowrap; }
