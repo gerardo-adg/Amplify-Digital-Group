@@ -31,7 +31,7 @@
 .ph__sub { margin-top: 1.25rem; max-width: 40rem; font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
 .ph__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem; margin-top: 2rem; }
 @media (max-width: 899px) {
-  .ph { padding-top: 6.5rem; }
+  .ph { padding-top: 6rem; }
   .ph__title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
   /* Long hero headlines: title case at a size where each sentence fits one line */
   .ph__title--wide { font-size: min(6.5vw, 2.1rem); font-stretch: 100%; text-transform: none; line-height: 1.15; }

@@ -13,7 +13,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
 ---
 <header class="sh" data-site-header>
   <div class="wrap sh__in">
-    <a href="/" class="sh__logo" aria-label={`${site.name} home`}><Logo height={40} eager dark /></a>
+    <a href="/" class="sh__logo" aria-label={`${site.name} home`}><Logo height={40} eager /></a>
     <nav class="sh__nav" aria-label="Main">
       <ul>
         {nav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
@@ -35,33 +35,34 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
 </header>
 
 <style>
-  /* White header with dark text, to sit on the white hero */
-  .sh { position: fixed; inset: 0 0 auto; z-index: 50; color: var(--ink); background: #fff; transition: box-shadow 0.4s; }
-  .sh.is-scrolled, .sh.is-open { box-shadow: 0 1px 0 var(--line); }
+  /* Black header above the white hero; the logo is made for dark backgrounds */
+  .sh { position: fixed; inset: 0 0 auto; z-index: 50; color: #fff; background: var(--ink); transition: box-shadow 0.4s; }
+  .sh.is-scrolled, .sh.is-open { box-shadow: 0 1px 0 var(--line-dark); }
   .sh__in { display: flex; align-items: center; gap: 2rem; height: 76px; }
   .sh__logo { display: block; transition: opacity 0.3s; }
   .sh__logo:hover { opacity: 0.85; }
   .sh__nav { margin-left: auto; }
   .sh__nav ul { display: flex; gap: 2.25rem; list-style: none; margin: 0; padding: 0; }
-  .sh__nav a { position: relative; text-decoration: none; font-size: 0.95rem; font-weight: 500; color: var(--muted); transition: color 0.3s; }
-  .sh__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
-  .sh__nav a:hover, .sh__nav a[aria-current="page"] { color: var(--ink); }
+  .sh__nav a { position: relative; text-decoration: none; font-size: 0.95rem; font-weight: 500; color: rgb(255 255 255 / 0.75); transition: color 0.3s; }
+  .sh__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--brand-hi); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
+  .sh__nav a:hover, .sh__nav a[aria-current="page"] { color: #fff; }
   .sh__nav a:hover::after, .sh__nav a[aria-current="page"]::after { transform: scaleX(1); }
   .sh__cta { padding: 0.7rem 1.25rem; font-size: 0.92rem; }
-  .sh__toggle { display: none; margin-left: auto; width: 44px; height: 44px; place-items: center; border-radius: 12px; color: var(--ink); }
+  .sh__toggle { display: none; margin-left: auto; width: 44px; height: 44px; place-items: center; border-radius: 12px; color: #fff; }
   .sh__icon { display: grid; }
   .sh__icon--close, .sh.is-open .sh__icon--open { display: none; }
   .sh.is-open .sh__icon--close { display: grid; }
-  .sh__panel { border-top: 1px solid var(--line); }
-  .sh.is-open { background: #fff; }
+  .sh__panel { border-top: 1px solid var(--line-dark); }
+  .sh.is-open { background: var(--ink); }
   .sh__panel ul { list-style: none; margin-block: 0; padding: 1rem 0 1.75rem; display: grid; gap: 0.25rem; }
-  .sh__panel a:not(.btn) { display: block; padding: 0.9rem 0; font-size: 1.25rem; font-weight: 650; text-decoration: none; border-bottom: 1px solid var(--line); }
-  .sh__panel a[aria-current="page"] { color: var(--brand); }
+  .sh__panel a:not(.btn) { display: block; padding: 0.9rem 0; font-size: 1.25rem; font-weight: 650; text-decoration: none; border-bottom: 1px solid var(--line-dark); }
+  .sh__panel a[aria-current="page"] { color: var(--brand-hi); }
   .sh__panel-cta { margin-top: 1rem; width: 100%; justify-content: center; }
   .sh__panel:not([hidden]) { animation: panelIn 0.35s var(--ease); }
   @keyframes panelIn { from { opacity: 0; transform: translateY(-8px); } }
   @media (max-width: 899px) {
-    .sh__in { height: 68px; }
+    .sh__in { height: 60px; }
+    .sh__logo :global(.logo) { height: 28px; }
     .sh__nav, .sh__cta { display: none; }
     .sh__toggle { display: grid; }
   }
