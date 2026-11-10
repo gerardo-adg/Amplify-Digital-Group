@@ -4,6 +4,7 @@ import Site from "../layouts/Site.astro";
 import Icon from "../components/Icon.astro";
 import PageHero from "../components/site/PageHero.astro";
 import ProofBand from "../components/site/ProofBand.astro";
+import ClientStrip from "../components/site/ClientStrip.astro";
 import ServiceCards from "../components/site/ServiceCards.astro";
 import Process from "../components/site/Process.astro";
 import ProofCards from "../components/site/ProofCards.astro";
@@ -23,6 +24,8 @@ const schema = pageGraph({ path: "/", name: title, description, nodes: [...servi
     <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
     <a class="btn btn--ghost" href="/results/">See our results</a>
   </PageHero>
+
+  <ClientStrip />
 
   <ProofBand />
 

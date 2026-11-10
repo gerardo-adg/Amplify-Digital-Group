@@ -142,6 +142,16 @@ export const nav = [
   { label: "About", href: "/about/" },
 ];
 
+// Contractors we work with, for the scrolling strip under the home hero.
+// `logo` is a file in public/clients/ (transparent PNG/WebP, about 240px tall);
+// without one, the name shows as text. Only list real clients.
+export const clients: { name: string; logo?: string; width?: number; height?: number }[] = [
+  { name: "Triple R Roofing LLC", logo: "/clients/triple-r-roofing.webp", width: 280, height: 240 },
+  { name: "Sky Roofing Unlimited Inc." },
+  { name: "GM Roofing" },
+  { name: "B & S Painting Inc." },
+];
+
 // A website we built: shown on Results and the Websites page
 export const websiteProjects = [
   {
