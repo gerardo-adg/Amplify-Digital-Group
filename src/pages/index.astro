@@ -10,7 +10,7 @@ import Process from "../components/site/Process.astro";
 import ProofCards from "../components/site/ProofCards.astro";
 import Faq from "../components/site/Faq.astro";
 import CtaBand from "../components/site/CtaBand.astro";
-import { site, hero, objections, services } from "../data/site";
+import { site, hero, homeHero, objections, services } from "../data/site";
 import { pageGraph, clientVideos, faqNode, serviceNode } from "../lib/schema";
 
 const title = `${site.name} | Meta ads for contractors and home-service businesses`;
@@ -20,7 +20,7 @@ const schema = pageGraph({ path: "/", name: title, description, nodes: [...servi
 ---
 
 <Site title={title} description={description} schema={schema}>
-  <PageHero callout={hero.callout} title={hero.title} underlineLast wide sub="We script, film, launch and manage your Meta ads, backed by high-quality video and a website built to turn clicks into booked jobs.">
+  <PageHero eyebrow={homeHero.eyebrow} title={homeHero.title} wide sub={homeHero.sub} subBold>
     <a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
     <a class="btn btn--ghost" href="/results/">See our results</a>
   </PageHero>

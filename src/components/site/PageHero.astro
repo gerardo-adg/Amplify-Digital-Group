@@ -6,12 +6,16 @@
 interface Props {
   title: string[];
   callout?: string;
+  // Small blue line above the headline (keywords for Google)
+  eyebrow?: string;
   sub?: string;
+  // Show the subheadline in bold dark text instead of grey
+  subBold?: boolean;
   underlineLast?: boolean;
   wide?: boolean;
   crumbs?: { name: string; href: string }[];
 }
-const { title, callout, sub, underlineLast = false, wide = false, crumbs } = Astro.props;
+const { title, callout, eyebrow, sub, subBold = false, underlineLast = false, wide = false, crumbs } = Astro.props;
 ---
 <section class="ph">
   <div class="wrap ph__in">
@@ -23,11 +27,12 @@ const { title, callout, sub, underlineLast = false, wide = false, crumbs } = Ast
         </ol>
       </nav>
     )}
+    {eyebrow && <p class="eyebrow ph__eyebrow" data-reveal>{eyebrow}</p>}
     {callout && <p class="ph__callout" data-reveal>{callout}</p>}
     <h1 class:list={["display ph__title", wide && "ph__title--wide"]} data-reveal="lines">
       {title.map((line, i) => <span class="l"><span class:list={["l__in", underlineLast && i === title.length - 1 && "ph__u"]}>{line}</span>{" "}</span>)}
     </h1>
-    {sub && <p class="ph__sub muted" data-reveal style="--i:2">{sub}</p>}
+    {sub && <p class:list={["ph__sub", subBold ? "ph__sub--bold" : "muted"]} data-reveal style="--i:2">{sub}</p>}
     {Astro.slots.has("default") && <div class="ph__ctas" data-reveal style="--i:3"><slot /></div>}
   </div>
 </section>

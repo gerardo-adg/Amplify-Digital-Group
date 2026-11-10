@@ -45,6 +45,13 @@ export const hero = {
   },
 };
 
+// The website home page hero (the ads landing page uses `hero` above)
+export const homeHero = {
+  eyebrow: "Meta Ads for Contractors & Home-Service Businesses",
+  title: ["Video Ads That Keep Your Crews Busy."],
+  sub: "We script, film, launch and manage everything. You just answer the phone.",
+};
+
 export type Service = {
   slug: string;
   title: string;
