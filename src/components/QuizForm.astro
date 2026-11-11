@@ -56,10 +56,10 @@ const total = questions.length;
       <fieldset class="step" data-step data-show={askService && q.show ? JSON.stringify(q.show) : undefined}>
         <legend class="step__q" tabindex="-1">{q.q}</legend>
         {q.help && <p class="step__help muted">{q.help}</p>}
-        <div class="opts">
+        <div class:list={["opts", q.multi && "opts--multi"]}>
           {q.options.map((o, k) => (
             <label class="opt">
-              <input type="radio" name={q.name} value={o} required={k === 0 && !(askService && q.show)} />
+              <input type={q.multi ? "checkbox" : "radio"} name={q.name} value={o} required={k === 0 && !q.multi && !(askService && q.show)} />
               <span class="opt__box">
                 <span class="opt__key" aria-hidden="true">{String.fromCharCode(65 + k)}</span>
                 <span class="opt__text">{o}</span>
@@ -161,6 +161,7 @@ const total = questions.length;
   .opt__key { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-dark); font-size: 0.8rem; font-weight: 700; color: var(--muted-dark); transition: all 0.25s; }
   .opt__text { flex: 1; }
   .opt__check { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / 0.3); transition: all 0.25s; }
+  .opts--multi .opt__check { border-radius: 7px; }
   .opt input:focus-visible + .opt__box { outline: 2px solid var(--brand-hi); outline-offset: 3px; }
   .opt input:checked + .opt__box { background: rgb(59 0 252 / 0.28); border-color: var(--brand-hi); }
   .opt input:checked + .opt__box .opt__key { background: var(--brand); border-color: var(--brand); color: #fff; }
@@ -255,16 +256,22 @@ const total = questions.length;
 
     type When = Record<string, string[]>;
     const rules = JSON.parse(root.dataset.priority ?? "{}") as {
-      notFit: { label: string; whenAny: When[] };
-      hot: { label: string; whenAny: When[] };
-      otherwise: string;
+      labels: { hot: string; warm: string; notFit: string };
+      byService: Record<string, { notFit: When[]; hot: When[] }>;
     };
+    // A field matches when any of its answers (several for checkboxes) is listed
     const matches = (when: When, data: FormData) =>
-      Object.entries(when).every(([field, values]) => values.includes(String(data.get(field) ?? "")));
-    const priorityOf = (data: FormData) =>
-      rules.notFit.whenAny.some((w) => matches(w, data)) ? rules.notFit.label
-        : rules.hot.whenAny.some((w) => matches(w, data)) ? rules.hot.label
-        : rules.otherwise;
+      Object.entries(when).every(([field, values]) => data.getAll(field).some((v) => values.includes(String(v))));
+    // Label each service they picked, then keep the best one
+    const priorityOf = (data: FormData) => {
+      const picked = data.getAll("service").map(String).filter((sv) => rules.byService[sv]);
+      if (!picked.length) return rules.labels.warm;
+      const each = picked.map((sv) => {
+        const r = rules.byService[sv];
+        return r.notFit.some((w) => matches(w, data)) ? 0 : r.hot.some((w) => matches(w, data)) ? 2 : 1;
+      });
+      return [rules.labels.notFit, rules.labels.warm, rules.labels.hot][Math.max(...each)];
+    };
 
     // Keep the top of the quiz on screen as it changes height
     const keepInView = () => {
@@ -321,10 +328,11 @@ const total = questions.length;
 
     function validStep(step: HTMLElement) {
       const err = step.querySelector<HTMLElement>("[data-error]");
-      const radios = step.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+      const radios = step.querySelectorAll<HTMLInputElement>('input[type="radio"], input[type="checkbox"]');
       if (radios.length) {
         const ok = Array.from(radios).some((r) => r.checked);
-        if (err) err.textContent = ok ? "" : "Pick one to continue.";
+        const multi = radios[0].type === "checkbox";
+        if (err) err.textContent = ok ? "" : multi ? "Pick at least one to continue." : "Pick one to continue.";
         return ok;
       }
       let first: HTMLInputElement | null = null;
@@ -344,7 +352,7 @@ const total = questions.length;
     // Tapping the answer that's already selected doesn't fire "change", so move on here
     form.addEventListener("click", (e) => {
       const input = (e.target as HTMLElement).closest(".opt")?.querySelector("input");
-      if (!input || !pointerPick || !input.checked || input.dataset.wasChecked !== "1") return;
+      if (!input || input.type !== "radio" || !pointerPick || !input.checked || input.dataset.wasChecked !== "1") return;
       pointerPick = false;
       const step = steps[current];
       setTimeout(() => { if (steps[current] === step) show(nextIdx()); }, 200);
@@ -355,6 +363,15 @@ const total = questions.length;
     });
     form.addEventListener("change", (e) => {
       const input = e.target as HTMLInputElement;
+      if (input.type === "checkbox") {
+        // Pick as many as they like, then press Next
+        pointerPick = false;
+        const step = steps[current];
+        step.querySelector<HTMLElement>("[data-error]")!.textContent = "";
+        next.hidden = !step.querySelector("input:checked");
+        nav.hidden = back.hidden && next.hidden;
+        return;
+      }
       if (input.type !== "radio") return;
       const step = steps[current];
       step.querySelector<HTMLElement>("[data-error]")!.textContent = "";
@@ -399,7 +416,11 @@ const total = questions.length;
       form.querySelector<HTMLInputElement>("[data-priority-field]")!.value = priorityOf(new FormData(form));
       submit.disabled = true;
       try {
-        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+        // Several picks for one question go to Netlify as one field: "Meta Ads, A Website"
+        const fd = new FormData(form);
+        const params = new URLSearchParams();
+        for (const key of new Set(fd.keys())) params.set(key, fd.getAll(key).map(String).join(", "));
+        const body = params.toString();
         const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
         if (!res.ok) throw new Error(String(res.status));
         (window as unknown as { fbq?: Fbq }).fbq?.("track", "Lead");

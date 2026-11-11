@@ -5,10 +5,12 @@
  */
 
 // `show` limits a question to certain earlier answers, e.g. { service: ["A Website"] }
-export type Question = { name: string; q: string; help?: string; options: string[]; show?: Record<string, string[]> };
+// `multi` lets people pick more than one answer (checkboxes and a Next button)
+export type Question = { name: string; q: string; help?: string; options: string[]; multi?: boolean; show?: Record<string, string[]> };
+type When = Record<string, string[]>;
 
 // Answers that send someone down the ads path (the landing page always counts as ads)
-const ads = { service: ["Meta Ads", "All Three"] };
+const ads = { service: ["Meta Ads"] };
 const soon = ["As Soon as Possible", "Within 30 Days"];
 
 export const quiz = {
@@ -20,7 +22,9 @@ export const quiz = {
   service: {
     name: "service",
     q: "What can we help you with?",
-    options: ["Meta Ads", "High-Quality Content", "A Website", "All Three"],
+    help: "Pick all that apply.",
+    multi: true,
+    options: ["Meta Ads", "High-Quality Content", "A Website"],
   } satisfies Question,
   serviceDefault: "Meta Ads",
   // Every question qualifies the lead. Easy ones first; the money questions
@@ -91,37 +95,32 @@ export const quiz = {
   // Each lead gets a hidden "priority" field so you know who to call first.
   // Based on a $2K–$3K monthly fee: under $3K total leaves almost nothing for
   // ads, and $5K+ leaves room for both the fee and a real ad budget.
-  // A rule matches when every listed question's answer is one of its options.
-  // "Not a fit" is checked first, then each "Hot" rule; everyone else is "Warm".
-  // A rule matches when every listed question's answer is one of its options.
-  // "Not a fit" is checked first, then "Hot"; everyone else is "Warm".
+  // Each service they picked gets its own label: "Not a fit" if a notFit rule
+  // matches, else "Hot" if a hot rule matches, else "Warm". The lead gets the
+  // best of those (Hot, then Warm, then Not a fit), so a good fit for one
+  // service isn't thrown out for another. A rule matches when every listed
+  // question's answer is one of its options.
   priority: {
-    notFit: {
-      label: "Not a fit",
-      whenAny: [
-        // Ads: under $3K total leaves almost nothing for ads after a $2K–$3K fee
-        { service: ads.service, marketing_budget: ["Under $3K"] },
-        { service: ["A Website"], website_budget: ["Under $1,500"] },
-        { service: ["High-Quality Content"], content_budget: ["Under $2K"] },
-      ],
+    labels: { hot: "🔥 Hot", warm: "Warm", notFit: "Not a fit" },
+    byService: {
+      "Meta Ads": {
+        // Under $3K total leaves almost nothing for ads after a $2K–$3K fee
+        notFit: [{ marketing_budget: ["Under $3K"] }],
+        hot: [
+          { timeline: soon, annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"], marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"] },
+          { timeline: soon, marketing_budget: ["$3K–$5K"] },
+        ],
+      },
+      "A Website": {
+        notFit: [{ website_budget: ["Under $1,500"] }],
+        hot: [{ timeline: soon, website_budget: ["$1,500–$2,500", "Over $2,500"] }],
+      },
+      "High-Quality Content": {
+        notFit: [{ content_budget: ["Under $2K"] }],
+        hot: [{ timeline: soon, content_budget: ["$2K–$3K", "$3K–$5K", "Over $5K"] }],
+      },
     },
-    hot: {
-      label: "🔥 Hot",
-      // Any one of these makes a lead Hot
-      whenAny: [
-        {
-          service: ads.service,
-          timeline: soon,
-          annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
-          marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
-        },
-        { service: ads.service, timeline: soon, marketing_budget: ["$3K–$5K"] },
-        { service: ["A Website"], timeline: soon, website_budget: ["$1,500–$2,500", "Over $2,500"] },
-        { service: ["High-Quality Content"], timeline: soon, content_budget: ["$2K–$3K", "$3K–$5K", "Over $5K"] },
-      ],
-    },
-    otherwise: "Warm",
-  } as { notFit: { label: string; whenAny: Record<string, string[]>[] }; hot: { label: string; whenAny: Record<string, string[]>[] }; otherwise: string },
+  } as { labels: { hot: string; warm: string; notFit: string }; byService: Record<string, { notFit: When[]; hot: When[] }> },
   contact: {
     q: "Where should we reach you?",
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
