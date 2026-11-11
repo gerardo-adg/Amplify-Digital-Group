@@ -55,8 +55,10 @@ export const homeHero = {
 export type Service = {
   slug: string;
   title: string;
-  // Short line for cards and the menu
+  // Longer line (service page "Pairs well with", schema)
   body: string;
+  // One line for the home page cards
+  short: string;
   points: string[];
   icon: "web" | "video" | "ads";
   // The main service gets the big card
@@ -77,6 +79,7 @@ export const services: Service[] = [
     icon: "ads",
     main: true,
     title: "Meta ads",
+    short: "Facebook & Instagram campaigns aimed at the people in your area who need what you do.",
     body: "Our main service. Facebook and Instagram campaigns that put your business in front of the people in your area who need what you do, and turn them into leads.",
     points: ["We script, film and edit your ads", "We launch and manage your campaigns", "Targeted to the areas you serve", "Budgets you approve"],
     page: {
@@ -100,6 +103,7 @@ export const services: Service[] = [
     slug: "content",
     icon: "video",
     title: "High-quality content",
+    short: "We come to your jobsites and film the work, the crew and you.",
     body: "We come to you, film the work and the people, and cut it for your ads, your site and your social.",
     points: ["On-site shoots", "Short-form for Reels and TikTok", "Ad creative that stops the scroll"],
     page: {
@@ -122,6 +126,7 @@ export const services: Service[] = [
     slug: "websites",
     icon: "web",
     title: "Websites",
+    short: "Fast sites built around one goal: getting the visitor to call.",
     body: "Fast, good-looking sites built around one goal: getting the visitor to call or book.",
     points: ["Custom design, no templates", "Built for phones first", "Schema markup built in"],
     page: {

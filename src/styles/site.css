@@ -81,37 +81,24 @@
   .band__who a { margin-top: 0.5rem; font-size: 0.92rem; }
 }
 
-/* Service cards */
-.svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; }
-.svc__card { position: relative; display: flex; flex-direction: column; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: var(--paper-2); border: 1px solid var(--line); text-decoration: none; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s; }
-.svc__card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgb(59 0 252 / 0.4); border-color: rgb(59 0 252 / 0.3); }
-.svc__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-.svc__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--brand); color: #fff; }
-.svc__badge { padding: 0.35rem 0.8rem; border-radius: 999px; background: var(--brand); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.svc__card h3 { font-size: 1.45rem; font-weight: 750; letter-spacing: -0.01em; line-height: 1.15; }
-.svc__card p { margin-top: 0.75rem; }
-.svc__pts { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.5rem; font-size: 0.97rem; }
-.svc__pts li { display: flex; gap: 0.6rem; align-items: baseline; }
-.svc__pts li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 2px; background: var(--brand); transform: translateY(-2px) rotate(45deg); }
-.svc__more { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: auto; padding-top: 1.75rem; font-weight: 650; color: var(--brand); }
-.svc__card--main { grid-row: span 2; padding: clamp(2rem, 4vw, 3rem); background: var(--ink); color: #fff; border-color: transparent; overflow: hidden; isolation: isolate; }
-.svc__card--main::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 70% at 100% 0%, rgb(59 0 252 / 0.55), transparent 65%), radial-gradient(70% 60% at 0% 100%, rgb(122 43 255 / 0.3), transparent 60%); }
-.svc__card--main h3 { font-family: var(--font-display); font-weight: 850; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: 0.95; }
-.svc__card--main p { color: var(--muted-dark); font-size: 1.1rem; max-width: 30rem; }
-.svc__card--main .svc__pts li::before { background: var(--brand-hi); }
+/* Service cards: three equal columns, Meta ads in dark */
+.svc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.svc__card { display: flex; flex-direction: column; align-items: flex-start; padding: 2rem 1.75rem; border-radius: var(--radius-lg); background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 50px -35px rgb(7 5 26 / 0.35); text-decoration: none; transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease); }
+.svc__card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -30px rgb(59 0 252 / 0.35); }
+.svc__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--ink); color: #fff; }
+.svc__card h3 { margin-top: 1.25rem; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.15; }
+.svc__card p { margin-top: 0.5rem; }
+.svc__more { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: auto; padding-top: 1.25rem; font-weight: 700; color: var(--brand); }
+.svc__card--main { background: var(--ink); color: #fff; border-color: transparent; }
+.svc__card--main p { color: var(--muted-dark); }
+.svc__card--main .svc__icon { background: var(--brand); }
 .svc__card--main .svc__more { color: #fff; }
-.svc__proof { display: flex; align-items: center; gap: 1.25rem; margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: var(--radius); background: rgb(255 255 255 / 0.06); border: 1px solid var(--line-dark); }
-.svc__proof strong { flex: none; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; color: var(--brand-hi); }
-.svc__proof span { font-size: 0.98rem; color: var(--muted-dark); }
 @media (max-width: 899px) {
-  .svc { grid-template-columns: 1fr; }
-  .svc__card { text-align: center; align-items: center; }
-  .svc__top { justify-content: center; gap: 1rem; }
-  .svc__card p { margin-inline: auto; }
-  .svc__pts { justify-items: center; }
-  .svc__pts li { display: block; }
-  .svc__pts li::before { display: inline-block; margin-right: 0.6rem; vertical-align: middle; transform: translateY(-1px) rotate(45deg); }
-  .svc__proof { flex-direction: column; gap: 0.5rem; }
+  .svc { grid-template-columns: 1fr; gap: 0.75rem; }
+  .svc__card { display: grid; grid-template-columns: auto 1fr; column-gap: 1rem; padding: 1.25rem; text-align: left; }
+  .svc__icon { grid-row: span 3; width: 44px; height: 44px; }
+  .svc__card h3 { margin: 0; font-size: 1.2rem; }
+  .svc__more { padding-top: 0.5rem; }
 }
 
 /* Process steps */
