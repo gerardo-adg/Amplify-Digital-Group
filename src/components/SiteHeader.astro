@@ -6,7 +6,7 @@
  */
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
-import { site, hero, nav } from "../data/site";
+import { site, hero, nav, services } from "../data/site";
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(href);
@@ -16,7 +16,24 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     <a href="/" class="sh__logo" aria-label={`${site.name} home`}><Logo height={40} eager /></a>
     <nav class="sh__nav" aria-label="Main">
       <ul>
-        {nav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+        {nav.map((n) => n.href === "/services/" ? (
+          <li class="dd" data-dd>
+            <a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a>
+            <button class="dd__btn" type="button" aria-expanded="false" aria-controls="dd-services" data-dd-btn>
+              <span class="sr-only">Show services</span><Icon name="chevron" size={16} />
+            </button>
+            <div class="dd__menu" id="dd-services">
+              <ul>
+                {services.map((s) => (
+                  <li><a class="dd__item" href={`/services/${s.slug}/`} aria-current={path.startsWith(`/services/${s.slug}`) ? "page" : undefined}>
+                    <span class="dd__icon"><Icon name={s.icon} size={22} /></span>
+                    <span><strong>{s.title}</strong><small>{s.short}</small></span>
+                  </a></li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ) : <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
       </ul>
     </nav>
     <a class="btn sh__cta" href={site.ctaUrl}>{hero.primaryCta}</a>
@@ -28,7 +45,16 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
   </div>
   <div class="sh__panel" id="site-menu" data-menu hidden>
     <ul class="wrap">
-      {nav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+      {nav.map((n) => (
+        <li>
+          <a href={n.href} aria-current={path === n.href || (n.href !== "/services/" && isCurrent(n.href)) ? "page" : undefined}>{n.label}</a>
+          {n.href === "/services/" && (
+            <ul class="sh__sub">
+              {services.map((s) => <li><a href={`/services/${s.slug}/`} aria-current={path.startsWith(`/services/${s.slug}`) ? "page" : undefined}><Icon name={s.icon} size={20} />{s.title}</a></li>)}
+            </ul>
+          )}
+        </li>
+      ))}
       <li><a class="btn sh__panel-cta" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a></li>
     </ul>
   </div>
@@ -47,6 +73,20 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
   .sh__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--brand-hi); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
   .sh__nav a:hover, .sh__nav a[aria-current="page"] { color: #fff; }
   .sh__nav a:hover::after, .sh__nav a[aria-current="page"]::after { transform: scaleX(1); }
+  /* Services dropdown (desktop): opens on hover, keyboard focus or the arrow button */
+  .dd { position: relative; display: flex; align-items: center; gap: 0.2rem; }
+  .dd__btn { display: grid; place-items: center; width: 22px; height: 22px; color: rgb(255 255 255 / 0.75); transition: color 0.3s, transform 0.3s var(--ease); }
+  .dd:hover .dd__btn, .dd.is-open .dd__btn { color: #fff; transform: rotate(180deg); }
+  .dd__menu { position: absolute; top: 100%; left: 50%; width: 360px; padding-top: 1.1rem; transform: translate(-50%, 8px); opacity: 0; visibility: hidden; transition: opacity 0.25s, transform 0.3s var(--ease), visibility 0.25s; }
+  .dd:hover .dd__menu, .dd:focus-within .dd__menu, .dd.is-open .dd__menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .dd.is-closed .dd__menu { opacity: 0; visibility: hidden; }
+  .sh__nav .dd__menu ul { display: grid; gap: 0.25rem; padding: 0.5rem; border-radius: 18px; background: #fff; box-shadow: 0 30px 60px -20px rgb(7 5 26 / 0.5); }
+  .sh__nav .dd__item { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.8rem 0.9rem; border-radius: 12px; color: var(--ink); transition: background 0.2s; }
+  .sh__nav .dd__item::after { display: none; }
+  .sh__nav .dd__item:hover, .sh__nav .dd__item:focus-visible, .sh__nav .dd__item[aria-current="page"] { background: var(--brand-soft); color: var(--ink); }
+  .dd__icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--brand); color: #fff; }
+  .dd__item strong { display: block; font-weight: 700; font-size: 0.98rem; }
+  .dd__item small { display: block; margin-top: 0.15rem; font-size: 0.84rem; line-height: 1.4; color: var(--muted); }
   .sh__cta { padding: 0.7rem 1.25rem; font-size: 0.92rem; }
   .sh__toggle { display: none; margin-left: auto; width: 44px; height: 44px; place-items: center; border-radius: 12px; color: #fff; }
   .sh__icon { display: grid; }
@@ -57,6 +97,10 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
   .sh__panel ul { list-style: none; margin-block: 0; padding: 1rem 0 1.75rem; display: grid; gap: 0.25rem; }
   .sh__panel a:not(.btn) { display: block; padding: 0.9rem 0; font-size: 1.25rem; font-weight: 650; text-decoration: none; border-bottom: 1px solid var(--line-dark); }
   .sh__panel a[aria-current="page"] { color: var(--brand-hi); }
+  .sh__panel .sh__sub { padding: 0.25rem 0 0.5rem 0.25rem; gap: 0; }
+  .sh__panel .sh__sub a { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0; font-size: 1.05rem; font-weight: 550; color: rgb(255 255 255 / 0.8); border-bottom: 0; }
+  .sh__panel .sh__sub a :global(svg) { color: var(--brand-hi); }
+  .sh__panel .sh__sub a[aria-current="page"] { color: var(--brand-hi); font-weight: 650; }
   .sh__panel-cta { margin-top: 1rem; width: 100%; justify-content: center; }
   .sh__panel:not([hidden]) { animation: panelIn 0.35s var(--ease); }
   @keyframes panelIn { from { opacity: 0; transform: translateY(-8px); } }
@@ -80,6 +124,19 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     toggle.setAttribute("aria-expanded", String(open));
     toggle.querySelector(".sr-only")!.textContent = open ? "Close menu" : "Menu";
   };
+  // Services dropdown: the arrow button toggles it for touch and keyboard users
+  const dd = header.querySelector<HTMLElement>("[data-dd]");
+  const ddBtn = header.querySelector<HTMLButtonElement>("[data-dd-btn]");
+  const setDd = (open: boolean) => {
+    if (!dd || !ddBtn) return;
+    dd.classList.toggle("is-open", open);
+    dd.classList.toggle("is-closed", !open);
+    ddBtn.setAttribute("aria-expanded", String(open));
+  };
+  ddBtn?.addEventListener("click", () => setDd(!dd!.classList.contains("is-open")));
+  dd?.addEventListener("mouseleave", () => dd.classList.remove("is-closed"));
+  document.addEventListener("click", (e) => { if (dd && !dd.contains(e.target as Node)) { dd.classList.remove("is-open"); ddBtn?.setAttribute("aria-expanded", "false"); } });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && dd?.classList.contains("is-open")) { setDd(false); ddBtn?.focus(); } });
   setScrolled();
   window.addEventListener("scroll", setScrolled, { passive: true });
   toggle.addEventListener("click", () => setOpen(panel.hidden));
