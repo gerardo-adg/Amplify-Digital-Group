@@ -188,11 +188,12 @@ export const websiteProjects = [
 
 // How every Meta ads client is handled, start to finish.
 export const steps = [
-  { title: "Script", body: "We write the ads for you, so you know exactly what to say before the camera rolls." },
-  { title: "Film", body: "We come to you and film on location. Nervous on camera? We're patient, and it gets easier with every video." },
-  { title: "Edit", body: "We cut the footage into scroll-stopping ads made for Facebook and Instagram." },
-  { title: "Launch", body: "We build and launch your campaigns, aimed at the people in the areas you serve." },
-  { title: "Manage", body: "We keep running and managing your campaigns after launch, so you can get back to the work." },
+  { title: "Script", body: "We write your ads, so you know exactly what to say." },
+  { title: "Film", body: "We come to your jobsite. Nervous on camera? We're patient." },
+  { title: "Edit", body: "We cut it into scroll-stopping Facebook & Instagram ads." },
+  { title: "Launch & manage", body: "We run your campaigns in the areas you serve." },
+  // The result, not a task: leads land on their phone and they call them back
+  { title: "New leads, straight to your phone", body: "You call them back and book the job.", done: true },
 ];
 
 /**

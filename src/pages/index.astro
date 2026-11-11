@@ -42,12 +42,13 @@ const schema = pageGraph({ path: "/", name: title, description, nodes: [...servi
 
   <section class="section dark" aria-labelledby="process-h">
     <div class="wrap">
-      <div class="head">
+      <div class="head head--center">
         <p class="eyebrow" data-reveal>How it works</p>
-        <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+        <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">We handle it</span></span> <span class="l"><span class="l__in">start to finish.</span></span></h2>
         <p class="muted head__p" data-reveal>Your only job is to show up for the shoot. We do the rest.</p>
       </div>
       <Process />
+      <div class="tl__cta" data-reveal><a class="btn" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a></div>
     </div>
   </section>
 

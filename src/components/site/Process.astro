@@ -1,11 +1,14 @@
 ---
+/**
+ * The process as a timeline: numbered circles on a line, ending in a
+ * checkmark for the result. Runs down the left side on phones.
+ */
 import { steps } from "../../data/site";
-const pad = (n: number) => String(n).padStart(2, "0");
 ---
-<ol class="steps" data-stagger>
+<ol class="tl" data-stagger>
   {steps.map((s, i) => (
-    <li class="step" data-reveal>
-      <span class="step__n display">{pad(i + 1)}</span>
+    <li class:list={["tl__step", s.done && "tl__step--done"]} data-reveal>
+      <span class="tl__n" aria-hidden="true">{s.done ? "✓" : i + 1}</span>
       <h3>{s.title}</h3>
       <p class="muted">{s.body}</p>
     </li>
