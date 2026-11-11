@@ -163,6 +163,7 @@ export const clients: { name: string; logo?: string; width?: number; height?: nu
   { name: "Blackstone Pools", logo: "/clients/blackstone-pools.webp", width: 825, height: 240, scale: 0.6 },
   { name: "AB Bespoke Home", logo: "/clients/ab-bespoke-home.webp", width: 238, height: 240 },
   { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
+  { name: "Alba's Roofing", logo: "/clients/albas-roofing.webp", width: 637, height: 240, scale: 0.7 },
 ];
 
 // A website we built: shown on Results and the Websites page
