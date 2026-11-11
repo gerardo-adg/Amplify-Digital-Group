@@ -155,7 +155,7 @@ export const nav = [
 // `scale` shrinks a logo that looks too big next to the others (wide wordmarks).
 export const clients: { name: string; logo?: string; width?: number; height?: number; scale?: number }[] = [
   { name: "Triple R Roofing LLC", logo: "/clients/triple-r-roofing.webp", width: 280, height: 240 },
-  { name: "Sky Roofing Unlimited Inc." },
+  { name: "Sky Roofing Unlimited Inc.", logo: "/clients/sky-roofing.webp", width: 480, height: 240, scale: 0.85 },
   { name: "Samperio's Roofing Inc.", logo: "/clients/samperios-roofing.webp", width: 239, height: 240 },
   { name: "Speed Plumbing Pros", logo: "/clients/speed-plumbing-pros.webp", width: 370, height: 240 },
   { name: "GM Roofing" },
