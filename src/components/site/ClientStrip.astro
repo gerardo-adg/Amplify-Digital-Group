@@ -17,7 +17,7 @@ const pass = Array.from({ length: Math.max(1, Math.ceil(8 / clients.length)) }, 
       {[0, 1].map(() => pass.map((c) => (
         <div class="cs__item">
           {c.logo
-            ? <img src={c.logo} alt="" width={c.width} height={c.height} style={c.scale ? `--s:${c.scale}` : undefined} loading="lazy" decoding="async" />
+            ? <img src={c.logo} alt="" width={c.width} height={c.height} style={[c.scale && `--s:${c.scale}`, c.boost && `--b:${c.boost}`].filter(Boolean).join(";") || undefined} loading="lazy" decoding="async" />
             : <span class="cs__name">{c.name}</span>}
         </div>
       )))}
@@ -31,7 +31,7 @@ const pass = Array.from({ length: Math.max(1, Math.ceil(8 / clients.length)) }, 
   .cs__track { display: flex; width: max-content; animation: csScroll 40s linear infinite; }
   .cs__item { flex: none; display: grid; place-items: center; height: 80px; padding-inline: clamp(1.75rem, 4vw, 3rem); }
   /* Greyscale, brightened so dark parts still read on the dark band */
-  .cs__item img { height: calc(80px * var(--s, 1)); width: auto; filter: grayscale(1) brightness(1.35) contrast(1.05); opacity: 0.9; }
+  .cs__item img { height: calc(80px * var(--s, 1)); width: auto; filter: grayscale(1) contrast(1.35) brightness(calc(1.2 * var(--b, 1))); }
   .cs__name { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-style: italic; text-transform: uppercase; font-size: 1.2rem; letter-spacing: 0.01em; white-space: nowrap; color: #fff; opacity: 0.7; transition: opacity 0.3s; }
   .cs__item:hover .cs__name { opacity: 1; }
   @keyframes csScroll { to { transform: translateX(-50%); } }

@@ -153,7 +153,8 @@ export const nav = [
 // `logo` is a file in public/clients/ (transparent WebP, 240px tall, light enough to read on the dark band);
 // without one, the name shows as text. Only list real clients.
 // `scale` shrinks a logo that looks too big next to the others (wide wordmarks).
-export const clients: { name: string; logo?: string; width?: number; height?: number; scale?: number }[] = [
+// `boost` brightens a logo whose colors go too dark in the black-and-white strip.
+export const clients: { name: string; logo?: string; width?: number; height?: number; scale?: number; boost?: number }[] = [
   { name: "Triple R Roofing LLC", logo: "/clients/triple-r-roofing.webp", width: 280, height: 240 },
   { name: "Sky Roofing Unlimited Inc.", logo: "/clients/sky-roofing.webp", width: 480, height: 240, scale: 0.85 },
   { name: "Samperio's Roofing Inc.", logo: "/clients/samperios-roofing.webp", width: 239, height: 240 },
@@ -164,9 +165,9 @@ export const clients: { name: string; logo?: string; width?: number; height?: nu
   { name: "AB Bespoke Home", logo: "/clients/ab-bespoke-home.webp", width: 238, height: 240 },
   { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
   { name: "Alba's Roofing", logo: "/clients/albas-roofing.webp", width: 637, height: 240, scale: 0.7 },
-  { name: "RG Roofing Services Inc", logo: "/clients/rg-roofing.webp", width: 665, height: 240, scale: 0.7 },
+  { name: "RG Roofing Services Inc", logo: "/clients/rg-roofing.webp", width: 665, height: 240, scale: 0.7, boost: 2.6 },
   { name: "Sierra Valley Tree Service", logo: "/clients/sierra-valley.webp", width: 303, height: 240 },
-  { name: "DLM Builders", logo: "/clients/dlm-builders.webp", width: 297, height: 240 },
+  { name: "DLM Builders", logo: "/clients/dlm-builders.webp", width: 297, height: 240, boost: 2 },
 ];
 
 // A website we built: shown on Results and the Websites page
