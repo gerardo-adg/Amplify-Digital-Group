@@ -91,12 +91,6 @@ export const quiz = {
     },
     // Content path
     {
-      name: "content_use",
-      show: { service: ["High-Quality Content"] },
-      q: "What will you use the content for?",
-      options: ["Social Media", "Ads", "My Website", "All of It"],
-    },
-    {
       name: "content_budget",
       show: { service: ["High-Quality Content"] },
       q: "What's your monthly budget for content?",
