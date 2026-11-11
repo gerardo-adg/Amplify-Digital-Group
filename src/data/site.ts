@@ -159,6 +159,7 @@ export const clients: { name: string; logo?: string; width?: number; height?: nu
   { name: "Samperio's Roofing Inc.", logo: "/clients/samperios-roofing.webp", width: 239, height: 240 },
   { name: "Speed Plumbing Pros", logo: "/clients/speed-plumbing-pros.webp", width: 370, height: 240 },
   { name: "GM Roofing" },
+  { name: "Arbor Evergreen Tree Care", logo: "/clients/arbor-evergreen.webp", width: 220, height: 240 },
   { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
 ];
 
