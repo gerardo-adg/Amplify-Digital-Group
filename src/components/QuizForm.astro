@@ -218,6 +218,7 @@ const total = questions.length;
   .quiz--card .step__error { color: #c8243f; }
   .quiz--card .qz__consent { color: var(--muted); }
   .quiz--card .qz__back { color: var(--muted); }
+  .quiz--card .eyebrow { color: var(--brand); }
   .quiz--card .qz__back:hover { color: var(--ink); }
 
   /* Phones: headings and buttons centered; answer cards stay left-aligned so they're easy to scan */
@@ -297,6 +298,8 @@ const total = questions.length;
       // Taps move on by themselves, so Next only shows for keyboard picks (see the
       // change handler) or on a question answered earlier, e.g. after going Back
       next.hidden = isContact || !step.querySelector("input:checked");
+      // No empty button row under the first question
+      nav.hidden = back.hidden && next.hidden;
       segs.forEach((seg, k) => {
         seg.hidden = k >= vis.length;
         const wasDone = seg.classList.contains("is-done");
@@ -360,6 +363,7 @@ const total = questions.length;
         setTimeout(() => { if (steps[current] === step) show(nextIdx()); }, 320);
       } else {
         next.hidden = false;
+        nav.hidden = false;
       }
     });
     form.addEventListener("input", (e) => {
