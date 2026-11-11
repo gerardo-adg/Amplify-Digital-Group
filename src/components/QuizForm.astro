@@ -13,10 +13,13 @@ interface Props {
   card?: boolean;
   // Show the quiz's own title and intro (the standalone /quiz/ page)
   intro?: boolean;
+  // Start by asking which service they want (the website's /quiz/ page)
+  askService?: boolean;
 }
-const { card = false, intro = false } = Astro.props;
+const { card = false, intro = false, askService = false } = Astro.props;
+const questions = askService ? [quiz.service, ...quiz.questions] : quiz.questions;
 // The contact step is labelled "Last step", so only the questions are counted
-const total = quiz.questions.length;
+const total = questions.length;
 ---
 
 <div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root data-priority={JSON.stringify(quiz.priority)}>
@@ -32,6 +35,7 @@ const total = quiz.questions.length;
     <input type="hidden" name="form-name" value="quiz" />
     <!-- Filled in on submit from the answers: who to call first -->
     <input type="hidden" name="priority" value="" data-priority-field />
+    {!askService && <input type="hidden" name="service" value={quiz.serviceDefault} />}
     <p hidden><label>Leave this empty: <input name="company_website" tabindex="-1" autocomplete="off" /></label></p>
 
     {intro && (
@@ -42,7 +46,7 @@ const total = quiz.questions.length;
       </section>
     )}
 
-    {quiz.questions.map((q, j) => (
+    {questions.map((q, j) => (
       <fieldset class="step" data-step>
         <legend class="step__q" tabindex="-1">{q.q}</legend>
         {q.help && <p class="step__help muted">{q.help}</p>}

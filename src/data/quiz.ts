@@ -11,6 +11,14 @@ export const quiz = {
   eyebrow: "30-Second Quiz",
   title: "See if we're a fit",
   intro: "Answer a few quick questions about your business. If we can help, we'll reach out to you personally.",
+  // First question on the website's /quiz/ page only. The Meta ads landing
+  // page (/start/) skips it and sends `serviceDefault` instead.
+  service: {
+    name: "service",
+    q: "What can we help you with?",
+    options: ["Meta Ads", "High-Quality Content", "A Website", "All Three"],
+  } satisfies Question,
+  serviceDefault: "Meta Ads",
   // Every question qualifies the lead. Easy ones first; the money questions
   // come last, once people have momentum.
   questions: [
@@ -54,7 +62,8 @@ export const quiz = {
   priority: {
     notFit: {
       label: "Not a fit",
-      when: { marketing_budget: ["Under $3K"] },
+      // Only for ads leads: a website or content job can fit a smaller budget
+      when: { marketing_budget: ["Under $3K"], service: ["Meta Ads", "All Three"] },
     },
     hot: {
       label: "🔥 Hot",
