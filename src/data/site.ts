@@ -165,7 +165,7 @@ export const clients: { name: string; logo?: string; width?: number; height?: nu
   { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
   { name: "Alba's Roofing", logo: "/clients/albas-roofing.webp", width: 637, height: 240, scale: 0.7 },
   { name: "RG Roofing Services Inc", logo: "/clients/rg-roofing.webp", width: 665, height: 240, scale: 0.7 },
-  { name: "Sierra Valley Tree Service", logo: "/clients/sierra-valley.webp", width: 320, height: 240 },
+  { name: "Sierra Valley Tree Service", logo: "/clients/sierra-valley.webp", width: 303, height: 240 },
 ];
 
 // A website we built: shown on Results and the Websites page
