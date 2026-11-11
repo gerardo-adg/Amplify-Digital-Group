@@ -49,7 +49,7 @@ export const hero = {
 export const homeHero = {
   eyebrow: "Meta Ads for Contractors & Home-Service Pros",
   title: ["Video Ads That Keep Your Crews Busy."],
-  sub: "We script, film, launch and manage everything. You just answer the phone.",
+  sub: "We script, film, launch and manage everything. You just call the leads.",
 };
 
 export type Service = {
@@ -88,7 +88,7 @@ export const services: Service[] = [
         "Facebook and Instagram ads for contractors, done for you: we script, film and edit the ads, then launch and manage the campaigns in the areas you serve.",
       headline: "Facebook & Instagram ads that bring in real jobs.",
       intro:
-        "Meta ads are what we do best. We handle the whole thing: the script, the shoot, the edit, the campaign and the day-to-day management. Your job is to show up for the shoot and answer the phone.",
+        "Meta ads are what we do best. We handle the whole thing: the script, the shoot, the edit, the campaign and the day-to-day management. Your job is to show up for the shoot and call your leads back.",
       included: [
         { title: "Scripting", body: "We write every ad, so you know exactly what to say before the camera rolls." },
         { title: "Filming and editing", body: "We film on location and cut the footage into ads made for Facebook and Instagram." },
