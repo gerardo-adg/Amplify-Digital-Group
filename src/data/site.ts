@@ -205,18 +205,17 @@ export const featured = {
   timeframe: "His first 30 days of Meta ads with us.",
   concern: "He'd been burned by a marketer before.",
   // His words on the call about almost not signing
-  concernQuote: "At one point I was like, I'm never gonna do this.",
+  concernQuote: "I used to be pretty skeptical about hiring agencies.", // jobsite video
   // One short paragraph under the numbers; the video does the rest
   story: [
     "That's over $70 in revenue for every $1 of ad spend. Two weeks in he already had $80K+ booked, and at 30 days we met him on the jobsite to hear it from him. Don't take our word for it: Evaristo tells you himself.",
   ],
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
-  quote: "The marketing pays for itself.", // his words on the call
+  quote: "Go with these guys. I promise you'll never regret it.", // jobsite video
   // Mux playback ID of the video. `ratio` is "9 / 16" for vertical, "16 / 9" for horizontal.
   // posterTime is in seconds: 74 = the 1:14 frame. uploadDate = posted on Instagram (Pacific time).
   // Main video: the 30-day testimonial, filmed with him on the jobsite.
-  // Add uploadDate (e.g. "2026-11-10T12:00:00-08:00") to put it in the schema.
-  video: { playbackId: "Sl9jTCixH01AG00Et1L4k7dDlagGi4MqSXiC4BcNN3QAE", ratio: "9 / 16", posterTime: 1, uploadDate: "" },
+  video: { playbackId: "Sl9jTCixH01AG00Et1L4k7dDlagGi4MqSXiC4BcNN3QAE", ratio: "9 / 16", posterTime: 1, uploadDate: "2026-11-08T12:00:00-08:00" },
   // The earlier phone call at two weeks ($80K+ booked); shown second on the Results page
   callVideo: { playbackId: "2v2jub58TG9M9kdJ6PPqEVfZS9zfpPEuZzRAGh00K00500", ratio: "9 / 16", posterTime: 74, uploadDate: "2026-10-24T12:00:00-07:00" },
 };
@@ -272,7 +271,7 @@ export const proofCards = [
   {
     result: "$94K in 30 days off $1,300 in ads",
     detail: "Revenue from his first 30 days of Meta ads. He had $80K+ booked in the first two weeks.",
-    quote: "The marketing pays for itself.",
+    quote: "Go with these guys. I promise you'll never regret it.",
     name: "Evaristo",
     business: "Sky Roofing Unlimited Inc. · Stockton, CA",
     video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc.: 30 days of Meta ads, on the jobsite", label: "Watch" },
