@@ -283,7 +283,10 @@ const total = questions.length;
 
     // Keep the top of the quiz on screen as it changes height
     const keepInView = () => {
-      if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (root.getBoundingClientRect().top >= 0) return;
+      // On the standalone quiz page, go back to the very top so the logo stays in view
+      if (intro) window.scrollTo({ top: 0, behavior: "smooth" });
+      else root.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
     // Steps that apply to the answers so far (e.g. website questions only for
@@ -448,7 +451,9 @@ const total = questions.length;
         nav.hidden = true;
         done.hidden = false;
         done.focus({ preventScroll: true });
-        keepInView();
+        // Standalone quiz page: show the whole confirmation with the logo above it
+        if (intro) window.scrollTo({ top: 0, behavior: "smooth" });
+        else keepInView();
       } catch {
         err.textContent = "Something went wrong sending your answers. Please try again.";
         submit.disabled = false;
