@@ -208,13 +208,17 @@ export const featured = {
   concernQuote: "At one point I was like, I'm never gonna do this.",
   // One short paragraph under the numbers; the video does the rest
   story: [
-    "That's over $70 in revenue for every $1 of ad spend. Two weeks in, he already had $80K+ booked, which is when we called him for the video. Don't take our word for it: Evaristo tells you himself.",
+    "That's over $70 in revenue for every $1 of ad spend. Two weeks in he already had $80K+ booked, and at 30 days we met him on the jobsite to hear it from him. Don't take our word for it: Evaristo tells you himself.",
   ],
   client: { name: "Evaristo", business: "Sky Roofing Unlimited Inc.", trade: "Roofing", city: "Stockton, CA" },
   quote: "The marketing pays for itself.", // his words on the call
   // Mux playback ID of the video. `ratio` is "9 / 16" for vertical, "16 / 9" for horizontal.
   // posterTime is in seconds: 74 = the 1:14 frame. uploadDate = posted on Instagram (Pacific time).
-  video: { playbackId: "2v2jub58TG9M9kdJ6PPqEVfZS9zfpPEuZzRAGh00K00500", ratio: "9 / 16", posterTime: 74, uploadDate: "2026-10-24T12:00:00-07:00" },
+  // Main video: the 30-day testimonial, filmed with him on the jobsite.
+  // Add uploadDate (e.g. "2026-11-10T12:00:00-08:00") to put it in the schema.
+  video: { playbackId: "Sl9jTCixH01AG00Et1L4k7dDlagGi4MqSXiC4BcNN3QAE", ratio: "9 / 16", posterTime: 1, uploadDate: "" },
+  // The earlier phone call at two weeks ($80K+ booked); shown second on the Results page
+  callVideo: { playbackId: "2v2jub58TG9M9kdJ6PPqEVfZS9zfpPEuZzRAGh00K00500", ratio: "9 / 16", posterTime: 74, uploadDate: "2026-10-24T12:00:00-07:00" },
 };
 
 // The three biggest objections, most common first, answered right under the hero
@@ -271,7 +275,7 @@ export const proofCards = [
     quote: "The marketing pays for itself.",
     name: "Evaristo",
     business: "Sky Roofing Unlimited Inc. · Stockton, CA",
-    video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc. on his first results with Meta ads", label: "Watch the call" },
+    video: { ...featured.video, title: "Evaristo of Sky Roofing Unlimited Inc.: 30 days of Meta ads, on the jobsite", label: "Watch" },
   },
   {
     result: "Camera-shy to “highly recommend”",

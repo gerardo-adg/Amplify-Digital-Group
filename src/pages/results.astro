@@ -22,7 +22,11 @@ const schema = pageGraph({ path: "/results/", name: title, description, crumbs: 
   <section class="section case" id="evaristo" aria-labelledby="ev-h">
     <div class="wrap case__in">
       <div class="case__media" data-reveal>
-        <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business} on his first results with Meta ads`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch the call" sizes="(min-width: 900px) 380px, 90vw" />
+        <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business}: 30 days of Meta ads, on the jobsite`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch: 30 days in" sizes="(min-width: 900px) 380px, 90vw" />
+        <div class="case__second">
+          <p class="case__second-label">Two weeks in, on the phone</p>
+          <VideoFrame playbackId={f.callVideo.playbackId} title={`${f.client.name} of ${f.client.business} on the phone, two weeks after launch`} posterTime={f.callVideo.posterTime} ratio="1 / 1" label="Watch the call" sizes="(min-width: 900px) 380px, 90vw" />
+        </div>
       </div>
       <div class="case__body">
         <p class="eyebrow" data-reveal>{f.client.business} · {f.client.city}</p>
@@ -34,7 +38,7 @@ const schema = pageGraph({ path: "/results/", name: title, description, crumbs: 
         <div class="case__concern" data-reveal>
           <p class="case__tag">The concern</p>
           <p class="case__concern-text">{f.concern}</p>
-          <p class="case__concern-quote">“{f.concernQuote}” <span class="muted">{f.client.name}, on the call</span></p>
+          <p class="case__concern-quote">“{f.concernQuote}” <span class="muted">{f.client.name}</span></p>
         </div>
         {f.story.map((p) => <p class="case__story" data-reveal>{p}</p>)}
         <blockquote class="case__quote" data-reveal>
@@ -87,6 +91,8 @@ const schema = pageGraph({ path: "/results/", name: title, description, crumbs: 
   .case__in--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); }
   .case__in--flip .case__media { order: 2; }
   .case__media :global(.vf) { box-shadow: 0 40px 90px -40px rgb(59 0 252 / 0.6); }
+  .case__second { margin-top: 1.25rem; }
+  .case__second-label { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 0.5rem; }
   .case__h { margin-top: 1rem; font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 750; line-height: 1.2; letter-spacing: -0.02em; }
   .case__stats { display: flex; flex-wrap: wrap; gap: 1rem 3rem; margin: 2rem 0 0.75rem; }
   .case__stats strong { display: block; font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 0.9; color: var(--brand); }
