@@ -17,8 +17,12 @@ interface Props {
   askService?: boolean;
 }
 const { card = false, intro = false, askService = false } = Astro.props;
-const questions = askService ? [quiz.service, ...quiz.questions] : quiz.questions;
-// The contact step is labelled "Last step", so only the questions are counted
+// With the service question, later questions follow the answer (each `show`).
+// Without it, keep only the questions for the default service (Meta ads).
+const questions = askService
+  ? [quiz.service, ...quiz.questions]
+  : quiz.questions.filter((q) => !q.show || Object.entries(q.show).every(([k, v]) => k !== "service" || v.includes(quiz.serviceDefault)));
+// Progress segments for the longest path; the script hides the extras
 const total = questions.length;
 ---
 
@@ -28,7 +32,7 @@ const total = questions.length;
     <ol class="qz__segs" aria-hidden="true">
       {Array.from({ length: total + 1 }, () => <li class="qz__seg"><span></span></li>)}
     </ol>
-    <p class="sr-only" aria-live="polite" data-count-label>Question 1 of {total}</p>
+    <p class="sr-only" aria-live="polite" data-count-label>Question 1</p>
   </div>
 
   <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="company_website" data-quiz>
@@ -36,6 +40,8 @@ const total = questions.length;
     <!-- Filled in on submit from the answers: who to call first -->
     <input type="hidden" name="priority" value="" data-priority-field />
     {!askService && <input type="hidden" name="service" value={quiz.serviceDefault} />}
+    {/* Both quizzes post to the same Netlify form, so list every field here too (Netlify registers fields from the HTML) */}
+    {!askService && quiz.questions.filter((q) => !questions.includes(q)).map((q) => <input type="hidden" name={q.name} value="" />)}
     <p hidden><label>Leave this empty: <input name="company_website" tabindex="-1" autocomplete="off" /></label></p>
 
     {intro && (
@@ -47,13 +53,13 @@ const total = questions.length;
     )}
 
     {questions.map((q, j) => (
-      <fieldset class="step" data-step>
+      <fieldset class="step" data-step data-show={askService && q.show ? JSON.stringify(q.show) : undefined}>
         <legend class="step__q" tabindex="-1">{q.q}</legend>
         {q.help && <p class="step__help muted">{q.help}</p>}
         <div class="opts">
           {q.options.map((o, k) => (
             <label class="opt">
-              <input type="radio" name={q.name} value={o} required={k === 0} />
+              <input type="radio" name={q.name} value={o} required={k === 0 && !(askService && q.show)} />
               <span class="opt__box">
                 <span class="opt__key" aria-hidden="true">{String.fromCharCode(65 + k)}</span>
                 <span class="opt__text">{o}</span>
@@ -248,14 +254,14 @@ const total = questions.length;
 
     type When = Record<string, string[]>;
     const rules = JSON.parse(root.dataset.priority ?? "{}") as {
-      notFit: { label: string; when: When };
+      notFit: { label: string; whenAny: When[] };
       hot: { label: string; whenAny: When[] };
       otherwise: string;
     };
     const matches = (when: When, data: FormData) =>
       Object.entries(when).every(([field, values]) => values.includes(String(data.get(field) ?? "")));
     const priorityOf = (data: FormData) =>
-      matches(rules.notFit.when, data) ? rules.notFit.label
+      rules.notFit.whenAny.some((w) => matches(w, data)) ? rules.notFit.label
         : rules.hot.whenAny.some((w) => matches(w, data)) ? rules.hot.label
         : rules.otherwise;
 
@@ -264,30 +270,46 @@ const total = questions.length;
       if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
+    // Steps that apply to the answers so far (e.g. website questions only for
+    // "A Website"). Skipped steps are disabled so their answers aren't sent.
+    const isOn = (step: HTMLElement) => {
+      if (!step.dataset.show) return true;
+      const data = new FormData(form);
+      return matches(JSON.parse(step.dataset.show) as When, data);
+    };
+    const sync = () => steps.forEach((s) => { if (s.dataset.show) (s as HTMLFieldSetElement).disabled = !isOn(s); });
+    const visible = () => steps.filter((s) => !(s as HTMLFieldSetElement).disabled);
+    const nextIdx = () => { sync(); return steps.indexOf(visible().find((s) => steps.indexOf(s) > current) ?? steps[steps.length - 1]); };
+    const prevIdx = () => { const v = visible().filter((s) => steps.indexOf(s) < current); return v.length ? steps.indexOf(v[v.length - 1]) : 0; };
+
     function show(i: number, dir = 1) {
+      sync();
       steps[current].classList.remove("is-active", "is-back");
       current = i;
       const step = steps[current];
       step.classList.add("is-active");
       step.classList.toggle("is-back", dir < 0);
       if (intro) intro.hidden = current > 0;
-      back.hidden = current === 0;
+      const vis = visible();
+      const pos = vis.indexOf(step);
+      back.hidden = pos <= 0;
       const isContact = step.classList.contains("step--contact");
       // Taps move on by themselves, so Next only shows for keyboard picks (see the
       // change handler) or on a question answered earlier, e.g. after going Back
       next.hidden = isContact || !step.querySelector("input:checked");
       segs.forEach((seg, k) => {
+        seg.hidden = k >= vis.length;
         const wasDone = seg.classList.contains("is-done");
-        seg.classList.toggle("is-done", k < current);
-        seg.classList.toggle("is-current", k === current);
+        seg.classList.toggle("is-done", k < pos);
+        seg.classList.toggle("is-current", k === pos);
         // Pop only the segment that just got completed
-        if (k < current && !wasDone && dir > 0) {
+        if (k < pos && !wasDone && dir > 0) {
           seg.classList.remove("is-pop");
           void seg.offsetWidth;
           seg.classList.add("is-pop");
         }
       });
-      countLabel.textContent = isContact ? "Last step" : `Question ${current + 1} of ${steps.length - 1}`;
+      countLabel.textContent = isContact ? "Last step" : `Question ${pos + 1} of ${vis.length - 1}`;
       if (dir !== 0) {
         step.querySelector<HTMLElement>("legend")?.focus({ preventScroll: true });
         keepInView();
@@ -322,7 +344,7 @@ const total = questions.length;
       if (!input || !pointerPick || !input.checked || input.dataset.wasChecked !== "1") return;
       pointerPick = false;
       const step = steps[current];
-      setTimeout(() => { if (steps[current] === step) show(current + 1); }, 200);
+      setTimeout(() => { if (steps[current] === step) show(nextIdx()); }, 200);
     });
     form.addEventListener("pointerdown", (e) => {
       const input = (e.target as HTMLElement).closest(".opt")?.querySelector("input");
@@ -335,7 +357,7 @@ const total = questions.length;
       step.querySelector<HTMLElement>("[data-error]")!.textContent = "";
       if (pointerPick) {
         pointerPick = false;
-        setTimeout(() => { if (steps[current] === step) show(current + 1); }, 320);
+        setTimeout(() => { if (steps[current] === step) show(nextIdx()); }, 320);
       } else {
         next.hidden = false;
       }
@@ -344,8 +366,8 @@ const total = questions.length;
       const input = e.target as HTMLInputElement;
       if (input.getAttribute("aria-invalid") === "true" && input.value.trim() && input.checkValidity()) input.setAttribute("aria-invalid", "false");
     });
-    next.addEventListener("click", () => { if (validStep(steps[current])) show(current + 1); });
-    back.addEventListener("click", () => { if (current > 0) show(current - 1, -1); });
+    next.addEventListener("click", () => { if (validStep(steps[current])) show(nextIdx()); });
+    back.addEventListener("click", () => { if (current > 0) show(prevIdx(), -1); });
 
     // Enter on a question moves forward instead of submitting the whole form
     form.addEventListener("keydown", (e) => {
@@ -364,7 +386,8 @@ const total = questions.length;
       e.preventDefault();
       const contact = steps[steps.length - 1];
       if (!validStep(contact)) return;
-      const firstMissing = steps.findIndex((s) => !s.classList.contains("step--contact") && !s.querySelector("input:checked"));
+      sync();
+      const firstMissing = steps.findIndex((s) => !(s as HTMLFieldSetElement).disabled && !s.classList.contains("step--contact") && !s.querySelector("input:checked"));
       if (firstMissing >= 0) { show(firstMissing, -1); validStep(steps[firstMissing]); return; }
 
       const submit = form.querySelector<HTMLButtonElement>("[data-submit]")!;

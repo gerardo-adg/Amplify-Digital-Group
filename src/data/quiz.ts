@@ -4,8 +4,12 @@
  * Rename, reorder or drop questions freely; keep each `name` unique.
  */
 
-export type Question = { name: string; q: string; help?: string; options: string[] };
-export type PriorityRule = { label: string; when: Record<string, string[]> };
+// `show` limits a question to certain earlier answers, e.g. { service: ["A Website"] }
+export type Question = { name: string; q: string; help?: string; options: string[]; show?: Record<string, string[]> };
+
+// Answers that send someone down the ads path (the landing page always counts as ads)
+const ads = { service: ["Meta Ads", "All Three"] };
+const soon = ["As Soon as Possible", "Within 30 Days"];
 
 export const quiz = {
   eyebrow: "30-Second Quiz",
@@ -41,6 +45,7 @@ export const quiz = {
     },
     {
       name: "annual_revenue",
+      show: ads,
       q: "What's your annual revenue?",
       help: "A ballpark is fine, and it stays between us.",
       // One range per kind of buyer
@@ -48,10 +53,39 @@ export const quiz = {
     },
     {
       name: "marketing_budget",
+      show: ads,
       // Total budget, not just ad spend, so nobody expects $1K to cover everything
       q: "What's your total monthly marketing budget?",
       help: "Our service plus your ad spend, combined. A ballpark is fine.",
       options: ["Under $3K", "$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K", "Not Sure Yet"],
+    },
+    // Website path
+    {
+      name: "has_website",
+      show: { service: ["A Website"] },
+      q: "Do you have a website right now?",
+      options: ["No, I Don't Have One", "Yes, but It's Outdated", "Yes, but It Doesn't Bring in Calls"],
+    },
+    {
+      name: "website_budget",
+      show: { service: ["A Website"] },
+      q: "What's your budget for the website?",
+      help: "A one-time cost. A ballpark is fine.",
+      options: ["Under $1,500", "$1,500–$2,500", "Over $2,500", "Not Sure Yet"],
+    },
+    // Content path
+    {
+      name: "content_use",
+      show: { service: ["High-Quality Content"] },
+      q: "What will you use the content for?",
+      options: ["Social Media", "Ads", "My Website", "All of It"],
+    },
+    {
+      name: "content_budget",
+      show: { service: ["High-Quality Content"] },
+      q: "What's your monthly budget for content?",
+      help: "Our monthly packages include 12 posts a month. A ballpark is fine.",
+      options: ["Under $2K", "$2K–$3K", "$3K–$5K", "Over $5K"],
     },
   ] satisfies Question[],
   // Each lead gets a hidden "priority" field so you know who to call first.
@@ -59,26 +93,35 @@ export const quiz = {
   // ads, and $5K+ leaves room for both the fee and a real ad budget.
   // A rule matches when every listed question's answer is one of its options.
   // "Not a fit" is checked first, then each "Hot" rule; everyone else is "Warm".
+  // A rule matches when every listed question's answer is one of its options.
+  // "Not a fit" is checked first, then "Hot"; everyone else is "Warm".
   priority: {
     notFit: {
       label: "Not a fit",
-      // Only for ads leads: a website or content job can fit a smaller budget
-      when: { marketing_budget: ["Under $3K"], service: ["Meta Ads", "All Three"] },
+      whenAny: [
+        // Ads: under $3K total leaves almost nothing for ads after a $2K–$3K fee
+        { service: ads.service, marketing_budget: ["Under $3K"] },
+        { service: ["A Website"], website_budget: ["Under $1,500"] },
+        { service: ["High-Quality Content"], content_budget: ["Under $2K"] },
+      ],
     },
     hot: {
       label: "🔥 Hot",
       // Any one of these makes a lead Hot
       whenAny: [
         {
-          timeline: ["As Soon as Possible", "Within 30 Days"],
+          service: ads.service,
+          timeline: soon,
           annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"],
           marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"],
         },
-        { timeline: ["As Soon as Possible", "Within 30 Days"], marketing_budget: ["$3K–$5K"] },
+        { service: ads.service, timeline: soon, marketing_budget: ["$3K–$5K"] },
+        { service: ["A Website"], timeline: soon, website_budget: ["$1,500–$2,500", "Over $2,500"] },
+        { service: ["High-Quality Content"], timeline: soon, content_budget: ["$2K–$3K", "$3K–$5K", "Over $5K"] },
       ],
     },
     otherwise: "Warm",
-  } as { notFit: PriorityRule; hot: { label: string; whenAny: Record<string, string[]>[] }; otherwise: string },
+  } as { notFit: { label: string; whenAny: Record<string, string[]>[] }; hot: { label: string; whenAny: Record<string, string[]>[] }; otherwise: string },
   contact: {
     q: "Where should we reach you?",
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
