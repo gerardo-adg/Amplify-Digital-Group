@@ -160,6 +160,7 @@ export const clients: { name: string; logo?: string; width?: number; height?: nu
   { name: "Speed Plumbing Pros", logo: "/clients/speed-plumbing-pros.webp", width: 370, height: 240 },
   { name: "GM Roofing", logo: "/clients/gm-roofing.webp", width: 384, height: 240, scale: 0.85 },
   { name: "Arbor Evergreen Tree Care", logo: "/clients/arbor-evergreen.webp", width: 220, height: 240 },
+  { name: "AB Bespoke Home", logo: "/clients/ab-bespoke-home.webp", width: 238, height: 240 },
   { name: "Blackstone Pools", logo: "/clients/blackstone-pools.webp", width: 825, height: 240, scale: 0.6 },
   { name: "B & S Painting Inc.", logo: "/clients/bs-painting.webp", width: 606, height: 240, scale: 0.7 },
 ];
