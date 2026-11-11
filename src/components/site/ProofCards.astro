@@ -1,19 +1,41 @@
 ---
+/**
+ * Proof section: Evaristo's result as the big featured card, Giovanni as a
+ * compact card under it, and a trust line built from the client list.
+ * When more testimonials come in, add them as compact cards.
+ */
 import VideoFrame from "../VideoFrame.astro";
-import { proofCards } from "../../data/site";
+import { featured, stories, clients } from "../../data/site";
+const f = featured;
+const g = stories[0];
 ---
-<ul class="proof__list" data-stagger>
-  {proofCards.map((c) => (
-    <li class="pc" data-reveal>
-      <VideoFrame playbackId={c.video.playbackId} title={c.video.title} posterTime={c.video.posterTime} ratio="4 / 5" label={c.video.label} sizes="(min-width: 760px) 470px, 100vw" />
-      <div class="pc__body">
-        <p class="pc__result">{c.result}</p>
-        <p class="pc__detail muted">{c.detail}</p>
-        <blockquote class="pc__quote">
-          <p>“{c.quote}”</p>
-          <footer><strong>{c.name}</strong><span class="muted">{c.business}</span></footer>
-        </blockquote>
+<div class="pf">
+  <article class="fx" data-reveal>
+    <VideoFrame playbackId={f.video.playbackId} title={`${f.client.name} of ${f.client.business}: 30 days of Meta ads, on the jobsite`} posterTime={f.video.posterTime} ratio="9 / 16" label="Watch" sizes="(min-width: 900px) 360px, 300px" />
+    <div class="fx__b">
+      <span class="fx__tag">{f.client.business.replace(/ Inc\.$/, "")} · {f.client.city}</span>
+      <div class="fx__n">
+        {f.results.map((r) => (
+          <div><strong>{r.prefix}{r.value}{r.suffix}</strong><span>{r.label}</span></div>
+        ))}
       </div>
-    </li>
-  ))}
-</ul>
+      <p class="fx__t muted">{f.timeframe}</p>
+      <blockquote class="fx__q"><p>“{f.quote}”</p></blockquote>
+      <p class="fx__who"><strong>{f.client.name}</strong>, owner</p>
+      <a class="fx__link" href="/results/#evaristo">Read his full story <span aria-hidden="true">→</span></a>
+    </div>
+  </article>
+
+  {g?.video && (
+    <article class="sm" data-reveal>
+      <VideoFrame playbackId={g.video.playbackId} title={`${g.name} of GM Roofing on working with Amplify Digital Group`} posterTime={g.video.posterTime} ratio="9 / 16" label="Watch" sizes="150px" />
+      <div>
+        <blockquote class="sm__q"><p>“Highly recommend them to anybody who's looking to market their services online.”</p></blockquote>
+        <p class="sm__who"><strong>{g.name}</strong>, {g.business.replace(", CA", "")}</p>
+        <a class="sm__r" href="/results/#giovanni">Camera-shy to confident in 30 days</a>
+      </div>
+    </article>
+  )}
+
+  <p class="pf__trust" data-reveal>Trusted by {clients.length} contractors and home-service businesses across Northern California</p>
+</div>
