@@ -20,8 +20,11 @@ const { card = false, intro = false, askService = false } = Astro.props;
 // With the service question, later questions follow the answer (each `show`).
 // Without it, keep only the questions for the default service (Meta ads).
 const questions = askService
-  ? [quiz.service, ...quiz.questions]
-  : quiz.questions.filter((q) => !q.show || Object.entries(q.show).every(([k, v]) => k !== "service" || v.includes(quiz.serviceDefault)));
+  ? [quiz.service, ...quiz.questions.filter((q) => !q.adsPageOnly)]
+  : quiz.questions.filter((q) => [q.show, q.showOnly].every((w) => !w || !w.service || w.service.includes(quiz.serviceDefault)));
+// Which earlier answers a question depends on (read by the script)
+const showRule = (q: (typeof questions)[number]) =>
+  askService && (q.show || q.showOnly) ? JSON.stringify({ any: q.show ?? {}, only: q.showOnly ?? {} }) : undefined;
 // Progress segments for the longest path; the script hides the extras
 const total = questions.length;
 ---
@@ -53,13 +56,13 @@ const total = questions.length;
 
 
     {questions.map((q, j) => (
-      <fieldset class="step" data-step data-show={askService && q.show ? JSON.stringify(q.show) : undefined}>
+      <fieldset class="step" data-step data-show={showRule(q)}>
         <legend class="step__q" tabindex="-1">{q.q}</legend>
         {q.help && <p class="step__help muted">{q.help}</p>}
         <div class:list={["opts", q.multi && "opts--multi"]}>
           {q.options.map((o, k) => (
             <label class="opt">
-              <input type={q.multi ? "checkbox" : "radio"} name={q.name} value={o} required={k === 0 && !q.multi && !(askService && q.show)} />
+              <input type={q.multi ? "checkbox" : "radio"} name={q.name} value={o} required={k === 0 && !q.multi && !showRule(q)} />
               <span class="opt__box">
                 <span class="opt__key" aria-hidden="true">{String.fromCharCode(65 + k)}</span>
                 <span class="opt__text">{q.display?.[o] ? <>{q.display[o].label}{q.display[o].sub && <small class="opt__sub">{q.display[o].sub}</small>}</> : o}</span>
@@ -288,7 +291,13 @@ const total = questions.length;
     const isOn = (step: HTMLElement) => {
       if (!step.dataset.show) return true;
       const data = new FormData(form);
-      return matches(JSON.parse(step.dataset.show) as When, data);
+      const rule = JSON.parse(step.dataset.show) as { any: When; only: When };
+      // "only": they answered, and every answer is in the list
+      const only = Object.entries(rule.only).every(([field, values]) => {
+        const picked = data.getAll(field).map(String);
+        return picked.length > 0 && picked.every((v) => values.includes(v));
+      });
+      return matches(rule.any, data) && only;
     };
     const sync = () => steps.forEach((s) => { if (s.dataset.show) (s as HTMLFieldSetElement).disabled = !isOn(s); });
     const visible = () => steps.filter((s) => !(s as HTMLFieldSetElement).disabled);

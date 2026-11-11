@@ -11,12 +11,14 @@
 export type Question = {
   name: string; q: string; help?: string; options: string[]; multi?: boolean;
   show?: Record<string, string[]>;
+  // Like `show`, but every answer must be one of these (e.g. only "A Website" picked)
+  showOnly?: Record<string, string[]>;
+  // Asked on the Meta ads landing page only
+  adsPageOnly?: boolean;
   display?: Record<string, { label: string; sub?: string }>;
 };
 type When = Record<string, string[]>;
 
-// Answers that send someone down the ads path (the landing page always counts as ads)
-const ads = { service: ["Meta Ads"] };
 const soon = ["As Soon as Possible", "Within 30 Days"];
 
 export const quiz = {
@@ -59,22 +61,6 @@ export const quiz = {
       q: "When do you want to get started?",
       options: ["As Soon as Possible", "Within 30 Days", "In 1–3 Months", "Just Looking for Now"],
     },
-    {
-      name: "annual_revenue",
-      show: ads,
-      q: "What's your annual revenue?",
-      help: "A ballpark is fine, and it stays between us.",
-      // One range per kind of buyer
-      options: ["Under $500K", "$500K–$1M", "$1M–$5M", "Over $5M"],
-    },
-    {
-      name: "marketing_budget",
-      show: ads,
-      // Total budget, not just ad spend, so nobody expects $1K to cover everything
-      q: "What's your total monthly marketing budget?",
-      help: "Our service plus your ad spend, combined. A ballpark is fine.",
-      options: ["Under $3K", "$3K–$5K", "$5K–$10K", "$10K–$20K", "Over $20K", "Not Sure Yet"],
-    },
     // Website path
     {
       name: "has_website",
@@ -82,20 +68,30 @@ export const quiz = {
       q: "Do you have a website right now?",
       options: ["No, I Don't Have One", "Yes, but It's Outdated", "Yes, but It Doesn't Bring in Calls"],
     },
+    // Only on the ads landing page (/start/); the website quiz skips it
+    {
+      name: "annual_revenue",
+      adsPageOnly: true,
+      q: "What's your annual revenue?",
+      help: "A ballpark is fine, and it stays between us.",
+      options: ["Under $500K", "$500K–$1M", "$1M–$5M", "Over $5M"],
+    },
+    // One budget question at most. Monthly for ads and/or content (even if
+    // they also want a website); the one-time website budget only when a
+    // website is all they picked.
+    {
+      name: "marketing_budget",
+      show: { service: ["Meta Ads", "High-Quality Content"] },
+      q: "What's your total monthly marketing budget?",
+      help: "Everything you'd spend each month, including our service. A ballpark is fine.",
+      options: ["Under $2K", "$2K–$3K", "$3K–$5K", "$5K–$10K", "Over $10K", "Not Sure Yet"],
+    },
     {
       name: "website_budget",
-      show: { service: ["A Website"] },
+      showOnly: { service: ["A Website"] },
       q: "What's your budget for the website?",
       help: "A one-time cost. A ballpark is fine.",
       options: ["Under $1,500", "$1,500–$2,500", "Over $2,500", "Not Sure Yet"],
-    },
-    // Content path
-    {
-      name: "content_budget",
-      show: { service: ["High-Quality Content"] },
-      q: "What's your monthly budget for content?",
-      help: "Our monthly packages include 12 posts a month. A ballpark is fine.",
-      options: ["Under $2K", "$2K–$3K", "$3K–$5K", "Over $5K"],
     },
   ] satisfies Question[],
   // Each lead gets a hidden "priority" field so you know who to call first.
@@ -109,21 +105,20 @@ export const quiz = {
   priority: {
     labels: { hot: "🔥 Hot", warm: "Warm", notFit: "Not a fit" },
     byService: {
+      // The monthly budget decides it, not revenue: a $5K/month shop is a fit at any size
       "Meta Ads": {
         // Under $3K total leaves almost nothing for ads after a $2K–$3K fee
-        notFit: [{ marketing_budget: ["Under $3K"] }],
-        hot: [
-          { timeline: soon, annual_revenue: ["$500K–$1M", "$1M–$5M", "Over $5M"], marketing_budget: ["$5K–$10K", "$10K–$20K", "Over $20K"] },
-          { timeline: soon, marketing_budget: ["$3K–$5K"] },
-        ],
+        notFit: [{ marketing_budget: ["Under $2K", "$2K–$3K"] }],
+        hot: [{ timeline: soon, marketing_budget: ["$3K–$5K", "$5K–$10K", "Over $10K"] }],
       },
+      "High-Quality Content": {
+        notFit: [{ marketing_budget: ["Under $2K"] }],
+        hot: [{ timeline: soon, marketing_budget: ["$2K–$3K", "$3K–$5K", "$5K–$10K", "Over $10K"] }],
+      },
+      // With other services picked there's no website budget question, so this one is Warm
       "A Website": {
         notFit: [{ website_budget: ["Under $1,500"] }],
         hot: [{ timeline: soon, website_budget: ["$1,500–$2,500", "Over $2,500"] }],
-      },
-      "High-Quality Content": {
-        notFit: [{ content_budget: ["Under $2K"] }],
-        hot: [{ timeline: soon, content_budget: ["$2K–$3K", "$3K–$5K", "Over $5K"] }],
       },
     },
   } as { labels: { hot: string; warm: string; notFit: string }; byService: Record<string, { notFit: When[]; hot: When[] }> },
