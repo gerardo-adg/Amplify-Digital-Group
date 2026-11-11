@@ -1,0 +1,78 @@
+---
+/**
+ * Website terms and conditions (use of the site only; client services are
+ * covered by each client's written agreement). Governed by California law,
+ * no arbitration clause. Not legal advice: have a California attorney review it.
+ */
+import Legal from "../layouts/Legal.astro";
+import { site } from "../data/site";
+
+const updated = "November 11, 2026";
+const mail = `mailto:${site.email}`;
+---
+
+<Legal heading="Terms and Conditions" path="/terms/" updated={updated} description={`The terms for using the ${site.name} website and receiving calls and texts from us.`}>
+  <p>These Terms and Conditions ("Terms") apply to your use of <a href="/">{site.url.replace("https://", "")}</a> (the "Site"), run by {site.name} ("{site.shortName}", "we", "us" or "our"), and to the calls, texts and emails you agree to receive from us through it. By using the Site, you agree to these Terms and our <a href="/privacy/">Privacy Policy</a>. If you don't agree, please don't use the Site.</p>
+
+  <h2>1. Who can use the Site</h2>
+  <p>You must be at least 18 years old to use the Site or submit our quiz or forms. If you submit information on behalf of a business, you confirm you're allowed to do so.</p>
+
+  <h2>2. Our services are under a separate agreement</h2>
+  <p>The Site describes our marketing services. Submitting the quiz doesn't create a client relationship or obligate either of us. If we work together, our services, pricing, payment, cancellation and ownership terms will be set out in a separate written agreement, which controls if it conflicts with these Terms.</p>
+
+  <h2>3. Information you submit</h2>
+  <p>You agree that the information you give us is accurate and is your own (including the phone number you provide). We handle it as described in our <a href="/privacy/">Privacy Policy</a>.</p>
+
+  <h2>4. Text messages</h2>
+  <p>By giving us your phone number and agreeing on our quiz or forms, you agree to receive calls and text messages from {site.name} about your inquiry and our services, which may be sent with automated technology. Consent isn't a condition of any purchase.</p>
+  <ul>
+    <li><strong>What you'll get:</strong> messages about your inquiry, scheduling, follow-ups and our services.</li>
+    <li><strong>How often:</strong> message frequency varies.</li>
+    <li><strong>Cost:</strong> message and data rates may apply, depending on your mobile plan.</li>
+    <li><strong>To stop:</strong> reply STOP at any time. You may get one final message confirming you've opted out.</li>
+    <li><strong>For help:</strong> reply HELP, or email <a href={mail}>{site.email}</a>.</li>
+    <li><strong>Carriers</strong> aren't liable for delayed or undelivered messages.</li>
+  </ul>
+  <p>Your mobile number and text consent won't be shared with third parties for their marketing. See our <a href="/privacy/">Privacy Policy</a>.</p>
+
+  <h2>5. Results and testimonials</h2>
+  <p>The results, numbers and testimonials on the Site are from real clients and reflect their own experiences. <strong>They aren't typical and aren't a guarantee or promise of what you'll get.</strong> Results depend on your market, offer, pricing, budget, how quickly you follow up with leads, and many other factors outside our control. Nothing on the Site is a promise of any specific number of leads, jobs, revenue or return on ad spend.</p>
+
+  <h2>6. Content and ownership</h2>
+  <p>The Site and everything on it, including text, videos, graphics, logos and design, belongs to {site.name} or the people who gave us permission to use it, and is protected by copyright and trademark laws. Client names, logos and videos appear with permission and belong to their owners. You may view the Site for your own personal or business research, but you may not copy, republish, sell or use its content without our written permission.</p>
+  <p>Facebook and Instagram are trademarks of Meta Platforms, Inc. The Site isn't part of, or endorsed by, Meta.</p>
+
+  <h2>7. Acceptable use</h2>
+  <p>You agree not to:</p>
+  <ul>
+    <li>Submit false information or someone else's information without permission.</li>
+    <li>Use the Site for anything unlawful, or to send spam.</li>
+    <li>Try to hack, disrupt or overload the Site, or get around its security.</li>
+    <li>Use bots or scrapers to collect content or data from the Site.</li>
+  </ul>
+
+  <h2>8. Other websites</h2>
+  <p>The Site may link to or embed content from other websites and platforms. We don't control them and aren't responsible for their content, policies or practices.</p>
+
+  <h2>9. Disclaimer</h2>
+  <p class="caps">The Site and its content are provided "as is" and "as available," without warranties of any kind, whether express or implied, including warranties of merchantability, fitness for a particular purpose and non-infringement. We don't guarantee that the Site will be uninterrupted, error-free or secure, or that its information is complete or current. Content on the Site is general information, not business, legal or financial advice.</p>
+
+  <h2>10. Limitation of liability</h2>
+  <p class="caps">To the fullest extent the law allows, {site.name} and its owners, employees and contractors won't be liable for any indirect, incidental, special, consequential or punitive damages, or for lost profits, revenue or data, arising from your use of the Site, even if we were told they were possible. Our total liability for any claim relating to the Site is limited to $100.</p>
+  <p>Some laws don't allow certain limits on liability, so some of these limits may not apply to you.</p>
+
+  <h2>11. Indemnification</h2>
+  <p>You agree to defend and hold harmless {site.name} and its owners, employees and contractors from any claims, damages and costs (including reasonable attorneys' fees) that come from your misuse of the Site, your breach of these Terms, or information you submit that isn't yours to give.</p>
+
+  <h2>12. Governing law</h2>
+  <p>These Terms are governed by the laws of the State of California, without regard to its conflict-of-law rules. Any dispute about the Site or these Terms will be handled only in the state or federal courts located in California, and you and we agree to those courts' jurisdiction. Before filing a claim, we each agree to try to resolve the dispute informally by contacting the other.</p>
+
+  <h2>13. Changes</h2>
+  <p>We may update these Terms from time to time. The date at the top shows when they last changed. Continuing to use the Site after a change means you accept the updated Terms.</p>
+
+  <h2>14. Other terms</h2>
+  <p>If any part of these Terms is found unenforceable, the rest stays in effect. If we don't enforce a part of these Terms, that doesn't waive our right to enforce it later. These Terms and our Privacy Policy are the whole agreement between you and us about the Site.</p>
+
+  <h2>15. Contact us</h2>
+  <p>Questions about these Terms? Email <a href={mail}>{site.email}</a>.</p>
+</Legal>

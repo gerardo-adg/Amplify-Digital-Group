@@ -1,77 +1,106 @@
 ---
 /**
- * Privacy policy. A plain-English starting point, not legal advice:
- * have it reviewed, and fill in the legal name, state and mailing address.
+ * Privacy policy, written for a small California business (CalOPPA,
+ * Shine the Light, TCPA/A2P texting, CAN-SPAM). Not legal advice: have a
+ * California attorney review it. Update `updated` whenever it changes.
  */
-import Base from "../layouts/Base.astro";
-import Logo from "../components/Logo.astro";
-import Footer from "../components/Footer.astro";
+import Legal from "../layouts/Legal.astro";
 import { site } from "../data/site";
-import { pageGraph } from "../lib/schema";
 
-const updated = "October 28, 2026";
-const title = `Privacy policy | ${site.name}`;
-const description = `How ${site.name} collects, uses and protects the information you share with us.`;
+const updated = "November 11, 2026";
+const mail = `mailto:${site.email}`;
 ---
 
-<Base title={title} description={description} schema={pageGraph("/privacy/", title, description)}>
-  <div class="lg dark">
-    <header class="wrap lg__top"><a href="/" aria-label={`${site.name} home`}><Logo height={38} eager /></a></header>
-    <main id="main" class="wrap lg__main">
-      <h1 class="display">Privacy policy</h1>
-      <p class="muted">Last updated {updated}</p>
+<Legal heading="Privacy Policy" path="/privacy/" updated={updated} description={`How ${site.name} collects, uses, shares and protects personal information, and the choices you have.`}>
+  <p>{site.name} ("{site.shortName}", "we", "us" or "our") is a marketing agency based in California. This Privacy Policy explains how we collect, use, share and protect personal information when you visit <a href="/">{site.url.replace("https://", "")}</a> (the "Site"), fill out our quiz or other forms, or communicate with us by phone, text or email. By using the Site, you agree to this policy and our <a href="/terms/">Terms and Conditions</a>.</p>
 
-      <p>{site.name} ("we", "us") runs this website. This policy explains what information we collect when you visit it or fill out our quiz, how we use it, and the choices you have.</p>
+  <h2>1. Information we collect</h2>
+  <h3>Information you give us</h3>
+  <ul>
+    <li><strong>Quiz and form answers:</strong> such as your type of business, timeline, revenue range and marketing budget.</li>
+    <li><strong>Contact details:</strong> your name, business name, phone number, email address and city.</li>
+    <li><strong>Communications:</strong> anything you tell us when you call, text or email us, including call recordings or notes if we let you know a call is being recorded.</li>
+  </ul>
+  <h3>Information collected automatically</h3>
+  <ul>
+    <li><strong>Device and usage data:</strong> your IP address, browser and device type, pages you visit, the page that sent you here, and the date and time of your visit. Our website host records this automatically.</li>
+    <li><strong>Cookies, pixels and similar tools:</strong> we use, or may use, tools such as the Meta Pixel, Google Analytics and Google Ads tags. These set cookies or collect data about your visit (for example, that you viewed a page or submitted the quiz) so we can measure our ads, understand how the Site is used, and show our ads to people who visited the Site.</li>
+  </ul>
+  <h3>Information from others</h3>
+  <p>We may receive information about you from advertising platforms (for example, when you fill out a lead form in a Facebook or Instagram ad) and from our clients, as described in section 6.</p>
 
-      <h2>What we collect</h2>
-      <ul>
-        <li><strong>Information you give us.</strong> When you take our quiz, we collect your answers (such as your type of business, timeline, revenue range and marketing budget) and your contact details: name, business name, phone number, email and city.</li>
-        <li><strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data such as your IP address, browser and the pages you visit. If we use the Meta Pixel, Meta may collect information about your visit through cookies to measure and improve our ads.</li>
-      </ul>
+  <h2>2. How we use information</h2>
+  <ul>
+    <li>To review your answers, decide whether we're a good fit, and contact you about your inquiry.</li>
+    <li>To call, text and email you about your inquiry and our services, including with automated technology, if you've agreed to that (see section 5).</li>
+    <li>To send marketing emails about our services, which you can unsubscribe from at any time.</li>
+    <li>To provide, operate and improve our services and the Site.</li>
+    <li>To measure and improve our advertising, and to show our ads to people who have visited the Site.</li>
+    <li>To keep the Site secure, prevent spam and fraud, and comply with the law.</li>
+  </ul>
 
-      <h2>How we use it</h2>
-      <ul>
-        <li>To review your answers and contact you about your inquiry by phone, text or email.</li>
-        <li>To provide and improve our services and this website.</li>
-        <li>To measure how our advertising performs.</li>
-      </ul>
-      <p>We don't sell your personal information.</p>
+  <h2>3. How we share information</h2>
+  <p><strong>We do not sell your personal information, and we don't share it with other companies for their own marketing.</strong> We share it only as follows:</p>
+  <ul>
+    <li><strong>Service providers</strong> that help us run our business and may use it only to provide services to us. These include website hosting and forms (Netlify), customer relationship and marketing tools (such as GoHighLevel and HubSpot), automation and spreadsheet tools (such as Zapier and Google Sheets), calling and texting providers (such as Twilio), and email providers.</li>
+    <li><strong>Advertising and analytics partners</strong> such as Meta (Facebook and Instagram) and Google, through the cookies and pixels described above, so we can measure and target our ads.</li>
+    <li><strong>Legal and safety reasons:</strong> when the law requires it, or to protect our rights, our clients, or others.</li>
+    <li><strong>Business transfers:</strong> if our business is sold or merged, information may transfer to the new owner under this policy.</li>
+  </ul>
 
-      <h2>Who we share it with</h2>
-      <p>We share information only with service providers that help us run our business, such as our website host and form provider (Netlify), our customer relationship tools, and advertising platforms like Meta for measuring ads. They may use it only to provide their services to us. We may also share information if the law requires it.</p>
+  <h2>4. Mobile information and text messages</h2>
+  <p><strong>We will not share or sell your mobile phone number or text messaging consent with third parties or affiliates for their marketing or promotional purposes.</strong> Text messaging opt-in data and consent are excluded from all sharing described in this policy, except with the service providers that deliver our messages for us.</p>
 
-      <h2>Calls and text messages</h2>
-      <p>If you give us your phone number and agree to be contacted, we may call or text you about your inquiry. Message and data rates may apply. You can reply STOP to any text to opt out, or ask us to stop calling at any time.</p>
+  <h2>5. Calls, texts and emails</h2>
+  <p>If you give us your phone number and agree to be contacted, we may call and text you about your inquiry and our services, including with automated technology and prerecorded messages. Your consent isn't a condition of buying anything. Message frequency varies. Message and data rates may apply.</p>
+  <ul>
+    <li><strong>Texts:</strong> reply STOP at any time to stop receiving texts, or HELP for help. You may get one final text confirming you've opted out.</li>
+    <li><strong>Calls:</strong> tell us on the call, or email us, and we'll stop calling.</li>
+    <li><strong>Emails:</strong> click "unsubscribe" in any marketing email. We may still send you emails about an active inquiry or service.</li>
+  </ul>
+  <p>More details are in the "Text messages" section of our <a href="/terms/">Terms and Conditions</a>.</p>
 
-      <h2>Cookies and ad tracking</h2>
-      <p>You can block or delete cookies in your browser settings. You can control how Meta uses your information for ads in your Facebook or Instagram ad preferences.</p>
+  <h2>6. Information we handle for our clients</h2>
+  <p>When we run ads, build websites or set up customer relationship tools for our clients, we may receive and store personal information about our clients' own customers and leads (for example, a homeowner who requests a quote through a client's ad). We handle that information on our client's behalf, only to provide services to that client, and we don't sell it or use it for our own marketing. The client's own privacy policy governs how they use it. If you're a customer of one of our clients and want to make a request about your information, please contact that business directly. We'll help them respond.</p>
 
-      <h2>Your choices and rights</h2>
-      <p>You can ask us to access, correct or delete the personal information we hold about you, or to stop contacting you. Depending on where you live (for example, California), you may have additional rights under local law. To make a request, email us at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  <h2>7. Cookies, ads and "Do Not Track"</h2>
+  <p>You can block or delete cookies in your browser settings, though some features may not work. To limit ads:</p>
+  <ul>
+    <li>Meta: adjust your ad preferences in your Facebook or Instagram settings.</li>
+    <li>Google: visit <a href="https://adssettings.google.com" rel="noopener">adssettings.google.com</a>, or install the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics opt-out add-on</a>.</li>
+    <li>Industry opt-outs: <a href="https://optout.aboutads.info" rel="noopener">optout.aboutads.info</a> and <a href="https://optout.networkadvertising.org" rel="noopener">optout.networkadvertising.org</a>.</li>
+  </ul>
+  <p>Some browsers send a "Do Not Track" signal. There's no common standard for how websites should respond, so the Site doesn't currently respond to these signals. Third-party tools on the Site may collect information about your activity over time and across different websites.</p>
 
-      <h2>How long we keep it</h2>
-      <p>We keep your information only as long as we need it for the purposes above or as the law requires.</p>
+  <h2>8. Your California privacy rights</h2>
+  <p>We respect the privacy rights of California residents. You can ask us to:</p>
+  <ul>
+    <li>Tell you what personal information we have about you and how we've used and shared it.</li>
+    <li>Correct information that's inaccurate.</li>
+    <li>Delete your personal information, unless we need to keep it to finish a transaction, for security, or to meet a legal obligation.</li>
+    <li>Stop contacting you, and stop using your information for ads based on your activity on the Site.</li>
+  </ul>
+  <p>Email <a href={mail}>{site.email}</a> to make a request. We may need to confirm your identity before acting on it, and you can have an authorized agent make a request for you. We won't treat you differently for exercising these rights.</p>
+  <p><strong>Shine the Light:</strong> California Civil Code § 1798.83 lets California residents ask which personal information a business shared with third parties for their own direct marketing. We don't share personal information that way.</p>
 
-      <h2>Children</h2>
-      <p>This website is meant for business owners and isn't directed at children under 13. We don't knowingly collect their information.</p>
+  <h2>9. How long we keep information</h2>
+  <p>We keep personal information only as long as we need it for the purposes in this policy: generally for as long as you're a lead or client and a reasonable time afterward for our records, or longer if the law requires. When we no longer need it, we delete it or make it anonymous.</p>
 
-      <h2>Changes to this policy</h2>
-      <p>We may update this policy from time to time. The date at the top shows when it last changed.</p>
+  <h2>10. How we protect information</h2>
+  <p>We use reasonable safeguards, such as access controls and reputable providers that encrypt data, to protect personal information. No method of sending or storing data online is completely secure, so we can't guarantee absolute security.</p>
 
-      <h2>Contact us</h2>
-      <p>Questions about this policy? Email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
-    </main>
-    <Footer />
-  </div>
-</Base>
+  <h2>11. Children</h2>
+  <p>The Site and our services are meant for business owners and adults. They aren't directed at children under 16, and we don't knowingly collect personal information from them. If you think a child has given us information, email us and we'll delete it.</p>
 
-<style>
-  .lg__top { display: flex; align-items: center; height: 84px; }
-  .lg__main { max-width: 760px; padding-block: 2rem 5rem; }
-  h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin-bottom: 0.75rem; }
-  h2 { font-family: var(--font-body); font-size: 1.3rem; font-weight: 750; letter-spacing: -0.01em; margin-top: 2.5rem; }
-  p, ul { margin-top: 0.9rem; color: rgb(255 255 255 / 0.85); }
-  ul { padding-left: 1.2rem; display: grid; gap: 0.6rem; }
-  a { color: var(--brand-hi); }
-  @media (max-width: 899px) { .lg__top { justify-content: center; } }
-</style>
+  <h2>12. Links to other sites</h2>
+  <p>The Site may link to other websites and platforms, such as Facebook, Instagram or video players. Their own privacy policies apply, and we aren't responsible for how they handle information.</p>
+
+  <h2>13. Where information is stored</h2>
+  <p>We're based in the United States, and our service providers store information in the United States and other countries. If you use the Site from outside the U.S., your information will be processed in the U.S.</p>
+
+  <h2>14. Changes to this policy</h2>
+  <p>We may update this policy from time to time. The date at the top shows when it last changed. If we make a significant change, we'll post a notice on the Site.</p>
+
+  <h2>15. Contact us</h2>
+  <p>Questions or requests about this policy or your information? Email <a href={mail}>{site.email}</a>.</p>
+</Legal>

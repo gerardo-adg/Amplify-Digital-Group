@@ -1,0 +1,37 @@
+---
+/** Shared layout for the privacy policy and terms pages. */
+import Base from "./Base.astro";
+import Logo from "../components/Logo.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+import { pageGraph } from "../lib/schema";
+
+interface Props { heading: string; path: string; description: string; updated: string }
+const { heading, path, description, updated } = Astro.props;
+const title = `${heading} | ${site.name}`;
+---
+
+<Base title={title} description={description} schema={pageGraph(path, title, description)}>
+  <div class="lg dark">
+    <header class="wrap lg__top"><a href="/" aria-label={`${site.name} home`}><Logo height={38} eager /></a></header>
+    <main id="main" class="wrap lg__main">
+      <h1 class="display">{heading}</h1>
+      <p class="muted">Effective and last updated {updated}</p>
+      <slot />
+    </main>
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .lg__top { display: flex; align-items: center; height: 84px; }
+  .lg__main { max-width: 760px; padding-block: 2rem 5rem; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin-bottom: 0.75rem; }
+  .lg__main :global(h2) { font-family: var(--font-body); font-size: 1.3rem; font-weight: 750; letter-spacing: -0.01em; margin-top: 2.5rem; }
+  .lg__main :global(h3) { font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; margin-top: 1.5rem; color: #fff; }
+  .lg__main :global(p), .lg__main :global(ul) { margin-top: 0.9rem; color: rgb(255 255 255 / 0.85); }
+  .lg__main :global(ul) { padding-left: 1.2rem; display: grid; gap: 0.6rem; }
+  .lg__main :global(a) { color: var(--brand-hi); }
+  .lg__main :global(.caps) { text-transform: uppercase; font-size: 0.92rem; }
+  @media (max-width: 899px) { .lg__top { justify-content: center; } }
+</style>

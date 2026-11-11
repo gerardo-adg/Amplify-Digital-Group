@@ -76,7 +76,7 @@ export const quiz = {
     submit: "Apply Now",
     // Consent for calls and texts (TCPA). Have this reviewed if you text leads.
     consent:
-      "By sending this, you agree that Amplify Digital Group may contact you by call, text or email about your inquiry, including with automated technology. Consent isn't a condition of any purchase. Message and data rates may apply. Reply STOP to opt out.",
+      "By clicking Apply Now, you agree that Amplify Digital Group may call and text you at the number you provided, including with automated technology and prerecorded messages, and email you about your inquiry and our services. Consent isn't a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help.",
   },
   done: {
     title: "You're all set",
