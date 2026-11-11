@@ -38,8 +38,8 @@ const schema = pageGraph({
   <section class="section" aria-labelledby="inc-h">
     <div class="wrap split">
       <div class="head">
-        <p class="eyebrow" data-reveal>What's included</p>
-        <h2 id="inc-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Done for you,</span></span> <span class="l"><span class="l__in grad">start to finish.</span></span></h2>
+        <p class="eyebrow" data-reveal>What's Included</p>
+        <h2 id="inc-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Everything we</span></span> <span class="l"><span class="l__in grad">do for you.</span></span></h2>
         <p class="muted head__p" data-reveal><strong>Who it's for:</strong> {s.page.forWho}</p>
       </div>
       <ul class="inc" data-stagger>
@@ -57,7 +57,7 @@ const schema = pageGraph({
     <section class="section dark" aria-labelledby="process-h">
       <div class="wrap">
         <div class="head">
-          <p class="eyebrow" data-reveal>How it works</p>
+          <p class="eyebrow" data-reveal>Our Process</p>
           <h2 id="process-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">Your only job:</span></span> <span class="l"><span class="l__in grad">show up for the shoot.</span></span></h2>
         </div>
         <Process />
@@ -68,7 +68,7 @@ const schema = pageGraph({
   <section class="section tint" aria-labelledby="proof-h">
     <div class="wrap">
       <div class="head head--center">
-        <p class="eyebrow" data-reveal>{s.slug === "websites" ? "Our work" : "Proof over promises"}</p>
+        <p class="eyebrow" data-reveal>{s.slug === "websites" ? "Our Work" : "Proof Over Promises"}</p>
         <h2 id="proof-h" class="display h2" data-reveal="lines"><span class="l"><span class="l__in">{s.slug === "websites" ? "A site we built" : "Real contractors."}</span></span> <span class="l"><span class="l__in grad">{s.slug === "websites" ? "for a roofer." : "Real results."}</span></span></h2>
       </div>
       {s.slug === "websites" ? websiteProjects.map((p) => <ProjectCard {...p} />) : <ProofCards />}

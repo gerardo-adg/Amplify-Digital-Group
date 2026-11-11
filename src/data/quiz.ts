@@ -8,7 +8,7 @@ export type Question = { name: string; q: string; help?: string; options: string
 export type PriorityRule = { label: string; when: Record<string, string[]> };
 
 export const quiz = {
-  eyebrow: "30-second quiz",
+  eyebrow: "30-Second Quiz",
   title: "See if we're a fit",
   intro: "Answer a few quick questions about your business. If we can help, we'll reach out to you personally.",
   // Every question qualifies the lead. Easy ones first; the money questions

@@ -186,7 +186,7 @@ export const websiteProjects = [
   },
 ];
 
-// How every Meta ads client is handled, start to finish.
+// How every Meta ads client is handled, from the script to the leads.
 export const steps = [
   { title: "Script", body: "We write your ads, so you know exactly what to say." },
   { title: "Film", body: "We come to your jobsite. Nervous on camera? We're patient." },
