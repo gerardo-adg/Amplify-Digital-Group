@@ -5,8 +5,14 @@
  */
 
 // `show` limits a question to certain earlier answers, e.g. { service: ["A Website"] }
-// `multi` lets people pick more than one answer (checkboxes and a Next button)
-export type Question = { name: string; q: string; help?: string; options: string[]; multi?: boolean; show?: Record<string, string[]> };
+// `multi` lets people pick more than one answer (checkboxes and a Next button).
+// `display` shows friendlier wording for an option (plus a small line under it)
+// while the option itself is what gets saved with the lead.
+export type Question = {
+  name: string; q: string; help?: string; options: string[]; multi?: boolean;
+  show?: Record<string, string[]>;
+  display?: Record<string, { label: string; sub?: string }>;
+};
 type When = Record<string, string[]>;
 
 // Answers that send someone down the ads path (the landing page always counts as ads)
@@ -21,10 +27,16 @@ export const quiz = {
   // page (/start/) skips it and sends `serviceDefault` instead.
   service: {
     name: "service",
-    q: "What can we help you with?",
+    q: "What do you need help with?",
     help: "Pick all that apply.",
     multi: true,
+    // Saved as the service name; shown as the goal
     options: ["Meta Ads", "High-Quality Content", "A Website"],
+    display: {
+      "Meta Ads": { label: "Get more leads and booked jobs", sub: "Video ads aimed at homeowners in your area" },
+      "High-Quality Content": { label: "Look more professional online", sub: "Photos and videos of your work for social media" },
+      "A Website": { label: "Get a website that brings in calls", sub: "A new website, or a rebuild of the one you have" },
+    },
   } satisfies Question,
   serviceDefault: "Meta Ads",
   // Every question qualifies the lead. Easy ones first; the money questions

@@ -62,7 +62,7 @@ const total = questions.length;
               <input type={q.multi ? "checkbox" : "radio"} name={q.name} value={o} required={k === 0 && !q.multi && !(askService && q.show)} />
               <span class="opt__box">
                 <span class="opt__key" aria-hidden="true">{String.fromCharCode(65 + k)}</span>
-                <span class="opt__text">{o}</span>
+                <span class="opt__text">{q.display?.[o] ? <>{q.display[o].label}{q.display[o].sub && <small class="opt__sub">{q.display[o].sub}</small>}</> : o}</span>
                 <span class="opt__check" aria-hidden="true"></span>
               </span>
             </label>
@@ -163,6 +163,10 @@ const total = questions.length;
   .opt__text { flex: 1; }
   .opt__check { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / 0.3); transition: all 0.25s; }
   .opts--multi .opt__check { border-radius: 7px; }
+  .quiz--card .opts--multi { grid-template-columns: 1fr; }
+  .opts--multi .opt__text { line-height: 1.3; }
+  .opt__sub { display: block; margin-top: 0.2rem; font-size: 0.85rem; font-weight: 500; line-height: 1.35; color: var(--muted-dark); }
+  .quiz--card .opt__sub { color: var(--muted); }
   .opt input:focus-visible + .opt__box { outline: 2px solid var(--brand-hi); outline-offset: 3px; }
   .opt input:checked + .opt__box { background: rgb(59 0 252 / 0.28); border-color: var(--brand-hi); }
   .opt input:checked + .opt__box .opt__key { background: var(--brand); border-color: var(--brand); color: #fff; }
