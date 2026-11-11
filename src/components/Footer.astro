@@ -20,6 +20,7 @@ const { links = true } = Astro.props;
       <nav class="foot__links" aria-label="Legal">
         <a href="/privacy/">Privacy Policy</a>
         <a href="/terms/">Terms and Conditions</a>
+        <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </nav>
     </div>
@@ -39,7 +40,7 @@ const { links = true } = Astro.props;
       </div>
     )}
     <div class="foot__legal">
-      <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
       <p>Results vary. The results shown are from real clients and aren't a guarantee of what you'll get; they depend on your market, offer and many other factors.</p>
       <p>This site is not part of the Facebook website or Meta Platforms, Inc., and isn't endorsed by Meta in any way. Facebook and Instagram are trademarks of Meta Platforms, Inc.</p>
     </div>

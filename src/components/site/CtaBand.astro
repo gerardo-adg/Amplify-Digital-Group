@@ -1,14 +1,14 @@
 ---
 import Icon from "../Icon.astro";
 import { site, hero } from "../../data/site";
-interface Props { title?: [string, string]; text?: string }
-const { title = ["Ready to get", "amplified?"], text = "Answer 4 quick questions about your business. If we're a fit, we'll reach out to you personally." } = Astro.props;
+interface Props { title?: [string, string]; text?: string; href?: string }
+const { title = ["Ready to get", "amplified?"], text = "Answer a few quick questions about your business. If we're a fit, we'll reach out to you personally.", href = site.ctaUrl } = Astro.props;
 ---
 <section class="cta dark" aria-labelledby="cta-h">
   <div class="ph__glow" aria-hidden="true"><span></span><span></span></div>
   <div class="wrap cta__in">
     <h2 id="cta-h" class="display cta__title" data-reveal="lines"><span class="l"><span class="l__in">{title[0]}</span></span> <span class="l"><span class="l__in grad">{title[1]}</span></span></h2>
     <p class="muted cta__p" data-reveal>{text}</p>
-    <a class="btn" href={site.ctaUrl} data-reveal>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
+    <a class="btn" href={href} data-reveal>{hero.primaryCta} <Icon name="arrow" size={18} /></a>
   </div>
 </section>

@@ -10,6 +10,9 @@ import { site, hero, nav, services } from "../data/site";
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(href);
+// On a service page, Apply Now pre-checks that service in the quiz
+const svcSlug = services.find((s) => path.startsWith(`/services/${s.slug}`))?.slug;
+const ctaHref = svcSlug ? `${site.ctaUrl}?service=${svcSlug}` : site.ctaUrl;
 ---
 <header class="sh" data-site-header>
   <div class="wrap sh__in">
@@ -36,7 +39,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
         ) : <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>)}
       </ul>
     </nav>
-    <a class="btn sh__cta" href={site.ctaUrl}>{hero.primaryCta}</a>
+    <a class="btn sh__cta" href={ctaHref}>{hero.primaryCta}</a>
     <button class="sh__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
       <span class="sr-only">Menu</span>
       <span class="sh__icon sh__icon--open"><Icon name="menu" size={26} /></span>
@@ -55,7 +58,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
           )}
         </li>
       ))}
-      <li><a class="btn sh__panel-cta" href={site.ctaUrl}>{hero.primaryCta} <Icon name="arrow" size={18} /></a></li>
+      <li><a class="btn sh__panel-cta" href={ctaHref}>{hero.primaryCta} <Icon name="arrow" size={18} /></a></li>
     </ul>
   </div>
 </header>

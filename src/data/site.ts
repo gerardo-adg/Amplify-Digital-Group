@@ -9,12 +9,13 @@
 
 export const site = {
   name: "Amplify Digital Group",
+  legalName: "Amplify Digital Group LLC",
   shortName: "Amplify",
   url: "https://amplifydigitalgroup.net",
   description:
     "Amplify Digital Group runs Meta ads for service businesses, backed by high-quality content and websites built to turn clicks into booked jobs.",
   email: "gerardo@amplifydigitalgroup.net",
-  phone: { display: "", tel: "" }, // e.g. { display: "(916) 555-0100", tel: "+19165550100" }
+  phone: { display: "(916) 708-3974", tel: "+19167083974" },
   // Every "get started" button goes to the quiz funnel
   ctaUrl: "/quiz/",
   // Meta Pixel ID (Events Manager → Data sources). When set, every page

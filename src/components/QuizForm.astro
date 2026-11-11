@@ -36,7 +36,7 @@ const total = questions.length;
     <p class="muted qz__lede">{quiz.intro}</p>
   </section>
 )}
-<div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root data-priority={JSON.stringify(quiz.priority)}>
+<div class:list={["quiz", card && "quiz--card"]} id="quiz" data-quiz-root data-priority={JSON.stringify(quiz.priority)} data-service-slugs={askService ? JSON.stringify(quiz.serviceBySlug) : undefined}>
   <!-- One segment per step (questions + contact). Fills and pulses as each step is done. -->
   <div class="qz__progress" data-progress-wrap>
     <ol class="qz__segs" aria-hidden="true">
@@ -460,6 +460,14 @@ const total = questions.length;
       }
     });
 
+    // Coming from a service page (/quiz/?service=websites): tick that service
+    // so they only need to press Next (they can still add or change it)
+    if (root.dataset.serviceSlugs) {
+      const slug = new URLSearchParams(location.search).get("service") ?? "";
+      const value = (JSON.parse(root.dataset.serviceSlugs) as Record<string, string>)[slug];
+      const box = value ? form.querySelector<HTMLInputElement>(`input[name="service"][value="${value}"]`) : null;
+      if (box) box.checked = true;
+    }
     show(0, 0);
   });
 </script>

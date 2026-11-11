@@ -62,6 +62,7 @@ function orgNode() {
     description: site.description,
     logo: { "@type": "ImageObject", "@id": ids.logo, url: `${SITE}/brand/logo.png`, width: 1024, height: 1024 },
     image: `${SITE}/og.png`,
+    legalName: site.legalName,
     email: site.email,
     knowsAbout: ["Meta advertising", "Facebook advertising", "Instagram advertising", "Lead generation", "Video production", "Web design"],
     hasOfferCatalog: {

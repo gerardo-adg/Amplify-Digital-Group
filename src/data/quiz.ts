@@ -41,6 +41,8 @@ export const quiz = {
     },
   } satisfies Question,
   serviceDefault: "Meta Ads",
+  // Service page slug -> answer to pre-check, from links like /quiz/?service=websites
+  serviceBySlug: { "meta-ads": "Meta Ads", content: "High-Quality Content", websites: "A Website" } as Record<string, string>,
   // Every question qualifies the lead. Easy ones first; the money questions
   // come last, once people have momentum.
   questions: [
