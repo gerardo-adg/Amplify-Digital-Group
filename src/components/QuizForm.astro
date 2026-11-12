@@ -86,6 +86,11 @@ const total = questions.length;
         <label class="field field--wide"><span>City you're based in</span><input name="city" autocomplete="address-level2" required /></label>
       </div>
       <p class="step__error" role="alert" data-error></p>
+      <div class="qz__optins">
+        {quiz.contact.smsOptIns.map((o) => (
+          <label class="qz__optin"><input type="checkbox" name={o.name} value="Yes" /><span>{o.label}</span></label>
+        ))}
+      </div>
       <button class="btn qz__submit" type="submit" data-submit>{quiz.contact.submit} <Icon name="arrow" size={18} /></button>
       <p class="qz__consent">{quiz.contact.consent} See our <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms</a>.</p>
     </fieldset>
@@ -189,6 +194,11 @@ const total = questions.length;
   .step--contact .qz__submit { display: flex; margin-inline: auto; }
   .qz__consent { margin-top: 1rem; font-size: 0.78rem; line-height: 1.5; color: rgb(169 165 196 / 0.8); }
   .qz__consent a { color: inherit; }
+  /* Text-message opt-ins: unchecked and optional (A2P 10DLC) */
+  .qz__optins { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .qz__optin { display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.8rem; line-height: 1.45; color: rgb(169 165 196 / 0.9); cursor: pointer; text-align: left; }
+  .qz__optin input { flex: none; width: 18px; height: 18px; margin: 0.1rem 0 0; accent-color: var(--brand); cursor: pointer; }
+  .quiz--card .qz__optin { color: var(--muted); }
   :global(.js) .qz__submit[disabled] { opacity: 0.6; pointer-events: none; }
 
   .step__error { min-height: 1.5em; margin-top: 0.75rem; color: #ff8a9b; font-size: 0.95rem; }
@@ -345,7 +355,7 @@ const total = questions.length;
 
     function validStep(step: HTMLElement) {
       const err = step.querySelector<HTMLElement>("[data-error]");
-      const radios = step.querySelectorAll<HTMLInputElement>('input[type="radio"], input[type="checkbox"]');
+      const radios = step.querySelectorAll<HTMLInputElement>('.opt input');
       if (radios.length) {
         const ok = Array.from(radios).some((r) => r.checked);
         const multi = radios[0].type === "checkbox";
@@ -380,6 +390,7 @@ const total = questions.length;
     });
     form.addEventListener("change", (e) => {
       const input = e.target as HTMLInputElement;
+      if (!input.closest(".opt")) return;
       if (input.type === "checkbox") {
         // Pick as many as they like, then press Next
         pointerPick = false;

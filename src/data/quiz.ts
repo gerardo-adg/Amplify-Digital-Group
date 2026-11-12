@@ -129,8 +129,21 @@ export const quiz = {
     help: "We'll look over your answers and reach out to you personally. No spam, ever.",
     submit: "Apply Now",
     // Consent for calls and texts (TCPA). Have this reviewed if you text leads.
+    // A2P 10DLC: text consent is its own unchecked, optional checkbox per
+    // message type, never bundled with submitting the form.
+    smsOptIns: [
+      {
+        name: "sms_consent_service",
+        label: "I agree to receive customer care text messages from Amplify Digital Group LLC about my inquiry, scheduling and follow-ups at the phone number provided. Message frequency varies. Message and data rates may apply. Reply HELP for help or STOP to opt out.",
+      },
+      {
+        name: "sms_consent_marketing",
+        label: "I agree to receive marketing text messages from Amplify Digital Group LLC, such as offers and updates, at the phone number provided. Message frequency varies. Message and data rates may apply. Reply HELP for help or STOP to opt out.",
+      },
+    ],
+    // Under the button: calls and email only (texts need a checkbox above)
     consent:
-      "By clicking Apply Now, you agree that Amplify Digital Group may call and text you at the number you provided, including with automated technology and prerecorded messages, and email you about your inquiry and our services. Consent isn't a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help.",
+      "By clicking Apply Now, you agree that Amplify Digital Group LLC may call and email you about your inquiry and our services. Consent isn't a condition of any purchase.",
   },
   done: {
     title: "You're all set",
