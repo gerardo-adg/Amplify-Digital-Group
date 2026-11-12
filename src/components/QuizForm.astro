@@ -45,14 +45,14 @@ const total = questions.length;
     <p class="sr-only" aria-live="polite" data-count-label>Question 1</p>
   </div>
 
-  <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="company_website" data-quiz>
+  <form class="qz__form" name="quiz" method="POST" action="/quiz/thanks/" data-netlify="true" netlify-honeypot="hp_check" data-quiz>
     <input type="hidden" name="form-name" value="quiz" />
     <!-- Filled in on submit from the answers: who to call first -->
     <input type="hidden" name="priority" value="" data-priority-field />
     {!askService && <input type="hidden" name="service" value={quiz.serviceDefault} />}
     {/* Both quizzes post to the same Netlify form, so list every field here too (Netlify registers fields from the HTML) */}
     {!askService && quiz.questions.filter((q) => !questions.includes(q)).map((q) => <input type="hidden" name={q.name} value="" />)}
-    <p hidden><label>Leave this empty: <input name="company_website" tabindex="-1" autocomplete="off" /></label></p>
+    <p hidden><label>Leave this empty: <input name="hp_check" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" /></label></p>
 
 
     {questions.map((q, j) => (
